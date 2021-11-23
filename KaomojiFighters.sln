@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31829.152
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaomojiFighters", "KaomojiFighters\KaomojiFighters.csproj", "{275FC253-7AE7-4E7B-BB66-07BCB803C6A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nez", "..\Nez\Nez.Portable\Nez.csproj", "{94FF561E-895A-436D-86F8-3472B1E7CAC0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{275FC253-7AE7-4E7B-BB66-07BCB803C6A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{275FC253-7AE7-4E7B-BB66-07BCB803C6A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{275FC253-7AE7-4E7B-BB66-07BCB803C6A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{275FC253-7AE7-4E7B-BB66-07BCB803C6A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94FF561E-895A-436D-86F8-3472B1E7CAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94FF561E-895A-436D-86F8-3472B1E7CAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94FF561E-895A-436D-86F8-3472B1E7CAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94FF561E-895A-436D-86F8-3472B1E7CAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2E3BD77B-497C-4AA8-8223-DC259DF6D05B}
+	EndGlobalSection
+EndGlobal
