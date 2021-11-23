@@ -15,71 +15,18 @@ namespace KaomojiFighters
 {
     class Battle : Scene
     {
-        Texture2D playerSprite;
-        private EnemyKaomoji enemyKaomoji;
         SpriteRenderer _player;
         private SpriteRenderer renderer;
         private int _horizontalMovementSpeed = 0;
         private int _vertikalMovementSpeed = 0;
-        private EnemyKaomoji _enemy;
+        private FollowPlayer _enemy;
 
-        public Battle()
-        {
-            enemyKaomoji = new EnemyKaomoji();
-            renderer = new SpriteRenderer(enemyKaomoji.Sprite);
-            playerSprite = Texture2D.FromFile(Core.GraphicsDevice, "C:\\Users\\jbb\\Pictures\\Saved Pictures\\Kaomoji01.png");
-            PlayScene();
-        }
-
-        private void PlayScene()
+        public override void Initialize()
         {
             AddRenderer(new DefaultRenderer());
-            _player = CreateEntity("Kaomoji01").AddComponent(new SpriteRenderer(playerSprite));
-            _player.Transform.LocalPosition = new Vector2(400, 700);
-            _enemy = CreateEntity("Kaomoji02").AddComponent(enemyKaomoji);
-            _enemy.AddComponent(renderer).LocalOffset = enemyKaomoji.position;
-        }
-
-        public override void Update()
-        {
-            if (Input.CurrentKeyboardState.IsKeyDown(Keys.W))
-            {
-                _horizontalMovementSpeed--;
-            }
-            else if (_horizontalMovementSpeed < 0)
-            {
-                _horizontalMovementSpeed++;
-            }
-            if (Input.CurrentKeyboardState.IsKeyDown(Keys.S))
-            {
-                _horizontalMovementSpeed++;
-            }
-            else if (_horizontalMovementSpeed > 0)
-            {
-                _horizontalMovementSpeed--;
-            }
-            if (Input.CurrentKeyboardState.IsKeyDown(Keys.A))
-            {
-                _vertikalMovementSpeed--;
-            }
-            else if (_vertikalMovementSpeed < 0)
-            {
-                _vertikalMovementSpeed++;
-            }
-            if (Input.CurrentKeyboardState.IsKeyDown(Keys.D))
-            {
-                _vertikalMovementSpeed++;
-            }
-            else if (_vertikalMovementSpeed > 0)
-            {
-                _vertikalMovementSpeed--;
-            }
-            _player.Transform.LocalPosition =
-                new Vector2(_player.Transform.LocalPosition.X + _vertikalMovementSpeed * Time.DeltaTime*7, _player.Transform.LocalPosition.Y + _horizontalMovementSpeed * Time.DeltaTime*7);
-
-            _enemy.Update(_player.Transform.LocalPosition);
-            _enemy.Transform.LocalPosition = _enemy.position;
-            base.Update();
+            base.Initialize();
+            CreateEntity("Kaomoji01").SetPosition(Screen.Center).AddComponent(new SpriteRenderer(Content.LoadTexture("Kaomoji01"))).AddComponent(new WASDMovement());
+            CreateEntity("Kaomoji02").SetPosition(1700,700).AddComponent(new SpriteRenderer(Content.LoadTexture("Kaomoji02"))).AddComponent(new FollowPlayer(){LerpIndex = 0.02f});
         }
     }
 }
