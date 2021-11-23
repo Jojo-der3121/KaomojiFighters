@@ -7,9 +7,6 @@ namespace KaomojiFighters
 {
     public class Game1 : Nez.Core
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
-
         public Game1()
         {
             Screen.SetSize(1920, 1080);
@@ -19,7 +16,7 @@ namespace KaomojiFighters
         {
             base.Initialize();
             var scene = new Battle();
-            Core.Scene = scene;
+            Scene = scene;
         }
     }
 }
