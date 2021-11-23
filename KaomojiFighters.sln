@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31829.152
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaomojiFighters", "KaomojiFighters\KaomojiFighters.csproj", "{275FC253-7AE7-4E7B-BB66-07BCB803C6A4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nez", "..\Nez\Nez.Portable\Nez.csproj", "{94FF561E-895A-436D-86F8-3472B1E7CAC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nez", "..\Beacon\Nez.Portable\Nez.csproj", "{94FF561E-895A-436D-86F8-3472B1E7CAC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
