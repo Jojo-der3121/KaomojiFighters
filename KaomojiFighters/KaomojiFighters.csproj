@@ -27,9 +27,6 @@
     <ProjectReference Include="..\..\Beacon-cs\Nez.Portable\Nez.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Beacon\Nez.Portable\Nez.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <None Update="Content\NezDefaultBMFont.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
