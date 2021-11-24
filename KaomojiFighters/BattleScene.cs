@@ -19,8 +19,8 @@ namespace KaomojiFighters
         {
             AddRenderer(new DefaultRenderer());
             base.Initialize();
-            CreateEntity("Kaomoji01").SetPosition(Screen.Center).AddComponent(new Punch()).AddComponent(new WASDMovement());
-            CreateEntity("Kaomoji02").SetPosition(1700, 700).AddComponent(new SpriteRenderer(Content.LoadTexture("Kaomoji02"))).AddComponent(new FollowPlayer() { LerpIndex = 0.02f });
+            CreateEntity("Kaomoji01").SetPosition(Screen.Center).AddComponent(new Player());
+            CreateEntity("Kaomoji02").SetPosition(1700, 700).AddComponent(new VSModeEnemy());
         }
     }
 }
