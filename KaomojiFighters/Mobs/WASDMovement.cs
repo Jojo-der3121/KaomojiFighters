@@ -11,20 +11,14 @@ namespace KaomojiFighters.Mobs
     {
         private VirtualJoystick joystick;
         private Vector2 LastFrameMovementSpeed;
-        private Mover movere;
 
-        public override void OnAddedToEntity()
-        {
-            joystick = new VirtualJoystick(true, new VirtualJoystick.KeyboardKeys(VirtualInput.OverlapBehavior.CancelOut, Keys.A, Keys.D, Keys.W, Keys.S));
+        public override void OnAddedToEntity()=> joystick = new VirtualJoystick(true, new VirtualJoystick.KeyboardKeys(VirtualInput.OverlapBehavior.CancelOut, Keys.A, Keys.D, Keys.W, Keys.S));
 
-            movere = Entity.AddComponent(new Mover());
-        }
 
         public void Update()
         {
             LastFrameMovementSpeed = Vector2.Lerp(LastFrameMovementSpeed, joystick.Value * 13,  0.02f);
-            CollisionResult lol;
-            movere.Move(LastFrameMovementSpeed, out lol);
+            Entity.Position += LastFrameMovementSpeed;
         }
     }
 }

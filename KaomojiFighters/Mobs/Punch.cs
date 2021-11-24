@@ -13,7 +13,7 @@ using Rectangle = System.Drawing.Rectangle;
 
 namespace KaomojiFighters.Mobs
 {
-    class Punch : Component, IUpdatable, ITriggerListener
+    class Punch : Component, IUpdatable
     {
         private int duration;
         private Scene scene;
@@ -27,7 +27,6 @@ namespace KaomojiFighters.Mobs
             base.OnAddedToEntity();
             EntitySprite = Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture("Kaomoji01")));
             collider = Entity.AddComponent(new BoxCollider(117, -50, 75, 75));
-            collider.IsTrigger = true;
             collider.Enabled = false;
             PunchButton = new VirtualButton(new VirtualButton.MouseLeftButton());
         }
@@ -36,9 +35,8 @@ namespace KaomojiFighters.Mobs
         {
             if (PunchButton.IsPressed && duration == 0)
             {
-                duration = 25;
-                collider.Enabled = true;
-
+                duration =25;
+                collider.Enabled  = true;
             }
             if (duration != 0)
             {
@@ -50,17 +48,6 @@ namespace KaomojiFighters.Mobs
                     collider.Enabled = false;
                 }
             }
-        }
-
-        public void OnTriggerEnter(Collider other, Collider local)
-        {
-            other.Entity.GetComponent<VSModeEnemy>().HP--;
-            other.Entity.Position = new Vector2(other.Entity.Position.X + 300, other.Entity.Position.Y - 75);
-        }
-
-        public void OnTriggerExit(Collider other, Collider local)
-        {
-
         }
     }
 }
