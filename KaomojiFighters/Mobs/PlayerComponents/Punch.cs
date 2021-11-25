@@ -20,12 +20,14 @@ namespace KaomojiFighters.Mobs
         public BoxCollider collider;
         private VirtualButton PunchButton;
         SpriteRenderer EntitySprite;
+        public string DistinguishedEasterEgg = "";
+        
 
         public override void OnAddedToEntity()
         {
             scene = new Scene();
             base.OnAddedToEntity();
-            EntitySprite = Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture("Kaomoji01")));
+            EntitySprite = Entity.GetComponent<SpriteRenderer>();
             collider = Entity.AddComponent(new BoxCollider(117, -50, 75, 75));
             collider.Enabled = false;
             PunchButton = new VirtualButton(new VirtualButton.MouseLeftButton());
@@ -35,16 +37,16 @@ namespace KaomojiFighters.Mobs
         {
             if (PunchButton.IsPressed && duration == 0)
             {
-                duration =25;
-                collider.Enabled  = true;
+                duration = 25;
+                collider.Enabled = true;
             }
             if (duration != 0)
             {
-                EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01Attack"));
+                EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01Attack" + DistinguishedEasterEgg));
                 duration--;
                 if (duration == 0)
                 {
-                    EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01"));
+                    EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01" + DistinguishedEasterEgg));
                     collider.Enabled = false;
                 }
             }

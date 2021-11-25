@@ -9,12 +9,17 @@ namespace KaomojiFighters
     {
         public Game1()
         {
-            Screen.SetSize(1920, 1080);
-            Window.AllowUserResizing = true;
+            
         }
         protected override void Initialize()
         {
             base.Initialize();
+            Screen.SetSize(1920, 1080);
+            Scene.SetDefaultDesignResolution(1920, 1080, Scene.SceneResolutionPolicy.BestFit);
+            Screen.SynchronizeWithVerticalRetrace = true;
+            Window.AllowUserResizing = true;
+            PauseOnFocusLost = false;
+            DebugRenderEnabled = true;
             var scene = new Battle();
             Scene = scene;
         }
