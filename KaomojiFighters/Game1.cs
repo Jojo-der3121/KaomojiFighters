@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using KaomojiFighters.Scenes;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Nez;
@@ -19,7 +20,7 @@ namespace KaomojiFighters
             Screen.SynchronizeWithVerticalRetrace = true;
             Window.AllowUserResizing = true;
             PauseOnFocusLost = false;
-            DebugRenderEnabled = true;
+            //DebugRenderEnabled = true;
             var scene = new Battle();
             Scene = scene;
         }

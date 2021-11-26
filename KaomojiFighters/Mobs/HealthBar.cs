@@ -29,7 +29,7 @@ namespace KaomojiFighters.Mobs
             ProcentPerHP = 900 / _stats.HP;
             redRectangle = Entity.AddComponent(new PrototypeSpriteRenderer(900, 75) { Color = Color.Red });
             redRectangle.RenderLayer = 1;
-            redRectangle.LayerDepth = 1;
+            redRectangle.LayerDepth = 0.1f;
         }
 
         public void Update()

@@ -21,15 +21,14 @@ namespace KaomojiFighters.Mobs
             stats = Entity.GetComponent<Stats>();
             HitBox = Entity.AddComponent(new BoxCollider());
             opponentEntity = Entity.Scene.FindEntity("Kaomoji02");
-            enemyBoxCollider = opponentEntity.GetComponent<BoxCollider>();
         }
 
         public void Update()
         {
-            if (HitBox.CollidesWith(enemyBoxCollider, out var result))
+            if (HitBox.CollidesWithAny(out var entityWasAttacked) && entityWasAttacked.Collider == opponentEntity.GetComponent<BoxCollider>())
             {
                 stats.HP -= opponentEntity.GetComponent<Stats>().AttackValue;
-                Entity.Position = new Vector2(Entity.Position.X,Entity.Position.Y- 20);
+                Entity.Position = new Vector2(Entity.Position.X - 100, Entity.Position.Y );
             }
             if (stats.HP <= 0)
             {

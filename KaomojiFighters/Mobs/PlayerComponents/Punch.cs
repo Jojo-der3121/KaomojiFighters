@@ -31,6 +31,7 @@ namespace KaomojiFighters.Mobs
             collider = Entity.AddComponent(new BoxCollider(117, -50, 75, 75));
             collider.Enabled = false;
             PunchButton = new VirtualButton(new VirtualButton.MouseLeftButton());
+            var frig = Color.CornflowerBlue;
         }
 
         public void Update()
@@ -39,17 +40,14 @@ namespace KaomojiFighters.Mobs
             {
                 duration = 25;
                 collider.Enabled = true;
-            }
-            if (duration != 0)
-            {
                 EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01Attack" + DistinguishedEasterEgg));
-                duration--;
-                if (duration == 0)
-                {
-                    EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01" + DistinguishedEasterEgg));
-                    collider.Enabled = false;
-                }
             }
+
+            if (duration == 0) return;
+            duration--;
+            if (duration != 0) return;
+            EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01" + DistinguishedEasterEgg));
+            collider.Enabled = false;
         }
     }
 }

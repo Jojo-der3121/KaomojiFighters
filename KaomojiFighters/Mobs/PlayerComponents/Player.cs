@@ -11,6 +11,7 @@ namespace KaomojiFighters.Mobs
     class Player : Component
     {
         private Scene scene;
+        public BoxCollider HitBox;
 
         public override void OnAddedToEntity()
         {
@@ -20,7 +21,7 @@ namespace KaomojiFighters.Mobs
             Entity.AddComponent(new WASDMovement());
             Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture("Kaomoji01")));
             Entity.AddComponent(new DistinguishedEasterEgg());
-            Entity.AddComponent(new Stats() {HP = 30, AttackValue = 3});
+            Entity.AddComponent(new Stats() { HP = 30, AttackValue = 3 });
         }
     }
 }

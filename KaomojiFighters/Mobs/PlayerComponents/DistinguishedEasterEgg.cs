@@ -154,7 +154,8 @@ namespace KaomojiFighters
                     {
                         EasterEggCache += "d";
                         EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01" + EasterEggCache));
-                        Entity.GetComponent<Stats>().AttackValue *= 50;
+                        EntitySprite.Size = new Vector2(EntitySprite.Width, EntitySprite.Height );
+                        Entity.GetComponent<Stats>().AttackValue *= 5;
                         EntitySprite.LocalOffset = new Vector2(0, -50);
                         punch.DistinguishedEasterEgg = EasterEggCache;
                     }
