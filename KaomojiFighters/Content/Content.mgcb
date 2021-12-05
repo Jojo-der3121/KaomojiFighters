@@ -109,6 +109,11 @@
 /processorParam:TextureFormat=Color
 /build:Kaomoji02Hurt.png
 
+#begin KaomojiDisplayMap.tmx
+/importer:
+/processor:
+/build:KaomojiDisplayMap.tmx
+
 #begin VS.png
 /importer:TextureImporter
 /processor:TextureProcessor
