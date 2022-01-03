@@ -26,10 +26,12 @@ namespace KaomojiFighters
             CreateEntity("BackgroundClouds").SetScale(2).SetPosition(0,270).AddComponent(new Background(){ BackgroundImageName = "ArenaBackgroundClouds" });
             var player = CreateEntity("Kaomoji01").SetPosition(600,700).AddComponent(new Player());
             var enemy = CreateEntity("Kaomoji02").SetPosition(1400, 700).AddComponent(new Opponent());
+            enemy.AddComponent(new Stats() { HP = 49, AttackValue = 2, Speed = 7 });
             player.AddComponent(new PlayerHitBox());
+            player.AddComponent(new Stats() { HP = 35, AttackValue = 3, Speed = 3 });
             CreateEntity("Kaomoji02HealthBar").SetPosition(570,175).AddComponent(new HealthBar() {entity = FindEntity("Kaomoji01")});
             CreateEntity("Kaomoji02HealthBar").SetPosition(570 + 710, 175).AddComponent(new HealthBar() { entity = FindEntity("Kaomoji02") });
-            CreateEntity("SpeedoMeter").AddComponent(new SpeedoMeter { EntityList = new List<Entity> { FindEntity("Kaomoji01"), FindEntity("Kaomoji02") } });
+            CreateEntity("SpeedoMeter").AddComponent(new SpeedoMeter { EntityList = new List<Stats> { FindEntity("Kaomoji01").GetComponent<Stats>(), FindEntity("Kaomoji02").GetComponent<Stats>() } });
         }
     }
 }

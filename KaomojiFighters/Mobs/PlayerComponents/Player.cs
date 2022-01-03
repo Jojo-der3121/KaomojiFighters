@@ -21,7 +21,7 @@ namespace KaomojiFighters.Mobs
             Entity.AddComponent(new Punch());
             Entity.AddComponent(new WASDMovement());
             Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture("Kaomoji01")));
-            Entity.AddComponent(new Stats() { HP = 35, AttackValue = 3, Speed = 3});
+            //Entity.AddComponent(new Stats() { HP = 35, AttackValue = 3, Speed = 3});
         }
     }
 }
