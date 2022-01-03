@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Input;
 using Nez;
 using Nez.Sprites;
 
@@ -20,8 +21,7 @@ namespace KaomojiFighters.Mobs
             Entity.AddComponent(new Punch());
             Entity.AddComponent(new WASDMovement());
             Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture("Kaomoji01")));
-            Entity.AddComponent(new DistinguishedEasterEgg());
-            Entity.AddComponent(new Stats() { HP = 30, AttackValue = 3 });
+            Entity.AddComponent(new Stats() { HP = 35, AttackValue = 3, Speed = 3});
         }
     }
 }

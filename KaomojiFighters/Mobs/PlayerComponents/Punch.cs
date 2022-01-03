@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Nez;
 using Nez.Sprites;
 using Nez.Textures;
-using Rectangle = System.Drawing.Rectangle;
 
 namespace KaomojiFighters.Mobs
 {
@@ -17,11 +10,12 @@ namespace KaomojiFighters.Mobs
     {
         private int duration;
         private Scene scene;
+        private bool IsSpriteAlreadyChenged;
         public BoxCollider collider;
-        private VirtualButton PunchButton;
         SpriteRenderer EntitySprite;
-        public string DistinguishedEasterEgg = "";
-        
+        public EasterEgg easterEgg;
+        private Stats stat;
+
 
         public override void OnAddedToEntity()
         {
@@ -29,25 +23,56 @@ namespace KaomojiFighters.Mobs
             base.OnAddedToEntity();
             EntitySprite = Entity.GetComponent<SpriteRenderer>();
             collider = Entity.AddComponent(new BoxCollider(117, -50, 75, 75));
+            stat = Entity.GetComponent<Stats>();
+            easterEgg = Entity.AddComponent(new EasterEgg() { EasterEggString = new Keys[] { Keys.D, Keys.I, Keys.S, Keys.T, Keys.I, Keys.N, Keys.G, Keys.U, Keys.I, Keys.S, Keys.H, Keys.E, Keys.D } });
             collider.Enabled = false;
-            PunchButton = new VirtualButton(new VirtualButton.MouseLeftButton());
-            var frig = Color.CornflowerBlue;
+            
         }
 
         public void Update()
         {
-            if (PunchButton.IsPressed && duration == 0)
+            if (!IsSpriteAlreadyChenged && easterEgg.IsActivated)
+            {
+                EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01distinguished"));
+                EntitySprite.Size = new Vector2(EntitySprite.Width, EntitySprite.Height * 2);
+                Entity.GetComponent<Stats>().AttackValue *= 5;
+                EntitySprite.LocalOffset = new Vector2(0, -50);
+                IsSpriteAlreadyChenged = true;
+            }
+
+            if (stat.ItsMyTurn && duration == 0)
             {
                 duration = 25;
                 collider.Enabled = true;
-                EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01Attack" + DistinguishedEasterEgg));
+                if (easterEgg.IsActivated)
+                {
+                    EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01Attackdistinguished"));
+                    EntitySprite.Size = new Vector2(373 , EntitySprite.Height );
+                }
+                else
+                {
+                    EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01Attack"));
+                    EntitySprite.Size = new Vector2(373, EntitySprite.Height);
+                }
+
             }
 
             if (duration == 0) return;
             duration--;
             if (duration != 0) return;
-            EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01" + DistinguishedEasterEgg));
+            if (easterEgg.IsActivated)
+            {
+                EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01distinguished"));
+                EntitySprite.Size = new Vector2(310 , EntitySprite.Height);
+            }
+            else
+            {
+                EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01"));
+                EntitySprite.Size = new Vector2(310 , EntitySprite.Height);               
+            }
+            stat.ItsMyTurn = false;
             collider.Enabled = false;
+
         }
     }
 }

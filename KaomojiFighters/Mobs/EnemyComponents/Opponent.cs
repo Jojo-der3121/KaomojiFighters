@@ -17,7 +17,7 @@ namespace KaomojiFighters.Mobs
         {
             scene = new Scene();
             base.OnAddedToEntity();
-            Entity.AddComponent(new Stats() {HP = 45, AttackValue = 1});
+            Entity.AddComponent(new Stats() {HP = 49, AttackValue = 2 , Speed = 7});
             Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture("Kaomoji02")));
             Entity.AddComponent(new FollowPlayer() { LerpIndex = 0.02f });
             Entity.AddComponent(new MobHitCalculation(){spriteAssetName = "Kaomoji02"});

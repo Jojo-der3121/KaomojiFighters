@@ -10,6 +10,7 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\..\Beacon-cs\Nez.ExtendedContent\bin\Debug\net461\Beacon.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -36,6 +37,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:ArenaBackgroundCloudsAkatsuki.png
+
+#begin ExplosionKaoUwu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ExplosionKaoUwu.png
 
 #begin Kaomoji01.png
 /importer:TextureImporter
@@ -110,9 +123,21 @@
 /build:Kaomoji02Hurt.png
 
 #begin KaomojiDisplayMap.tmx
-/importer:
-/processor:
+/importer:TiledImporter
+/processor:BinaryUncompressedProcessor
 /build:KaomojiDisplayMap.tmx
+
+#begin Tileset.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tileset.png
 
 #begin VS.png
 /importer:TextureImporter

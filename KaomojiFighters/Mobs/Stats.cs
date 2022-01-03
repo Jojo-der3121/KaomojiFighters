@@ -11,5 +11,7 @@ namespace KaomojiFighters.Mobs
     {
         public int HP;
         public int AttackValue;
+        public int Speed;
+        public bool ItsMyTurn = false;
     }
 }

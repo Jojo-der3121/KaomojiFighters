@@ -15,11 +15,22 @@ namespace KaomojiFighters.Mobs
 {
     class FollowPlayer : Component, IUpdatable
     {
-        private Entity _player;
+        //private Entity _player;
         public float LerpIndex;
 
-        public override void OnAddedToEntity() =>_player=  Entity.Scene.FindEntity("Kaomoji01");
+        //public override void OnAddedToEntity() =>_player=  Entity.Scene.FindEntity("Kaomoji01");
 
-        public void Update() => Entity.Position = Vector2.Lerp(Entity.Position, _player.Position, LerpIndex);
+        public void Update()
+        {
+            if (Entity.GetComponent<Stats>().ItsMyTurn)
+            {
+                Entity.Position = Vector2.Lerp(Entity.Position, Screen.Center, LerpIndex);
+            }
+            if (Entity.Position == Screen.Center)
+            {
+                Entity.Position = new Vector2(1700, 700);
+                Entity.GetComponent<Stats>().ItsMyTurn = false;
+            }
+        }
     }
 }

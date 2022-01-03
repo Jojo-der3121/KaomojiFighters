@@ -17,17 +17,17 @@ namespace KaomojiFighters.Mobs
         private Stats _stats;
         private PrototypeSpriteRenderer HealthMeter;
         private int ProcentPerHP;
-        private PrototypeSpriteRenderer redRectangle;
+        public PrototypeSpriteRenderer redRectangle;
 
         public override void OnAddedToEntity()
         {
             base.OnAddedToEntity();
             _stats = entity.GetComponent<Stats>();
-            HealthMeter = Entity.AddComponent(new PrototypeSpriteRenderer(900, 75) { Color = Color.Green });
+            ProcentPerHP = 700 / _stats.HP;
+            HealthMeter = Entity.AddComponent(new PrototypeSpriteRenderer(700, 55) { Color = Color.Green });
             HealthMeter.RenderLayer = 1;
             HealthMeter.LayerDepth = 0;
-            ProcentPerHP = 900 / _stats.HP;
-            redRectangle = Entity.AddComponent(new PrototypeSpriteRenderer(900, 75) { Color = Color.Red });
+            redRectangle = Entity.AddComponent(new PrototypeSpriteRenderer(_stats.HP * ProcentPerHP, 55) { Color = Color.Red });
             redRectangle.RenderLayer = 1;
             redRectangle.LayerDepth = 0.1f;
         }
