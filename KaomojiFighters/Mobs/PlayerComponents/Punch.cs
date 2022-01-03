@@ -35,14 +35,14 @@ namespace KaomojiFighters.Mobs
             {
                 EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01distinguished"));
                 EntitySprite.Size = new Vector2(EntitySprite.Width, EntitySprite.Height * 2);
-                Entity.GetComponent<Stats>().AttackValue *= 5;
+                stat.AttackValue *= 5;
                 EntitySprite.LocalOffset = new Vector2(0, -50);
                 IsSpriteAlreadyChenged = true;
             }
 
             if (stat.ItsMyTurn && duration == 0)
             {
-                duration = 25;
+                duration = 123;
                 collider.Enabled = true;
                 if (easterEgg.IsActivated)
                 {

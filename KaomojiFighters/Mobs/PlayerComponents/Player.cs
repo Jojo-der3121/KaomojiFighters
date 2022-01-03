@@ -13,7 +13,7 @@ namespace KaomojiFighters.Mobs
     {
         private Scene scene;
         public BoxCollider HitBox;
-
+        
         public override void OnAddedToEntity()
         {
             scene = new Scene();

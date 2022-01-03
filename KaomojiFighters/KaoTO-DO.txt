@@ -1,0 +1,3 @@
+Design and Impliment Fighting HUD
+Add the feature that you're instantly getting back to the main menu if someone dies
+Add the esc button to the title screen in order to quite the game
