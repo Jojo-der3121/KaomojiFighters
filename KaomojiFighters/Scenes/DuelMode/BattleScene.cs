@@ -31,7 +31,7 @@ namespace KaomojiFighters
             player.AddComponent(new Stats() { HP = 35, AttackValue = 3, Speed = 3 });
             CreateEntity("Kaomoji02HealthBar").SetPosition(570,175).AddComponent(new HealthBar() {entity = FindEntity("Kaomoji01")});
             CreateEntity("Kaomoji02HealthBar").SetPosition(570 + 710, 175).AddComponent(new HealthBar() { entity = FindEntity("Kaomoji02") });
-            CreateEntity("SpeedoMeter").AddComponent(new SpeedoMeter { EntityList = new List<Stats> { FindEntity("Kaomoji01").GetComponent<Stats>(), FindEntity("Kaomoji02").GetComponent<Stats>() } });
         }
+
     }
 }

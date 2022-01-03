@@ -9,17 +9,18 @@ using Nez.Sprites;
 
 namespace KaomojiFighters.Scenes.DuelMode
 {
-    class SpeedoMeter : Component, IUpdatable
+    class SpeedoMeter : SceneComponent, IUpdatable
     {
         public List<Stats> EntityList;
         private Stats TurnPlayer;
         public bool LastPlayerFinished = true;
 
-        public override void OnAddedToEntity()
+        public SpeedoMeter()
         {
-            base.OnAddedToEntity();
-            TurnPlayer = EntityList[0]; // Wähle iwenn als erstes (es ist egal)
+            EntityList = new List<Stats>();
+            TurnPlayer = new Stats() { HP = 35, AttackValue = 3, Speed = 0};
         }
+        
         public void Update()
         {
             if (TurnPlayer.ItsMyTurn == true) return; //falls der Zugspieler noch dran ist warte bis er fertig ist
@@ -30,7 +31,7 @@ namespace KaomojiFighters.Scenes.DuelMode
             // suche die Momentan schnellste Entity und mach sie zum TurnPlayer
             for (var i = 0; i < EntityList.Count - 1; i++)
             {
-                if (EntityList[i].Speed > TurnPlayer.Speed)
+                if (EntityList[i].Speed >= TurnPlayer.Speed)
                 {
                     TurnPlayer = EntityList[i];
                 }
