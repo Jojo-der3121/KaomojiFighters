@@ -1,3 +1,4 @@
 Design and Impliment Fighting HUD
 Add the feature that you're instantly getting back to the main menu if someone dies
-Add the esc button to the title screen in order to quite the game
+Fix Bugg in the Player Options Menu where the cursor cant get to the left side after going to the left once
+Add the other Buttons

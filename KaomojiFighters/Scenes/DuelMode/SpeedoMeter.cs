@@ -41,13 +41,13 @@ namespace KaomojiFighters.Scenes.DuelMode
 
 
             //Überprüfe ob jeder dran war und falls ja erhöhe den Speed von allen wieder auf den "Startwert"
-            //if (HadEveryoneTheChanceToDoSomething())
-            //{
-            //    foreach (var element in EntityList)
-            //    {
-            //        element.GetComponent<Stats>().Speed += 10;
-            //    }
-            //}
+            if (HadEveryoneTheChanceToDoSomething())
+            {
+                foreach (var element in EntityList)
+                {
+                    element.GetComponent<Stats>().Speed += 10;
+                }
+            }
         }
 
         private bool HadEveryoneTheChanceToDoSomething()

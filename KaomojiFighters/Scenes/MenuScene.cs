@@ -17,21 +17,27 @@ namespace KaomojiFighters.Scenes
     class MenuScene : Scene
 
     {
-        VirtualButton Button;
+        VirtualButton Start;
+        VirtualButton Exit;
         public override void Initialize()
         {
             AddRenderer(new DefaultRenderer());
             base.Initialize();
-            Button = new VirtualButton().AddKeyboardKey(Keys.Space);
+            Start = new VirtualButton().AddKeyboardKey(Keys.Space);
+            Exit = new VirtualButton().AddKeyboardKey(Keys.Escape);
             CreateEntity("TitelScrean").SetLocalPosition(Screen.Center).AddComponent(new SpriteRenderer(Content.LoadTexture("ExplosionKaoUwu")));
         }
 
         public override void Update()
         {
             base.Update();
-            if (Button.IsPressed)
+            if (Start.IsPressed)
             {
                 Core.StartSceneTransition(new TextureWipeTransition(() => new Battle(), Content.LoadTexture("nez/textures/textureWipeTransition/pokemon")));
+            }
+            if (Exit.IsPressed)
+            {
+                Core.Exit();
             }
         }
     }

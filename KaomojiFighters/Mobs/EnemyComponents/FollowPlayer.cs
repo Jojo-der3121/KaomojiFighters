@@ -35,7 +35,7 @@ namespace KaomojiFighters.Mobs
                 buffer--;
                 if (buffer == 0)
                 {
-                    Entity.Position = new Vector2(1700, 700);
+                    Entity.Position = new Vector2(1400, 700);
                     Entity.GetComponent<Stats>().ItsMyTurn = false;
                 }
             }

@@ -38,6 +38,18 @@
 /processorParam:TextureFormat=Color
 /build:ArenaBackgroundCloudsAkatsuki.png
 
+#begin AttackKaoButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:AttackKaoButton.png
+
 #begin ExplosionKaoUwu.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -49,6 +61,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:ExplosionKaoUwu.png
+
+#begin ItemKaoButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ItemKaoButton.png
 
 #begin Kaomoji01.png
 /importer:TextureImporter
@@ -126,6 +150,30 @@
 /importer:TiledImporter
 /processor:BinaryUncompressedProcessor
 /build:KaomojiDisplayMap.tmx
+
+#begin SamstagKaoButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SamstagKaoButton.png
+
+#begin SelectionKaoButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SelectionKaoButton.png
 
 #begin Tileset.png
 /importer:TextureImporter
