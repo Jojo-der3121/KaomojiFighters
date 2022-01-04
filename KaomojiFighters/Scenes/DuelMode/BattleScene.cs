@@ -31,7 +31,6 @@ namespace KaomojiFighters
             CreateEntity("BackgroundClouds").SetScale(2).SetPosition(0, 270).AddComponent(new Background() { BackgroundImageName = "ArenaBackgroundClouds" });
             player1 = CreateEntity("Kaomoji01").SetPosition(600, 700).AddComponent(new Player());
             enemy = CreateEntity("Kaomoji02").SetPosition(1400, 700).AddComponent(new Opponent());
-            player1.AddComponent(new PlayerHitBox());
             CreateEntity("Kaomoji02HealthBar").SetPosition(570, 175).AddComponent(new HealthBar() { entity = FindEntity("Kaomoji01") });
             CreateEntity("Kaomoji02HealthBar").SetPosition(570 + 710, 175).AddComponent(new HealthBar() { entity = FindEntity("Kaomoji02") });
         }

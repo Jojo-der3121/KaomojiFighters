@@ -17,11 +17,11 @@ namespace KaomojiFighters.Mobs
         public Stats Stats;
         private Scene scene;
         public int StunTimer;
-        private Entity opponentEntity;
+        public Entity opponentEntity;
         private Attack EnemyAttack;
-        private BoxCollider HitBox;
+        public BoxCollider HitBox;
         private SpriteRenderer sprite;
-        public string spriteAssetName;
+        
         
 
         public override void OnAddedToEntity()
@@ -29,7 +29,6 @@ namespace KaomojiFighters.Mobs
             scene = new Scene();
             base.OnAddedToEntity();
             Stats = Entity.GetComponent<Stats>();
-            opponentEntity = Entity.Scene.FindEntity("Kaomoji01");
             EnemyAttack = opponentEntity.GetComponent<Attack>();
             sprite = Entity.GetComponent<SpriteRenderer>();
             HitBox = Entity.AddComponent(new BoxCollider());
@@ -43,8 +42,7 @@ namespace KaomojiFighters.Mobs
                 {
                     Stats.HP -= opponentEntity.GetComponent<Stats>().AttackValue;
                     Entity.Position = new Vector2(Entity.Position.X + 200, Entity.Position.Y - 25);
-                    Entity.GetComponent<FollowPlayer>().Enabled = false;
-                    sprite.Sprite = new Sprite(scene.Content.LoadTexture(spriteAssetName+"Hurt"));
+                    sprite.Sprite = new Sprite(scene.Content.LoadTexture(Stats.sprites.Hurt));
                     StunTimer = 15;
                     Entity.Rotation +=1 ;
                 }
@@ -55,8 +53,7 @@ namespace KaomojiFighters.Mobs
                 StunTimer--;
                 if (StunTimer == 0)
                 {
-                    Entity.GetComponent<FollowPlayer>().Enabled =true;
-                    sprite.Sprite = new Sprite(scene.Content.LoadTexture(spriteAssetName));
+                    sprite.Sprite = new Sprite(scene.Content.LoadTexture(Stats.sprites.Normal));
                     Entity.Rotation = 0;
                     Entity.Position = new Vector2(Entity.Position.X - 200, Entity.Position.Y + 25);
                 }

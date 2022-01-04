@@ -19,7 +19,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         SpriteRenderer EntitySprite;
         private Stats stat;
         private bool attackedAlready;
-        private float attackTargetSize;
+        
 
         public event EventHandler<EventArgs> EnabledChanged;
         public event EventHandler<EventArgs> UpdateOrderChanged;
@@ -28,25 +28,37 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         {
             base.OnAddedToEntity();
             scene = new Scene();
-            collider = Entity.AddComponent(new BoxCollider(117, -50, 75, 75));
-            collider.Enabled = false;
-            attackTarget = Entity.Scene.FindEntity("Kaomoji02");
             EntitySprite = Entity.GetComponent<SpriteRenderer>();
             stat = Entity.GetComponent<Stats>();
+            collider = Entity.AddComponent(new BoxCollider(75, 75));
+            collider.Enabled = false;
+        }
+
+        private float GetAttackX()
+        {
+            if (stat.startXPosition < attackTarget.GetComponent<Stats>().startXPosition)
+            {
+                return Entity.GetComponent<MobHitCalculation>().HitBox.Width/2;
+            }
+            else
+            {
+                return -Entity.GetComponent<MobHitCalculation>().HitBox.Width / 2;
+            }
         }
 
         public void Update()
         {
             if (!attackedAlready)
             {
-                Entity.Position = Vector2.Lerp(Entity.Position, new Vector2 (attackTarget.Position.X - attackTarget.GetComponent<SpriteRenderer>().Width / 2 - Entity.GetComponent<SpriteRenderer>().Width/2 - 10, attackTarget.Position.Y), 0.06f);
+                Entity.Position = Vector2.Lerp(Entity.Position, new Vector2(EnemyXPosition(), attackTarget.Position.Y), 0.06f);  
             }
 
-            if (stat.ItsMyTurn && attackedAlready== false && Entity.Position.X <= attackTarget.Position.X - attackTarget.GetComponent<SpriteRenderer>().Width / 2 - Entity.GetComponent<SpriteRenderer>().Width / 2 - 5 && Entity.Position.X >= attackTarget.Position.X - attackTarget.GetComponent<SpriteRenderer>().Width / 2 - Entity.GetComponent<SpriteRenderer>().Width / 2 - 15)
+            if (stat.ItsMyTurn && !attackedAlready && Entity.Position.X <= EnemyXPosition()+5 && Entity.Position.X >= EnemyXPosition() -5)
             {
                 duration = 12;
                 collider.Enabled = true;
-                EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01Attack"));
+                collider.LocalOffset = new Vector2(GetAttackX(), -50);
+                EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture(stat.sprites.Attack));
                 EntitySprite.Size = new Vector2(373, EntitySprite.Height);
                 attackedAlready = true;
             }
@@ -55,15 +67,15 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 duration--;
                 if (duration == 0)
                 {
-                    EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture("Kaomoji01"));
+                    EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture(stat.sprites.Normal));
                     EntitySprite.Size = new Vector2(310, EntitySprite.Height);
                     collider.Enabled = false;
                 }
             }
             if (attackedAlready && duration == 0)
             {
-                Entity.Position = Vector2.Lerp(Entity.Position, new Vector2(600, 700), 0.04f);
-                if (Entity.Position.X >= 598 && Entity.Position.X <= 602)
+                Entity.Position = Vector2.Lerp(Entity.Position, new Vector2(stat.startXPosition, 700), 0.04f);
+                if (Entity.Position.X >= stat.startXPosition -2 && Entity.Position.X <= stat.startXPosition +2)
                 {
                     this.Enabled = false;
                     stat.ItsMyTurn = false;
@@ -71,6 +83,18 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 }
             }
 
+        }
+
+        private float EnemyXPosition()
+        {
+            if (stat.startXPosition< attackTarget.GetComponent<Stats>().startXPosition)
+            {
+                return  attackTarget.Position.X - attackTarget.GetComponent<SpriteRenderer>().Width / 2 - Entity.GetComponent<SpriteRenderer>().Width / 2 - 10;
+            }
+            else
+            {
+                return attackTarget.Position.X + attackTarget.GetComponent<SpriteRenderer>().Width / 2 + Entity.GetComponent<SpriteRenderer>().Width / 2 + 10;
+            }
         }
     }
 }

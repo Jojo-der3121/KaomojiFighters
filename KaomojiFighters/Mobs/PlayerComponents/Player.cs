@@ -22,6 +22,7 @@ namespace KaomojiFighters.Mobs
         {
             scene = new Scene();
             base.OnAddedToEntity();
+            stats = Entity.AddComponent(new Stats() { HP = 35, AttackValue = 7, Speed = 3, sprites = new Enums.Sprites() { Normal = "Kaomoji01", Attack = "Kaomoji01Attack", Hurt = "Kaomoji01Hurt" }, startXPosition = 600 });
             HUD = Entity.AddComponent(new BattleHUD());
             HUD.selectionButton.Enabled = false;
             HUD.AttackButton.Enabled = false;
@@ -29,9 +30,10 @@ namespace KaomojiFighters.Mobs
             HUD.SaturdayButton.Enabled = false;
             HUD.Enabled = false;
             MovementComponent = Entity.AddComponent(new WASDMovement());
+            Entity.AddComponent(new MobHitCalculation() { opponentEntity = Entity.Scene.FindEntity("Kaomoji02") });
             MovementComponent.Enabled = false;
-            Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture("Kaomoji01")));
-            stats = Entity.AddComponent(new Stats() { HP = 35, AttackValue = 30, Speed = 3 , sprites = new Enums.Sprites() {  Normal = "Kaomoji01", Attack = "Kaomoji01Attack", Hurt = "" } });
+            Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture(stats.sprites.Normal)));
+            
         }
 
         public void Update()

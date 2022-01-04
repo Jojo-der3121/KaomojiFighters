@@ -24,6 +24,17 @@ namespace KaomojiFighters.Scenes.DuelMode
         public override void Update()
         {
             base.Update();
+            //checks if everyone is still alive and if not switches the scene to title screen Scene
+            foreach (var battlingEntity in EntityList)
+            {
+                if (battlingEntity.HP <= 0)
+                {
+                    var deadEntity = battlingEntity.Entity.GetComponent<SpriteRenderer>();
+                    deadEntity.Enabled = false;
+                    Core.StartSceneTransition(new FadeTransition(() => new MenuScene()));
+                }
+            }
+
             if (TurnPlayer.ItsMyTurn == true) return; //falls der Zugspieler noch dran ist warte bis er fertig ist
             TurnPlayer.Speed -= 10; //senke die Geschwindigkeit des Zugspielers, damit die Langsamereren dran kommen können
 
@@ -49,17 +60,7 @@ namespace KaomojiFighters.Scenes.DuelMode
                 }
             }
 
-            //checks if everyone is still alive and if not switches the scene to title screen Scene
-            foreach (var battlingEntity in EntityList)
-            {
-                if (battlingEntity.HP <= 0)
-                {
-
-                    var deadEntity = battlingEntity.Entity.GetComponent<SpriteRenderer>();
-                    deadEntity.Enabled = false;
-                    Core.StartSceneTransition(new FadeTransition(()=> new MenuScene()));
-                }
-            }
+            
         }
 
         private bool HadEveryoneTheChanceToDoSomething()

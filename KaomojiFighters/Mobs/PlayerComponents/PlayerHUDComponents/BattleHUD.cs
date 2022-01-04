@@ -39,7 +39,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents
         public override void OnAddedToEntity()
         {
             base.OnAddedToEntity();
-            AttackComponent = Entity.AddComponent(new Attack());
+            AttackComponent = Entity.AddComponent(new Attack() { attackTarget = Entity.Scene.FindEntity("Kaomoji02")});
             ItemMenuComponent = Entity.AddComponent(new ItemMenu());
             AttackComponent.Enabled = false;
             ItemMenuComponent.Enabled = false;

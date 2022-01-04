@@ -16,7 +16,9 @@ namespace KaomojiFighters.Mobs
         public int Speed;
         public bool ItsMyTurn = false;
         public Sprites sprites;
-        
+        public int startXPosition;
+
+
         public override void OnAddedToEntity()
         {
             base.OnAddedToEntity();
