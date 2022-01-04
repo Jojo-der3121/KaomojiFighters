@@ -1,4 +1,11 @@
-Design and Impliment Fighting HUD
-Add the feature that you're instantly getting back to the main menu if someone dies
-Fix Bugg in the Player Options Menu where the cursor cant get to the left side after going to the left once
-Add the other Buttons
+- Design and Impliment Fighting HUD
+  - Finish the Attack Component
+    Add different Attacks
+    Impliment Items
+    implement a way to use items
+  Fix the Bugg where there's an exception when the Opponent dies
+  add fancy animations when someone dies
+  add Sound
+  Fix Sliding Menu Bar
+  Ideas:
+  => how about a Textures Component Consisting of normal, attack and hurt sprite.

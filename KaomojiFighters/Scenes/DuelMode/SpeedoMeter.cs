@@ -48,6 +48,18 @@ namespace KaomojiFighters.Scenes.DuelMode
                     element.GetComponent<Stats>().Speed += 10;
                 }
             }
+
+            //checks if everyone is still alive and if not switches the scene to title screen Scene
+            foreach (var battlingEntity in EntityList)
+            {
+                if (battlingEntity.HP <= 0)
+                {
+
+                    var deadEntity = battlingEntity.Entity.GetComponent<SpriteRenderer>();
+                    deadEntity.Enabled = false;
+                    Core.StartSceneTransition(new FadeTransition(()=> new MenuScene()));
+                }
+            }
         }
 
         private bool HadEveryoneTheChanceToDoSomething()

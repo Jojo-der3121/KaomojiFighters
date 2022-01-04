@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KaomojiFighters.Enums;
 using KaomojiFighters.Scenes.DuelMode;
 using Nez;
 
@@ -14,7 +15,8 @@ namespace KaomojiFighters.Mobs
         public int AttackValue;
         public int Speed;
         public bool ItsMyTurn = false;
-
+        public Sprites sprites;
+        
         public override void OnAddedToEntity()
         {
             base.OnAddedToEntity();
