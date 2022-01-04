@@ -3,9 +3,7 @@
     Add different Attacks
     Impliment Items
     implement a way to use items
-  Fix the Bugg where there's an exception when the Opponent dies
+ (x)Fix the Bugg where there's an exception when the Opponent dies
   add fancy animations when someone dies
   add Sound
   Fix Sliding Menu Bar
-  Ideas:
-  => how about a Textures Component Consisting of normal, attack and hurt sprite.
