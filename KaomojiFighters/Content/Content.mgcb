@@ -122,6 +122,30 @@
 /processorParam:TextureFormat=Color
 /build:Kaomoji01distinguished.png
 
+#begin Kaomoji01Hurt.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Kaomoji01Hurt.png
+
+#begin Kaomoji01Hurtdistinguished.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Kaomoji01Hurtdistinguished.png
+
 #begin Kaomoji02.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -133,6 +157,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Kaomoji02.png
+
+#begin Kaomoji02Attack.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Kaomoji02Attack.png
 
 #begin Kaomoji02Hurt.png
 /importer:TextureImporter
