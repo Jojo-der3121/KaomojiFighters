@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents;
+using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
 
@@ -22,7 +23,7 @@ namespace KaomojiFighters.Mobs
             scene = new Scene();
             base.OnAddedToEntity();
             opponent = Entity.Scene.FindEntity("Kaomoji01");
-            stats = Entity.AddComponent(new Stats() { HP = 49, AttackValue = 2, Speed = 7, sprites = new Enums.Sprites() { Normal = "Kaomoji02", Attack = "Kaomoji02Attack", Hurt = "Kaomoji02Hurt" }, startXPosition = 1400 });
+            stats = Entity.AddComponent(new Stats() { HP = 49, AttackValue = 2, Speed = 7, sprites = new Enums.Sprites() { Normal = "Kaomoji02", Attack = "Kaomoji02Attack", Hurt = "Kaomoji02Hurt" }, startPosition = new Vector2(1400,700) });
             attack = Entity.AddComponent(new Attack() { attackTarget = opponent });
             attack.Enabled = false;
             Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture(stats.sprites.Normal)));

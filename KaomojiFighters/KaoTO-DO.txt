@@ -1,8 +1,5 @@
-
-- Finish the Attack Component
-  Add different Attacks
-  implement a way to use items
+- Finish the BattleComponent Component
+  Add different Attacks 
   add fancy animations when someone dies
-  add Sound
-  Fix Sliding Menu Bar
+  add Sound 
   add feature that HealthPotion cant restore more HP than the entity had in the beginning

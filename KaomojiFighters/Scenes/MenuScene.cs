@@ -18,13 +18,11 @@ namespace KaomojiFighters.Scenes
 
     {
         VirtualButton Start;
-        VirtualButton Exit;
         public override void Initialize()
         {
             AddRenderer(new DefaultRenderer());
             base.Initialize();
             Start = new VirtualButton().AddKeyboardKey(Keys.Space);
-            Exit = new VirtualButton().AddKeyboardKey(Keys.Escape);
             CreateEntity("TitelScrean").SetLocalPosition(Screen.Center).AddComponent(new SpriteRenderer(Content.LoadTexture("ExplosionKaoUwu")));
         }
 
@@ -34,10 +32,6 @@ namespace KaomojiFighters.Scenes
             if (Start.IsPressed)
             {
                 Core.StartSceneTransition(new TextureWipeTransition(() => new Battle(), Content.LoadTexture("nez/textures/textureWipeTransition/pokemon")));
-            }
-            if (Exit.IsPressed)
-            {
-                Core.Exit();
             }
         }
     }

@@ -18,7 +18,7 @@ namespace KaomojiFighters.Scenes.DuelMode
         public SpeedoMeter()
         {
             EntityList = new List<Stats>();
-            TurnPlayer = new Stats() { HP = 35, AttackValue = 3, Speed = 0};
+            TurnPlayer = new Stats() { HP = 35, AttackValue = 3, Speed = 0 };
         }
 
         public override void Update()
@@ -56,11 +56,14 @@ namespace KaomojiFighters.Scenes.DuelMode
             {
                 foreach (var element in EntityList)
                 {
-                    element.GetComponent<Stats>().Speed += 10;
+                    while (element.Speed <= 0)
+                    {
+                        element.Speed += 10;
+                    }
                 }
             }
 
-            
+
         }
 
         private bool HadEveryoneTheChanceToDoSomething()

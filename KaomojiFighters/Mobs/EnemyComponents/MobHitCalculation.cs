@@ -21,8 +21,8 @@ namespace KaomojiFighters.Mobs
         private Attack EnemyAttack;
         public BoxCollider HitBox;
         private SpriteRenderer sprite;
-        
-        
+
+
 
         public override void OnAddedToEntity()
         {
@@ -41,10 +41,19 @@ namespace KaomojiFighters.Mobs
                 if (HitBox.CollidesWith(EnemyAttack.collider, out var hitResult) && EnemyAttack.collider.Enabled)
                 {
                     Stats.HP -= opponentEntity.GetComponent<Stats>().AttackValue;
-                    Entity.Position = new Vector2(Entity.Position.X + 200, Entity.Position.Y - 25);
                     sprite.Sprite = new Sprite(scene.Content.LoadTexture(Stats.sprites.Hurt));
-                    StunTimer = 15;
-                    Entity.Rotation +=1 ;
+                    StunTimer = 25;
+                    if (Stats.startPosition.X > opponentEntity.GetComponent<Stats>().startPosition.X)
+                    {
+                        Entity.Position = new Vector2(Entity.Position.X + 200, Entity.Position.Y - 25);
+                        Entity.Rotation += 1;
+                    }
+                    else
+                    {
+                        Entity.Position = new Vector2(Entity.Position.X - 200, Entity.Position.Y - 25);
+                        Entity.Rotation -= 1;
+                    }
+
                 }
             }
 
@@ -54,8 +63,8 @@ namespace KaomojiFighters.Mobs
                 if (StunTimer == 0)
                 {
                     sprite.Sprite = new Sprite(scene.Content.LoadTexture(Stats.sprites.Normal));
+                    Entity.Position = Stats.startPosition;
                     Entity.Rotation = 0;
-                    Entity.Position = new Vector2(Entity.Position.X - 200, Entity.Position.Y + 25);
                 }
             }
         }

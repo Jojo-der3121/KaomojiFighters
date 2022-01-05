@@ -80,16 +80,16 @@ namespace KaomojiFighters.Mobs.PlayerComponents
         {
 
 
-            if (selectionDestination - 350 >= 1920 / 4 - 350 + 600 && Left.IsPressed)
+            if (selectionDestination - 350 >= 1920 / 4 - 350 + 600 && Left.IsPressed && !AttackComponent.Enabled && !ItemMenuComponent.Enabled)
             {
                 selectionDestination -= 350;
             }
-            if (selectionDestination + 350 <= 1920 / 4 + 350 + 600 && Right.IsPressed)
+            if (selectionDestination + 350 <= 1920 / 4 + 350 + 600 && Right.IsPressed && !AttackComponent.Enabled && !ItemMenuComponent.Enabled)
             {
                 selectionDestination += 350;
             }
             selectionButton.LocalOffset = Vector2.Lerp(selectionButton.LocalOffset, new Vector2(selectionDestination, selectionButton.LocalOffset.Y), 0.06f);
-            if (Enter.IsPressed)
+            if (Enter.IsReleased && !AttackComponent.Enabled && !ItemMenuComponent.Enabled)
             {
                 switch (selectionDestination)
                 {
@@ -98,6 +98,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents
                         break;
                     case 1920 / 4 + 600:
                         ItemMenuComponent.Enabled = true;
+                        ItemMenuComponent.SelectionButton.Enabled = true;
                         ItemMenuComponent.ItemMenuDisplay.Enabled = true;
                         foreach (var element in ItemMenuComponent.Textures)
                         {

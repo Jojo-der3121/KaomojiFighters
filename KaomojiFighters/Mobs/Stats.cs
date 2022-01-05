@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KaomojiFighters.Enums;
 using KaomojiFighters.Scenes.DuelMode;
+using Microsoft.Xna.Framework;
 using Nez;
 
 namespace KaomojiFighters.Mobs
@@ -16,7 +17,7 @@ namespace KaomojiFighters.Mobs
         public int Speed;
         public bool ItsMyTurn = false;
         public Sprites sprites;
-        public int startXPosition;
+        public Vector2 startPosition;
 
 
         public override void OnAddedToEntity()

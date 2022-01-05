@@ -36,7 +36,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
         private float GetAttackX()
         {
-            if (stat.startXPosition < attackTarget.GetComponent<Stats>().startXPosition)
+            if (stat.startPosition.X < attackTarget.GetComponent<Stats>().startPosition.X)
             {
                 return Entity.GetComponent<MobHitCalculation>().HitBox.Width/2;
             }
@@ -74,8 +74,8 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             }
             if (attackedAlready && duration == 0)
             {
-                Entity.Position = Vector2.Lerp(Entity.Position, new Vector2(stat.startXPosition, 700), 0.04f);
-                if (Entity.Position.X >= stat.startXPosition -2 && Entity.Position.X <= stat.startXPosition +2)
+                Entity.Position = Vector2.Lerp(Entity.Position, new Vector2(stat.startPosition.X, 700), 0.04f);
+                if (Entity.Position.X >= stat.startPosition.X -2 && Entity.Position.X <= stat.startPosition.X +2)
                 {
                     this.Enabled = false;
                     stat.ItsMyTurn = false;
@@ -87,7 +87,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
         private float EnemyXPosition()
         {
-            if (stat.startXPosition< attackTarget.GetComponent<Stats>().startXPosition)
+            if (stat.startPosition.X< attackTarget.GetComponent<Stats>().startPosition.X)
             {
                 return  attackTarget.Position.X - attackTarget.GetComponent<SpriteRenderer>().Width / 2 - Entity.GetComponent<SpriteRenderer>().Width / 2 - 10;
             }
