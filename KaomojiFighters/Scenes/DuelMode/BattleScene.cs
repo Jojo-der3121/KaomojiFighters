@@ -13,6 +13,8 @@ using Nez.Sprites;
 using Nez.UI;
 using KaomojiFighters.Scenes.DuelMode;
 using KaomojiFighters.Scenes;
+using KaomojiFighters.Mobs.PlayerComponents;
+using KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents;
 
 namespace KaomojiFighters
 {
@@ -33,6 +35,7 @@ namespace KaomojiFighters
             enemy = CreateEntity("Kaomoji02").SetPosition(1400, 700).AddComponent(new Opponent());
             CreateEntity("Kaomoji02HealthBar").SetPosition(570, 175).AddComponent(new HealthBar() { entity = FindEntity("Kaomoji01") });
             CreateEntity("Kaomoji02HealthBar").SetPosition(570 + 710, 175).AddComponent(new HealthBar() { entity = FindEntity("Kaomoji02") });
+            CreateEntity("Kaomoji01BattleHUD").AddComponent(new Player1BattleHUD());
         }
 
     }

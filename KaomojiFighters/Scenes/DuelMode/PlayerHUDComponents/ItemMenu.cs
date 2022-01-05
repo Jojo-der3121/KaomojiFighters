@@ -11,6 +11,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 {
     class ItemMenu : Component , IUpdatable
     {
+        public Entity playerEntity;
         private Player player;
         public SpriteRenderer ItemMenuDisplay;
         public List<SpriteRenderer> Textures;
@@ -19,7 +20,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         {
             var scene = new Scene();
             base.OnAddedToEntity();
-            player = Entity.GetComponent<Player>();
+            player = playerEntity.GetComponent<Player>();
             Textures = new List<SpriteRenderer>();
             ItemMenuDisplay = Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("ItemMenu")));
             ItemMenuDisplay.LocalOffset = Screen.Center;
