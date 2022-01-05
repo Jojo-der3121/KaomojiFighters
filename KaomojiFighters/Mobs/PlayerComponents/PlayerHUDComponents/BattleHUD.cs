@@ -96,6 +96,11 @@ namespace KaomojiFighters.Mobs.PlayerComponents
                         break;
                     case 1920 / 4:
                         ItemMenuComponent.Enabled = true;
+                        ItemMenuComponent.ItemMenuDisplay.Enabled = true;
+                        foreach(var element in ItemMenuComponent.Textures)
+                        {
+                            element.Enabled = true;
+                        }
                         break;
                     case 1920 / 4 + 350:
                         Entity.GetComponent<Stats>().HP = 0;

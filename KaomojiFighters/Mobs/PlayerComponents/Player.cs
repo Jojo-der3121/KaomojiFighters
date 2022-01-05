@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KaomojiFighters.Mobs.PlayerComponents;
+using KaomojiFighters.Objects;
 using Microsoft.Xna.Framework.Input;
 using Nez;
 using Nez.Sprites;
+using Nez.Textures;
 
 namespace KaomojiFighters.Mobs
 {
@@ -16,8 +18,13 @@ namespace KaomojiFighters.Mobs
         private Stats stats;
         private BattleHUD HUD;
         public BoxCollider HitBox;
+        private SpriteRenderer texture;
         public WASDMovement MovementComponent;
+        private EasterEgg easterEgg;
+        private bool wasActivatedAlready = false;
+        public List<Item> ItemList = new List<Item>();
         
+
         public override void OnAddedToEntity()
         {
             scene = new Scene();
@@ -32,8 +39,12 @@ namespace KaomojiFighters.Mobs
             MovementComponent = Entity.AddComponent(new WASDMovement());
             Entity.AddComponent(new MobHitCalculation() { opponentEntity = Entity.Scene.FindEntity("Kaomoji02") });
             MovementComponent.Enabled = false;
-            Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture(stats.sprites.Normal)));
-            
+            texture = Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture(stats.sprites.Normal)));
+            easterEgg = Entity.AddComponent(new EasterEgg() { EasterEggString = new Keys[] { Keys.D, Keys.I, Keys.S, Keys.T, Keys.I, Keys.N, Keys.G, Keys.U, Keys.I, Keys.S, Keys.H, Keys.E, Keys.D } });
+            ItemList.Add(Entity.AddComponent( new HealthPotion()));
+            ItemList.Add(Entity.AddComponent(new StrenghtPotion()));
+            ItemList.Add(Entity.AddComponent(new SpeedPotion()));
+
         }
 
         public void Update()
@@ -53,6 +64,13 @@ namespace KaomojiFighters.Mobs
                 HUD.ItemButton.Enabled = false;
                 HUD.SaturdayButton.Enabled = false;
                 HUD.Enabled = false;
+            }
+            if (easterEgg.IsActivated && !wasActivatedAlready)
+            {
+                stats.sprites = new Enums.Sprites() { Normal = "Kaomoji01distinguished", Attack = "Kaomoji01Attackdistinguished", Hurt = "Kaomoji01Hurtdistinguished" };
+                texture.Sprite = new Sprite(scene.Content.LoadTexture(stats.sprites.Normal));
+                stats.AttackValue *= 50;
+                wasActivatedAlready = true;
             }
         }
     }

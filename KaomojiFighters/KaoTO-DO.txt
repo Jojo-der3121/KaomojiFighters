@@ -1,9 +1,8 @@
-- Design and Impliment Fighting HUD
-  - Finish the Attack Component
-    Add different Attacks
-    Impliment Items
-    implement a way to use items
- (x)Fix the Bugg where there's an exception when the Opponent dies
+
+- Finish the Attack Component
+  Add different Attacks
+  implement a way to use items
   add fancy animations when someone dies
   add Sound
   Fix Sliding Menu Bar
+  add feature that HealthPotion cant restore more HP than the entity had in the beginning

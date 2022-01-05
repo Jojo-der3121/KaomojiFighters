@@ -62,6 +62,18 @@
 /processorParam:TextureFormat=Color
 /build:ExplosionKaoUwu.png
 
+#begin HealthPotions.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:HealthPotions.png
+
 #begin ItemKaoButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -73,6 +85,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:ItemKaoButton.png
+
+#begin ItemMenu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ItemMenu.png
 
 #begin Kaomoji01.png
 /importer:TextureImporter
@@ -210,6 +234,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:SelectionKaoButton.png
+
+#begin SpeedPotions.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SpeedPotions.png
+
+#begin StrenghtPotions.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:StrenghtPotions.png
 
 #begin Tileset.png
 /importer:TextureImporter
