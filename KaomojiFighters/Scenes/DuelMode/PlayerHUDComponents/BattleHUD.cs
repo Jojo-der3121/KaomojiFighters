@@ -36,7 +36,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents
             AttackButton = new SpriteRenderer(scene.Content.LoadTexture("AttackKaoButton"));
             ItemButton = new SpriteRenderer(scene.Content.LoadTexture("ItemKaoButton"));
             SaturdayButton = new SpriteRenderer(scene.Content.LoadTexture("SamstagKaoButton"));
-            AttackComponent = player.AddComponent(new Attack() { attackTarget = Entity.Scene.FindEntity("Kaomoji02") });
+            AttackComponent = player.AddComponent(new s1() { attackTarget = Entity.Scene.FindEntity("Kaomoji02") });
         }
 
         public override void OnAddedToEntity()

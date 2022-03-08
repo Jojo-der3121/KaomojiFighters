@@ -24,7 +24,7 @@ namespace KaomojiFighters.Mobs
             base.OnAddedToEntity();
             opponent = Entity.Scene.FindEntity("Kaomoji01");
             stats = Entity.AddComponent(new Stats() { HP = 49, AttackValue = 2, Speed = 7, sprites = new Enums.Sprites() { Normal = "Kaomoji02", Attack = "Kaomoji02Attack", Hurt = "Kaomoji02Hurt" }, startPosition = new Vector2(1400,700) });
-            attack = Entity.AddComponent(new Attack() { attackTarget = opponent });
+            attack = Entity.AddComponent(new s1() { attackTarget = opponent });
             attack.Enabled = false;
             Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture(stats.sprites.Normal)));
             Entity.AddComponent(new MobHitCalculation() { opponentEntity = opponent});

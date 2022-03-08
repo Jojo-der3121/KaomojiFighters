@@ -12,13 +12,13 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 {
     class Attack : Component, IUpdatable
     {
-        private Scene scene;
-        private int duration;
+        protected Scene scene;
+        protected int duration;
         public BoxCollider collider;
         public Entity attackTarget;
-        SpriteRenderer EntitySprite;
-        private Stats stat;
-        private bool attackedAlready;
+        protected SpriteRenderer EntitySprite;
+        protected Stats stat;
+        protected bool attackedAlready;
         
 
         public event EventHandler<EventArgs> EnabledChanged;
@@ -34,7 +34,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             collider.Enabled = false;
         }
 
-        private float GetAttackX()
+        protected float GetAttackX()
         {
             if (stat.startPosition.X < attackTarget.GetComponent<Stats>().startPosition.X)
             {
@@ -48,12 +48,38 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
         public void Update()
         {
+            attack();
+        }
+
+        protected virtual void attack()
+        {
+
+        }
+
+        protected float EnemyXPosition()
+        {
+            if (stat.startPosition.X< attackTarget.GetComponent<Stats>().startPosition.X)
+            {
+                return  attackTarget.Position.X - attackTarget.GetComponent<SpriteRenderer>().Width / 2 - Entity.GetComponent<SpriteRenderer>().Width / 2 - 10;
+            }
+            else
+            {
+                return attackTarget.Position.X + attackTarget.GetComponent<SpriteRenderer>().Width / 2 + Entity.GetComponent<SpriteRenderer>().Width / 2 + 10;
+            }
+        }
+    }
+
+    class s1 : Attack
+    {
+        protected override void attack()
+        {
+            base.attack();
             if (!attackedAlready)
             {
-                Entity.Position = Vector2.Lerp(Entity.Position, new Vector2(EnemyXPosition(), attackTarget.Position.Y), 0.06f);  
+                Entity.Position = Vector2.Lerp(Entity.Position, new Vector2(EnemyXPosition(), attackTarget.Position.Y), 0.06f);
             }
 
-            if (stat.ItsMyTurn && !attackedAlready && Entity.Position.X <= EnemyXPosition()+5 && Entity.Position.X >= EnemyXPosition() -5)
+            if (stat.ItsMyTurn && !attackedAlready && Entity.Position.X <= EnemyXPosition() + 5 && Entity.Position.X >= EnemyXPosition() - 5)
             {
                 duration = 12;
                 collider.Enabled = true;
@@ -75,25 +101,12 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             if (attackedAlready && duration == 0)
             {
                 Entity.Position = Vector2.Lerp(Entity.Position, new Vector2(stat.startPosition.X, 700), 0.04f);
-                if (Entity.Position.X >= stat.startPosition.X -2 && Entity.Position.X <= stat.startPosition.X +2)
+                if (Entity.Position.X >= stat.startPosition.X - 2 && Entity.Position.X <= stat.startPosition.X + 2)
                 {
                     this.Enabled = false;
                     stat.ItsMyTurn = false;
                     attackedAlready = false;
                 }
-            }
-
-        }
-
-        private float EnemyXPosition()
-        {
-            if (stat.startPosition.X< attackTarget.GetComponent<Stats>().startPosition.X)
-            {
-                return  attackTarget.Position.X - attackTarget.GetComponent<SpriteRenderer>().Width / 2 - Entity.GetComponent<SpriteRenderer>().Width / 2 - 10;
-            }
-            else
-            {
-                return attackTarget.Position.X + attackTarget.GetComponent<SpriteRenderer>().Width / 2 + Entity.GetComponent<SpriteRenderer>().Width / 2 + 10;
             }
         }
     }
