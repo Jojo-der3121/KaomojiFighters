@@ -27,12 +27,9 @@ namespace KaomojiFighters.Mobs
 
         public override void OnAddedToEntity()
         {
-            scene = new Scene();
+            scene = new Scene(); 
             base.OnAddedToEntity();
             stats = Entity.AddComponent(new Stats() { HP = 35, AttackValue = 7, Speed = 3, sprites = new Enums.Sprites() { Normal = "Kaomoji01", Attack = "Kaomoji01Attack", Hurt = "Kaomoji01Hurt" }, startPosition = new Vector2(600,700)  });
-            MovementComponent = Entity.AddComponent(new WASDMovement());
-            Entity.AddComponent(new MobHitCalculation() { opponentEntity = Entity.Scene.FindEntity("Kaomoji02") });
-            MovementComponent.Enabled = false;
             texture = Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture(stats.sprites.Normal)));
             easterEgg = Entity.AddComponent(new EasterEgg() { EasterEggString = new Keys[] { Keys.D, Keys.I, Keys.S, Keys.T, Keys.I, Keys.N, Keys.G, Keys.U, Keys.I, Keys.S, Keys.H, Keys.E, Keys.D } });
             ItemList.Add(Entity.AddComponent( new HealthPotion()));

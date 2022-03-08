@@ -2,4 +2,6 @@
   Add different Attacks 
   add fancy animations when someone dies
   add Sound 
-  add feature that HealthPotion cant restore more HP than the entity had in the beginning
+
+- add overworld
+  fix generic player component

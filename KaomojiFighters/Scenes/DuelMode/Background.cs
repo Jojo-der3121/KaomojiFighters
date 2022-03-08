@@ -13,7 +13,7 @@ namespace KaomojiFighters
         private TiledMapRenderer Display;
         private Scene scene;
         private EasterEgg easterEgg;
-
+        
         public override void OnAddedToEntity()
         {
             scene = new Scene();

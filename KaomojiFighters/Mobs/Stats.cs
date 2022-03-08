@@ -18,13 +18,5 @@ namespace KaomojiFighters.Mobs
         public bool ItsMyTurn = false;
         public Sprites sprites;
         public Vector2 startPosition;
-
-
-        public override void OnAddedToEntity()
-        {
-            base.OnAddedToEntity();
-            var speedoMeter = Entity.Scene.GetOrCreateSceneComponent<SpeedoMeter>();
-            speedoMeter.EntityList.Add(this);
-        }
     }
 }
