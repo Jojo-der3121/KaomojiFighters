@@ -13,11 +13,12 @@ namespace KaomojiFighters.Scenes
         public override void Initialize()
         {
             base.Initialize();
-            var Map = CreateEntity("Map").AddComponent(new TiledMapRenderer(Content.LoadTiledMap("OwOWorld"))) ;
-            Map.Transform.SetScale(10f);
-            var Player = CreateEntity("Player").AddComponent(new WASDMovement()).AddComponent(new Player());
-            //.AddComponent(new FollowCamera(FindEntity("Player"), FollowCamera.CameraStyle.CameraWindow));
-            Player.Transform.SetPosition(Screen.Center);
+            var map = CreateEntity("Map").AddComponent(new TiledMapRenderer(Content.LoadTiledMap("OwOWorld"))) ;
+            map.Transform.SetScale(10f);
+            var player = CreateEntity("Player").AddComponent(new WASDMovement()).AddComponent(new Player());
+            var webCame = FindEntity("camera").AddComponent(new FollowCamera(player.Entity, FollowCamera.CameraStyle.LockOn)
+                {MapLockEnabled = false, FollowLerp = 0.5F});
+            player.Transform.SetPosition(Screen.Center);
         }
     }
 }
