@@ -50,5 +50,7 @@ namespace KaomojiFighters
             }
             IsActivated = true;
         }
+
+        // Booti please plae DMC2 dante is gud he shuut da gunn
     }
 }
