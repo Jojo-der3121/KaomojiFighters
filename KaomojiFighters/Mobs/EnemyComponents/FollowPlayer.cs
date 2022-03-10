@@ -13,7 +13,7 @@ using Nez.Sprites;
 
 namespace KaomojiFighters.Mobs
 {
-    class FollowPlayer : Component, IUpdatable
+    class FollowPlayer : Component, IUpdatable 
     {
 
         public float LerpIndex;
@@ -21,22 +21,19 @@ namespace KaomojiFighters.Mobs
 
         public void Update()
         {
-            if (Entity.GetComponent<Stats>().ItsMyTurn)
-            {
-                Entity.Position = Vector2.Lerp(Entity.Position, Screen.Center, LerpIndex);
+           Entity.Position = Vector2.Lerp(Entity.Position, Screen.Center, LerpIndex);
                 if (buffer == 0)
                 {
                     buffer = 123;
                 }
 
-            }
+            
             if (buffer != 0)
             {
                 buffer--;
                 if (buffer == 0)
                 {
                     Entity.Position = new Vector2(1400, 700);
-                    Entity.GetComponent<Stats>().ItsMyTurn = false;
                 }
             }
         }

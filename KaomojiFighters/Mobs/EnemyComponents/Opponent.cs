@@ -11,31 +11,37 @@ using Nez.Sprites;
 
 namespace KaomojiFighters.Mobs
 {
-    class Opponent : Component, IUpdatable
+    class Opponent : Component, ITelegramReceiver
     {
-        private Scene scene;
         private Stats stats;
         private Attack attack;
         private Entity opponent;
 
+        public void MessageReceived(Telegram message)
+        {
+           if( message.Head == "its your turn")
+            {
+                attack.Enabled = true;
+                attack.enableAttack();
+            }
+            if (message.Head == "its not your turn")
+            {
+                attack.Enabled = false;
+            }
+        }
+
         public override void OnAddedToEntity()
         {
-            scene = new Scene();
             base.OnAddedToEntity();
+            TelegramService.Register(this, Entity.Name);
             opponent = Entity.Scene.FindEntity("Kaomoji01");
-            stats = Entity.AddComponent(new Stats() { HP = 49, AttackValue = 2, Speed = 7, sprites = new Enums.Sprites() { Normal = "Kaomoji02", Attack = "Kaomoji02Attack", Hurt = "Kaomoji02Hurt" }, startPosition = new Vector2(1400,700) });
+            stats = Entity.AddComponent(new Stats() { HP = 49, AttackValue = 2, Speed = 7, sprites = new Enums.Sprites() { Normal = "Kaomoji02", Attack = "Kaomoji02Attack", Hurt = "Kaomoji02Hurt" } });
             attack = Entity.AddComponent(new s1() { attackTarget = opponent });
             attack.Enabled = false;
-            Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture(stats.sprites.Normal)));
+            Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture(stats.sprites.Normal)));
             Entity.AddComponent(new MobHitCalculation() { opponentEntity = opponent});
         }
 
-        public void Update()
-        {
-            if (stats.ItsMyTurn)
-            {
-                attack.Enabled = true;
-            }
-        }
+        
     }
 }

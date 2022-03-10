@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KaomojiFighters.Mobs.PlayerComponents;
+﻿using System.Collections.Generic;
 using KaomojiFighters.Objects;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Nez;
 using Nez.Sprites;
 using Nez.Textures;
+using KaomojiFighters.Scenes.DuelMode;
 
 namespace KaomojiFighters.Mobs
 {
@@ -29,9 +24,12 @@ namespace KaomojiFighters.Mobs
         {
             scene = new Scene(); 
             base.OnAddedToEntity();
-            stats = Entity.AddComponent(new Stats() { HP = 35, AttackValue = 7, Speed = 3, sprites = new Enums.Sprites() { Normal = "Kaomoji01", Attack = "Kaomoji01Attack", Hurt = "Kaomoji01Hurt" }, startPosition = new Vector2(600,700)  });
+            stats = Entity.AddComponent(new Stats() { HP = 35, AttackValue = 7, Speed = 15, sprites = new Enums.Sprites() { Normal = "Kaomoji01", Attack = "Kaomoji01Attack", Hurt = "Kaomoji01Hurt" } });
             texture = Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture(stats.sprites.Normal)));
             Entity.AddComponent(new BoxCollider(texture.Width, texture.Height));
+            if(Entity.Scene is Battle){
+                Entity.AddComponent(new MobHitCalculation() { opponentEntity = Entity.Scene.FindEntity("Kaomoji02") }); // change Battle Kao from Base OWOworld Kao
+            }
             easterEgg = Entity.AddComponent(new EasterEgg() { EasterEggString = new Keys[] { Keys.D, Keys.I, Keys.S, Keys.T, Keys.I, Keys.N, Keys.G, Keys.U, Keys.I, Keys.S, Keys.H, Keys.E, Keys.D } });
             ItemList.Add(Entity.AddComponent( new HealthPotion()));
             ItemList.Add(Entity.AddComponent(new StrenghtPotion()));
@@ -42,7 +40,6 @@ namespace KaomojiFighters.Mobs
             ItemList.Add(Entity.AddComponent( new HealthPotion()));
             ItemList.Add(Entity.AddComponent(new StrenghtPotion()));
             ItemList.Add(Entity.AddComponent(new SpeedPotion()));
-
         }
 
         public void Update()
@@ -55,6 +52,7 @@ namespace KaomojiFighters.Mobs
                 stats.AttackValue *= 50;
                 wasActivatedAlready = true;
             }
+            
         }
     }
 }

@@ -52,26 +52,26 @@ namespace KaomojiFighters.Mobs.PlayerComponents
 
             selectionButton = Entity.AddComponent(selectionButton);
             selectionButton.Size = new Vector2(selectionButton.Width * 3, selectionButton.Height * 3);
-            selectionButton.RenderLayer = 0;
+            selectionButton.RenderLayer = -1;
             selectionButton.LayerDepth = 0;
             selectionButton.LocalOffset = new Vector2(1920 / 4-350 +600, 1080 / 2 - 375+700);
             selectionDestination = 1920 / 4 - 350 + 600;
 
             AttackButton = Entity.AddComponent(AttackButton);
             AttackButton.Size = new Vector2(AttackButton.Width * 2.7f, AttackButton.Height * 2.5f);
-            AttackButton.RenderLayer = 0;
+            AttackButton.RenderLayer = -1;
             AttackButton.LayerDepth = 0.1f;
             AttackButton.LocalOffset = new Vector2(1920 / 4 - 350 + 600, 1080 / 2 - 380 + 700);
 
             ItemButton = Entity.AddComponent(ItemButton);
             ItemButton.Size = new Vector2(ItemButton.Width * 2.7f, ItemButton.Height * 2.5f);
-            ItemButton.RenderLayer = 0;
+            ItemButton.RenderLayer = -1;
             ItemButton.LayerDepth = 0.1f;
             ItemButton.LocalOffset = new Vector2(1920 / 4+ 600, 1080 / 2 - 380 + 700);
 
             SaturdayButton = Entity.AddComponent(SaturdayButton);
             SaturdayButton.Size = new Vector2(SaturdayButton.Width * 2.7f, SaturdayButton.Height * 2.5f);
-            SaturdayButton.RenderLayer = 0;
+            SaturdayButton.RenderLayer = -1;
             SaturdayButton.LayerDepth = 0.1f;
             SaturdayButton.LocalOffset = new Vector2(1920 / 4 + 350 + 600, 1080 / 2 - 380 + 700);
         }
@@ -95,6 +95,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents
                 {
                     case 1920 / 4 - 350 + 600:
                         AttackComponent.Enabled = true;
+                        AttackComponent.enableAttack();
                         break;
                     case 1920 / 4 + 600:
                         ItemMenuComponent.Enabled = true;

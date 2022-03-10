@@ -9,10 +9,11 @@ using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
 using Nez.Textures;
+using Nez.Tweens;
 
 namespace KaomojiFighters.Mobs
 {
-    class MobHitCalculation : Component, IUpdatable
+    class MobHitCalculation : Component,  ITelegramReceiver
     {
         public Stats Stats;
         private Scene scene;
@@ -30,51 +31,31 @@ namespace KaomojiFighters.Mobs
             base.OnAddedToEntity();
             Stats = Entity.GetComponent<Stats>();
             EnemyAttacks = opponentEntity.GetComponents<Attack>();
-
+            TelegramService.Register(this, Entity.Name);
             sprite = Entity.GetComponent<SpriteRenderer>();
             HitBox = Entity.AddComponent(new BoxCollider());
         }
 
-        public void Update()
+    
+
+        public void MessageReceived(Telegram message)
         {
-            foreach (var EnemyAttack in EnemyAttacks)
+           if(message.Head == "auf die Fresse")
             {
-                if (EnemyAttack.Enabled)
+                foreach (var EnemyAttack in EnemyAttacks)
                 {
-                    if (EnemyAttack.collider != null)
-                    {
-                        if (HitBox.CollidesWith(EnemyAttack.collider, out var hitResult) && EnemyAttack.collider.Enabled)
-                        {
-                            Stats.HP -= opponentEntity.GetComponent<Stats>().AttackValue;
-                            sprite.Sprite = new Sprite(scene.Content.LoadTexture(Stats.sprites.Hurt));
-                            StunTimer = 25;
-                            if (Stats.startPosition.X > opponentEntity.GetComponent<Stats>().startPosition.X)
-                            {
-                                Entity.Position = new Vector2(Entity.Position.X + 200, Entity.Position.Y - 25);
-                                Entity.Rotation += 1;
-                            }
-                            else
-                            {
-                                Entity.Position = new Vector2(Entity.Position.X - 200, Entity.Position.Y - 25);
-                                Entity.Rotation -= 1;
-                            }
 
-                        }
+                    if (EnemyAttack.Enabled && (EnemyAttack.collider?.Enabled ?? false) && HitBox.CollidesWith(EnemyAttack.collider, out var hitResult))
+                    {
+                        Stats.HP -= opponentEntity.GetComponent<Stats>().AttackValue;
+                        sprite.Sprite = new Sprite(scene.Content.LoadTexture(Stats.sprites.Hurt));
+                        var Lammarsch = Math.Sign(Entity.Position.X - opponentEntity.Position.X);
+                        Entity.Tween("Position", new Vector2(Entity.Position.X + 200 * Lammarsch, Entity.Position.Y - 25), 0.2f).SetLoops(LoopType.PingPong, 1).SetLoopCompletionHandler((x) => sprite.Sprite = new Sprite(scene.Content.LoadTexture(Stats.sprites.Normal))).Start();
+                        Entity.Tween("Rotation", (float)Lammarsch, 0.2f).SetLoops(LoopType.PingPong, 1).SetFrom(0).Start();
                     }
 
-                    if (StunTimer > 0)
-                    {
-                        StunTimer--;
-                        if (StunTimer == 0)
-                        {
-                            sprite.Sprite = new Sprite(scene.Content.LoadTexture(Stats.sprites.Normal));
-                            Entity.Position = Stats.startPosition;
-                            Entity.Rotation = 0;
-                        }
-                    }
+
                 }
-
-
             }
         }
     }

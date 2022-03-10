@@ -5,7 +5,7 @@ using Nez.Sprites;
 
 namespace KaomojiFighters.Scenes.DuelMode
 {
-    class SpeedoMeter : SceneComponent
+    class SpeedoMeter : SceneComponent, ITelegramReceiver
     {
         public List<Stats> EntityList;
         private Stats TurnPlayer;
@@ -14,7 +14,7 @@ namespace KaomojiFighters.Scenes.DuelMode
         public SpeedoMeter()
         {
             EntityList = new List<Stats>();
-            TurnPlayer = new Stats() { HP = 35, AttackValue = 3, Speed = 0 };
+            TelegramService.Register(this,"SpeedoMeter");
         }
 
         public override void Update()
@@ -27,24 +27,24 @@ namespace KaomojiFighters.Scenes.DuelMode
                 {
                     var deadEntity = battlingEntity.Entity.GetComponent<SpriteRenderer>();
                     deadEntity.Enabled = false;
+                    this.Enabled = false;
                     Core.StartSceneTransition(new FadeTransition(() => new MenuScene()));
+                    return;
                 }
             }
-
-            if (TurnPlayer.ItsMyTurn == true) return; //falls der Zugspieler noch dran ist warte bis er fertig ist
-            TurnPlayer.Speed -= 10; //senke die Geschwindigkeit des Zugspielers, damit die Langsamereren dran kommen können
-
-
-
             // suche die Momentan schnellste Entity und mach sie zum TurnPlayer
-            for (var i = 0; i <= EntityList.Count - 1; i++)
+
+            if (!LastPlayerFinished || EntityList.Count == 0) return;
+            TurnPlayer = EntityList[0];
+            for (var i = 1; i <= EntityList.Count - 1; i++)
             {
                 if (EntityList[i].Speed >= TurnPlayer.Speed)
                 {
                     TurnPlayer = EntityList[i];
                 }
             }
-            TurnPlayer.ItsMyTurn = true;
+            TelegramService.SendPrivate(new Telegram("SpeedoMeter", TurnPlayer.Entity.Name, "its your turn", "tach3tach3tach3"));
+            LastPlayerFinished = false;
 
 
             //Überprüfe ob jeder dran war und falls ja erhöhe den Speed von allen wieder auf den "Startwert"
@@ -69,6 +69,15 @@ namespace KaomojiFighters.Scenes.DuelMode
                 if (element.Speed >= 0) return false;
             }
             return true;
+        }
+
+        public void MessageReceived(Telegram message)
+        {
+            if (message.Head == "I end my turn")
+            {
+                TurnPlayer.Speed -= 10;
+                LastPlayerFinished = true;
+            }
         }
     }
 }
