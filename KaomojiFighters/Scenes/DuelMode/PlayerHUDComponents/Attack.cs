@@ -64,16 +64,14 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             {
                 collider.Enabled = true;
                 collider.LocalOffset = new Vector2(GetAttackX(), -50);
-                EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture(stat.sprites.Attack));
-                EntitySprite.Size = new Vector2(373, EntitySprite.Height);
+                EntitySprite.SetSprite( new Sprite(stat.sprites.Attack), SpriteRenderer.SizingMode.Resize);
                 Core.Schedule(0.21f, (x) => attackState = AttackState.returning);
                 TelegramService.SendPrivate(new Telegram(Entity.Name,attackTarget.Name, "auf die Fresse", "tach3tach3tach3"));
             }
             
             if (attackState == AttackState.returning && oldAttackState != AttackState.returning)
             {
-                EntitySprite.Sprite = new Sprite(scene.Content.LoadTexture(stat.sprites.Normal));
-                EntitySprite.Size = new Vector2(310, EntitySprite.Height);
+                EntitySprite.SetSprite( new Sprite(stat.sprites.Normal), SpriteRenderer.SizingMode.Resize);
                 collider.Enabled = false;
 
                 Entity.Tween("Position", OriginalPosition,1).SetCompletionHandler((x)=> 

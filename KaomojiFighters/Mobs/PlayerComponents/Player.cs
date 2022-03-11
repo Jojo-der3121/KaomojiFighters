@@ -26,8 +26,8 @@ namespace KaomojiFighters.Mobs
             scene = new Scene(); 
             base.OnAddedToEntity();
             TelegramService.Register(this, Entity.Name);
-            stats = Entity.AddComponent(new Stats() { HP = 35, AttackValue = 7, Speed = 15, sprites = new Enums.Sprites() { Normal = "Kaomoji01", Attack = "Kaomoji01Attack", Hurt = "Kaomoji01Hurt" } });
-            texture = Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture(stats.sprites.Normal)));
+            stats = Entity.AddComponent(new Stats() { HP = 35, AttackValue = 7, Speed = 15, sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurt"))) });
+            texture = Entity.AddComponent(new SpriteRenderer(stats.sprites.Normal));
             Entity.AddComponent(new BoxCollider(texture.Width, texture.Height));
             if(Entity.Scene is Battle){
                 Entity.AddComponent(new MobHitCalculation() { opponentEntity = Entity.Scene.FindEntity("Kaomoji02") });
@@ -45,12 +45,12 @@ namespace KaomojiFighters.Mobs
         }
 
         public void MessageReceived(Telegram message)
-        {
+        { 
             if (message.Head == "Frohe Ostern")
             {
                 var oldSize = texture.Size.Y; 
-                stats.sprites = new Enums.Sprites() { Normal = "Kaomoji01distinguished", Attack = "Kaomoji01Attackdistinguished", Hurt = "Kaomoji01Hurtdistinguished" };
-                texture.SetSprite(new Sprite(scene.Content.LoadTexture(stats.sprites.Normal)), SpriteRenderer.SizingMode.Resize);
+                stats.sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurt"))) ;
+                texture.SetSprite(new Sprite(stats.sprites.Normal), SpriteRenderer.SizingMode.Resize);
                 texture.LocalOffset = new Vector2(texture.LocalOffset.X, texture.LocalOffset.Y - (texture.Size.Y - oldSize)/2);
                 stats.AttackValue *= 50;
                 

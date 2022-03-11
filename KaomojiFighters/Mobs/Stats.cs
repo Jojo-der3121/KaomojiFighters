@@ -7,6 +7,7 @@ using KaomojiFighters.Enums;
 using KaomojiFighters.Scenes.DuelMode;
 using Microsoft.Xna.Framework;
 using Nez;
+using Nez.Textures;
 
 namespace KaomojiFighters.Mobs
 {
@@ -17,7 +18,7 @@ namespace KaomojiFighters.Mobs
         [Inspectable]
         public int AttackValue;
         public int Speed;
-        public Sprites sprites;
+        public (Sprite Normal,Sprite Attack, Sprite Hurt) sprites;
 
         public override void OnAddedToEntity() => Entity.Scene.GetSceneComponent<SpeedoMeter>()?.EntityList.Add(this);
     }
