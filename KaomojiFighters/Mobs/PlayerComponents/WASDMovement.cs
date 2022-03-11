@@ -17,6 +17,7 @@ namespace KaomojiFighters.Mobs
         {
             joystick = new VirtualJoystick(true, new VirtualJoystick.KeyboardKeys(VirtualInput.OverlapBehavior.CancelOut, Keys.A, Keys.D, Keys.W, Keys.S));
             mover = Entity.AddComponent(new Mover());
+            
         }
 
 
@@ -41,7 +42,7 @@ namespace KaomojiFighters.Mobs
 
         public void OnTriggerExit(Collider other, Collider local)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

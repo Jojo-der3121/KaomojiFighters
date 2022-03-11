@@ -14,4 +14,9 @@ namespace KaomojiFighters.Scenes.OwOWorld
 
         public Enums.OwOWOrldTriggerTypes owoWorldTriggerType;
     }
+
+    class LevelWallCollider : BoxCollider
+    {
+        public LevelWallCollider(int width, int hight) => IsTrigger = true;
+    }
 }

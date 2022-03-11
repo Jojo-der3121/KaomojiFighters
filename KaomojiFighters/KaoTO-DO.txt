@@ -2,6 +2,3 @@
   Add different Attacks 
   add fancy animations when someone dies
   add Sound 
-
-- add overworld
-  fix generic player component
