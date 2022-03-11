@@ -10,7 +10,6 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
     abstract class Attack : Component, IUpdatable
     {
         protected Scene scene;
-        protected int duration;
         public BoxCollider collider;
         public Entity attackTarget;
         public SpriteRenderer EnemySprite;
@@ -20,7 +19,6 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         protected AttackState attackState;
         private int Lammarsch;
         private MobHitCalculation MyAutsch;
-        protected bool tweenStartet;
         protected Vector2 OriginalPosition;
 
         public void enableAttack() => attackState = AttackState.approaching;

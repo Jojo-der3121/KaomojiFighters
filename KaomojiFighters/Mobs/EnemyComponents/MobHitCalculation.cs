@@ -16,8 +16,6 @@ namespace KaomojiFighters.Mobs
     class MobHitCalculation : Component,  ITelegramReceiver
     {
         public Stats Stats;
-        private Scene scene;
-        public int StunTimer;
         public Entity opponentEntity;
         private List<Attack> EnemyAttacks;
         public BoxCollider HitBox;
@@ -27,7 +25,6 @@ namespace KaomojiFighters.Mobs
 
         public override void OnAddedToEntity()
         {
-            scene = new Scene();
             base.OnAddedToEntity();
             Stats = Entity.GetComponent<Stats>();
             EnemyAttacks = opponentEntity.GetComponents<Attack>();
