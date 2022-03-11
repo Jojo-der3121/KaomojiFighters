@@ -6,24 +6,32 @@ using Nez.Textures;
 
 namespace KaomojiFighters
 {
-    class Background : Component, IUpdatable
+    class Background : Component, IUpdatable, ITelegramReceiver
     {
         public string BackgroundImageName;
         private SpriteRenderer _background;
         private TiledMapRenderer Display;
-        private Scene scene;
-        private EasterEgg easterEgg;
-        
+     
+
+        public void MessageReceived(Telegram message)
+        {
+            if (message.Head == "Frohe Ostern")
+            {
+                _background.Sprite = new Sprite(Entity.Scene.Content.LoadTexture(BackgroundImageName + "Akatsuki"));
+            }
+        }
+
         public override void OnAddedToEntity()
         {
-            scene = new Scene();
-            _background = Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture(BackgroundImageName)));
-            Display = Entity.AddComponent(new TiledMapRenderer(scene.Content.LoadTiledMap("KaomojiDisplayMap")));
+            
+            TelegramService.Register(this, Entity.Name);
+            _background = Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture(BackgroundImageName)));
+            Display = Entity.AddComponent(new TiledMapRenderer(Entity.Scene.Content.LoadTiledMap("KaomojiDisplayMap")));
             Display.RenderLayer = 1;
             Display.LayerDepth = 0.1f;
             Display.Transform.SetScale(3f);
             Display.Transform.SetPosition(new Vector2(100,50));
-            easterEgg = Entity.AddComponent(new EasterEgg() { EasterEggString = new Keys[] { Keys.A,Keys.K,Keys.A,Keys.T,Keys.S,Keys.U,Keys.K,Keys.I } });
+            Entity.AddComponent(new EasterEgg() { EasterEggString = new Keys[] { Keys.A,Keys.K,Keys.A,Keys.T,Keys.S,Keys.U,Keys.K,Keys.I } });
             _background.RenderLayer = 1;
             _background.LayerDepth = 0.2f;
         }
@@ -35,11 +43,7 @@ namespace KaomojiFighters
             {
                 _background.LocalOffset = new Vector2(0, _background.LocalOffset.Y);
             }
-            if (easterEgg.IsActivated)
-            {
-                _background.Sprite = new Sprite(scene.Content.LoadTexture(BackgroundImageName + "Akatsuki"));
-                easterEgg.IsActivated = false;
-            }
+           
         }
     }
 }

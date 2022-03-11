@@ -16,7 +16,6 @@ namespace KaomojiFighters
         private List<Keys> OldInput = new List<Keys>();
         private List<Keys> NewInput = new List<Keys>();
         private List<Keys> KeyMemory = new List<Keys>();
-        public bool IsActivated;
     
         public void Update()
         {
@@ -48,7 +47,7 @@ namespace KaomojiFighters
             {
                 if (KeyMemory[KeyMemory.Count - i - 1] != EasterEggString[EasterEggString.Length - i - 1]) return;
             }
-            IsActivated = true;
+            TelegramService.SendPrivate(new Telegram(Entity.Name,Entity.Name,"Frohe Ostern","tach3tach3tach3"));
         }
 
         // Booti please plae DMC2 dante is gud he shuut da gunn

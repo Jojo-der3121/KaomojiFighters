@@ -5,10 +5,11 @@ using Nez;
 using Nez.Sprites;
 using Nez.Textures;
 using KaomojiFighters.Scenes.DuelMode;
+using Microsoft.Xna.Framework;
 
 namespace KaomojiFighters.Mobs
 {
-    class Player : Component, IUpdatable
+    class Player : Component, ITelegramReceiver
     {
         private Scene scene;
         private Stats stats;
@@ -24,11 +25,12 @@ namespace KaomojiFighters.Mobs
         {
             scene = new Scene(); 
             base.OnAddedToEntity();
+            TelegramService.Register(this, Entity.Name);
             stats = Entity.AddComponent(new Stats() { HP = 35, AttackValue = 7, Speed = 15, sprites = new Enums.Sprites() { Normal = "Kaomoji01", Attack = "Kaomoji01Attack", Hurt = "Kaomoji01Hurt" } });
             texture = Entity.AddComponent(new SpriteRenderer(scene.Content.LoadTexture(stats.sprites.Normal)));
             Entity.AddComponent(new BoxCollider(texture.Width, texture.Height));
             if(Entity.Scene is Battle){
-                Entity.AddComponent(new MobHitCalculation() { opponentEntity = Entity.Scene.FindEntity("Kaomoji02") }); // change Battle Kao from Base OWOworld Kao
+                Entity.AddComponent(new MobHitCalculation() { opponentEntity = Entity.Scene.FindEntity("Kaomoji02") });
             }
             easterEgg = Entity.AddComponent(new EasterEgg() { EasterEggString = new Keys[] { Keys.D, Keys.I, Keys.S, Keys.T, Keys.I, Keys.N, Keys.G, Keys.U, Keys.I, Keys.S, Keys.H, Keys.E, Keys.D } });
             ItemList.Add(Entity.AddComponent( new HealthPotion()));
@@ -42,17 +44,17 @@ namespace KaomojiFighters.Mobs
             ItemList.Add(Entity.AddComponent(new SpeedPotion()));
         }
 
-        public void Update()
+        public void MessageReceived(Telegram message)
         {
-            
-            if (easterEgg.IsActivated && !wasActivatedAlready)
+            if (message.Head == "Frohe Ostern")
             {
+                var oldSize = texture.Size.Y; 
                 stats.sprites = new Enums.Sprites() { Normal = "Kaomoji01distinguished", Attack = "Kaomoji01Attackdistinguished", Hurt = "Kaomoji01Hurtdistinguished" };
-                texture.Sprite = new Sprite(scene.Content.LoadTexture(stats.sprites.Normal));
+                texture.SetSprite(new Sprite(scene.Content.LoadTexture(stats.sprites.Normal)), SpriteRenderer.SizingMode.Resize);
+                texture.LocalOffset = new Vector2(texture.LocalOffset.X, texture.LocalOffset.Y - (texture.Size.Y - oldSize)/2);
                 stats.AttackValue *= 50;
                 wasActivatedAlready = true;
             }
-            
         }
     }
 }
