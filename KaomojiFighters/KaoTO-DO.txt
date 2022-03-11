@@ -1,4 +1,3 @@
 - Finish the BattleComponent Component
   Add different Attacks 
-  add fancy animations when someone dies
   add Sound 

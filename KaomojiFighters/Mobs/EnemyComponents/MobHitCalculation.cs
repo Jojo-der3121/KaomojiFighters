@@ -48,8 +48,10 @@ namespace KaomojiFighters.Mobs
                     if (EnemyAttack.Enabled && (EnemyAttack.collider?.Enabled ?? false) && HitBox.CollidesWith(EnemyAttack.collider, out var hitResult))
                     {
                         Stats.HP -= opponentEntity.GetComponent<Stats>().AttackValue;
+                        System.Diagnostics.Debug.WriteLine(Stats.HP);
                         sprite.Sprite = new Sprite(scene.Content.LoadTexture(Stats.sprites.Hurt));
                         var Lammarsch = Math.Sign(Entity.Position.X - opponentEntity.Position.X);
+                        if (Stats.HP <= 0) continue;
                         Entity.Tween("Position", new Vector2(Entity.Position.X + 200 * Lammarsch, Entity.Position.Y - 25), 0.2f).SetLoops(LoopType.PingPong, 1).SetLoopCompletionHandler((x) => sprite.Sprite = new Sprite(scene.Content.LoadTexture(Stats.sprites.Normal))).Start();
                         Entity.Tween("Rotation", (float)Lammarsch, 0.2f).SetLoops(LoopType.PingPong, 1).SetFrom(0).Start();
                     }

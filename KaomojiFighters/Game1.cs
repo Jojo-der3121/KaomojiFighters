@@ -20,7 +20,7 @@ namespace KaomojiFighters
             Screen.SynchronizeWithVerticalRetrace = true;
             Window.AllowUserResizing = true;
             PauseOnFocusLost = false;
-            DebugRenderEnabled = true;
+            DebugRenderEnabled = false;
             var scene = new MenuScene();
             Scene = scene;
         }

@@ -2,6 +2,7 @@
 using KaomojiFighters.Mobs;
 using Nez;
 using Nez.Sprites;
+using Nez.Tweens;
 
 namespace KaomojiFighters.Scenes.DuelMode
 {
@@ -26,9 +27,8 @@ namespace KaomojiFighters.Scenes.DuelMode
                 if (battlingEntity.HP <= 0)
                 {
                     var deadEntity = battlingEntity.Entity.GetComponent<SpriteRenderer>();
-                    deadEntity.Enabled = false;
+                    deadEntity.Entity.Tween("Rotation", 30f, 1).SetLoops(LoopType.PingPong, 1).SetLoopCompletionHandler((x)=> Core.StartSceneTransition(new FadeTransition(() => new MenuScene()))).Start();
                     this.Enabled = false;
-                    Core.StartSceneTransition(new FadeTransition(() => new MenuScene()));
                     return;
                 }
             }

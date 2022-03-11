@@ -57,9 +57,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         {
             if (attackState == AttackState.approaching && oldAttackState != AttackState.approaching)
             {
-                Entity.Tween("Position", new Vector2(EnemyXPosition(), attackTarget.Position.Y), 0.5f).SetCompletionHandler((x)=>attackState=AttackState.attacking).Start();
-                Entity.Position = Vector2.Lerp(Entity.Position, new Vector2(EnemyXPosition(), attackTarget.Position.Y), 0.06f);
-               
+                Entity.Tween("Position", new Vector2(EnemyXPosition(), attackTarget.Position.Y), 0.5f).SetCompletionHandler((x)=>attackState=AttackState.attacking).Start(); 
             }
 
             if ( attackState == AttackState.attacking && oldAttackState != AttackState.attacking)

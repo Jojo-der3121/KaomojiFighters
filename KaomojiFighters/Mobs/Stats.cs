@@ -12,7 +12,9 @@ namespace KaomojiFighters.Mobs
 {
     class Stats: Component
     {
-        public int HP;
+        [Inspectable]
+        public int HP { get; set; }
+        [Inspectable]
         public int AttackValue;
         public int Speed;
         public Sprites sprites;

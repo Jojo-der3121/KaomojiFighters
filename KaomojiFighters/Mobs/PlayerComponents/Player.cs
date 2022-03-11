@@ -53,7 +53,7 @@ namespace KaomojiFighters.Mobs
                 texture.SetSprite(new Sprite(scene.Content.LoadTexture(stats.sprites.Normal)), SpriteRenderer.SizingMode.Resize);
                 texture.LocalOffset = new Vector2(texture.LocalOffset.X, texture.LocalOffset.Y - (texture.Size.Y - oldSize)/2);
                 stats.AttackValue *= 50;
-                wasActivatedAlready = true;
+                
             }
         }
     }

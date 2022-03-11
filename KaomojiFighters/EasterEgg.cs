@@ -47,6 +47,7 @@ namespace KaomojiFighters
             {
                 if (KeyMemory[KeyMemory.Count - i - 1] != EasterEggString[EasterEggString.Length - i - 1]) return;
             }
+            KeyMemory.Clear();
             TelegramService.SendPrivate(new Telegram(Entity.Name,Entity.Name,"Frohe Ostern","tach3tach3tach3"));
         }
 
