@@ -1,16 +1,16 @@
 
 #----------------------------- Global Properties ----------------------------#
 
-/outputDir:bin/$(Platform)
-/intermediateDir:obj/$(Platform)
-/platform:DesktopGL
+/outputDir:bin
+/intermediateDir:obj
+/platform:Windows
 /config:
 /profile:Reach
 /compress:False
 
 #-------------------------------- References --------------------------------#
 
-/reference:..\..\..\Beacon-cs\Nez.ExtendedContent\bin\Debug\net461\Beacon.dll
+/reference:Beacon.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -206,9 +206,14 @@
 /processorParam:TextureFormat=Color
 /build:Kaomoji02Hurt.png
 
+#begin KaomojiDisplayMap..tmx
+/importer:TiledImporter
+/processor:BinaryGZipProcessor
+/build:KaomojiDisplayMap..tmx
+
 #begin KaomojiDisplayMap.tmx
 /importer:TiledImporter
-/processor:BinaryUncompressedProcessor
+/processor:BinaryGZipProcessor
 /build:KaomojiDisplayMap.tmx
 
 #begin OwOWorld.tmx

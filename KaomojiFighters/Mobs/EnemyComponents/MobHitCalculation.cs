@@ -35,7 +35,7 @@ namespace KaomojiFighters.Mobs
             sprite = Entity.GetComponent<SpriteRenderer>();
             HitBox = Entity.AddComponent(new BoxCollider());
         }
-
+        
     
 
         public void MessageReceived(Telegram message)

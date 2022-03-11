@@ -16,14 +16,18 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         public SpriteRenderer EnemySprite;
         protected SpriteRenderer EntitySprite;
         protected Stats stat;
-        protected AttackState oldAttackState;
-        protected AttackState attackState;
+        protected AttackState oldAttackState = AttackState.waiting;
+        protected AttackState attackState = AttackState.waiting;
         private int Lammarsch;
         private MobHitCalculation MyAutsch;
         protected bool tweenStartet;
         protected Vector2 OriginalPosition;
 
-        public void enableAttack() => attackState = AttackState.approaching;
+        public void enableAttack()
+        {
+            if (attackState != AttackState.waiting) return;
+            attackState = AttackState.approaching;
+        }
 
         public override void OnAddedToEntity()
         {
@@ -57,7 +61,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         {
             if (attackState == AttackState.approaching && oldAttackState != AttackState.approaching)
             {
-                Entity.Tween("Position", new Vector2(EnemyXPosition(), attackTarget.Position.Y), 0.5f).SetCompletionHandler((x)=>attackState=AttackState.attacking).Start();
+                Entity.Tween("Position", new Vector2(EnemyXPosition(), attackTarget.Position.Y), 0.5f).SetEaseType(Nez.Tweens.EaseType.CubicIn).SetCompletionHandler((x)=>attackState=AttackState.attacking).Start();
                 Entity.Position = Vector2.Lerp(Entity.Position, new Vector2(EnemyXPosition(), attackTarget.Position.Y), 0.06f);
                
             }
@@ -84,6 +88,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                     TelegramService.SendPrivate(new Telegram(Entity.Name, "SpeedoMeter", "I end my turn", "tach3tach3tach3"));
                     TelegramService.SendPrivate(new Telegram(Entity.Name, Entity.Name, "its not your turn", "tach3tach3tach3"));
                     this.Enabled = false;
+                    attackState = AttackState.waiting;
                 }
                 ).Start();
                 
