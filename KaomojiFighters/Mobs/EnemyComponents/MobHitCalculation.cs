@@ -25,6 +25,7 @@ namespace KaomojiFighters.Mobs
 
         public override void OnAddedToEntity()
         {
+ 
             base.OnAddedToEntity();
             Stats = Entity.GetComponent<Stats>();
             EnemyAttacks = opponentEntity.GetComponents<Attack>();

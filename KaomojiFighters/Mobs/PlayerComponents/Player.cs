@@ -47,7 +47,7 @@ namespace KaomojiFighters.Mobs
             if (message.Head == "Frohe Ostern")
             {
                 var oldSize = texture.Size.Y; 
-                stats.sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurt"))) ;
+                stats.sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01distinguished")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attackdistinguished")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurtdistinguished"))) ;
                 texture.SetSprite(new Sprite(stats.sprites.Normal), SpriteRenderer.SizingMode.Resize);
                 texture.LocalOffset = new Vector2(texture.LocalOffset.X, texture.LocalOffset.Y - (texture.Size.Y - oldSize)/2);
                 stats.AttackValue *= 50;

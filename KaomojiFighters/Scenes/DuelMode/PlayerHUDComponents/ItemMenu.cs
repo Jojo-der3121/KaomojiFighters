@@ -49,7 +49,8 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             SelectionButton =
                 Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("SelectionKaoButton")));
             SelectionButton.LocalOffset =
-                new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40, Screen.Center.Y - 30);
+                new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40, Screen.Center.Y - 22);
+            SelectionButton.Size = new Vector2(29, 55);
             SelectionButton.Enabled = false;
 
             Textures = new List<SpriteRenderer>();
@@ -91,7 +92,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X, SelectionButton.LocalOffset.Y - 50);
             }
-            if (SelectionButton.LocalOffset.Y + 50 <= Screen.Center.Y + 20 && Down.IsPressed)
+            if (SelectionButton.LocalOffset.Y + 50 <= Screen.Center.Y + 28 && Down.IsPressed)
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X, SelectionButton.LocalOffset.Y + 50);
             }
@@ -100,7 +101,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             {
                 for (var i = 0; i < Textures.Count; i++)
                 {
-                    if (SelectionButton.LocalOffset == Textures[i].LocalOffset)
+                    if (SelectionButton.LocalOffset.X == Textures[i].LocalOffset.X && SelectionButton.LocalOffset.Y-8 == Textures[i].LocalOffset.Y)
                     {
                         player.ItemList[i].ItemEffect();
                         player.ItemList.RemoveAt(i);
