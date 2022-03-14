@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="110" height="119" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="38">
  <tileset firstgid="1" name="OwOWorldTileset" tilewidth="32" tileheight="32" tilecount="36" columns="6">
-  <image source="OwOWorldTileset.png" width="192" height="192"/>
+  <image source="OwOWorldTilesetUpdated.png" width="192" height="192"/>
   <tile id="3">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">

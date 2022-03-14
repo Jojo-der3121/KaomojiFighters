@@ -35,7 +35,7 @@ namespace KaomojiFighters.Mobs
         {
             base.OnAddedToEntity();
             TelegramService.Register(this, Entity.Name);
-            opponent = Entity.Scene.FindEntity("Kaomoji01");
+            opponent = Entity.Scene.FindEntity("Kaomoji01"); 
             stats = Entity.AddComponent(new Stats() { HP = 49, AttackValue = 1, Speed = 7, sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Hurt"))) });
             attack = Entity.AddComponent(new s1() { attackTarget = opponent });
             attack.Enabled = false;

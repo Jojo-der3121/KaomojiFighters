@@ -6,6 +6,7 @@ using Nez.Sprites;
 using Nez.Textures;
 using KaomojiFighters.Scenes.DuelMode;
 using Microsoft.Xna.Framework;
+using KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents;
 
 namespace KaomojiFighters.Mobs
 {
@@ -17,6 +18,7 @@ namespace KaomojiFighters.Mobs
         private SpriteRenderer texture;
       
         public List<Item> ItemList = new List<Item>();
+        public List<Attack> Attacks = new List<Attack>();
         
 
         public override void OnAddedToEntity()
@@ -29,6 +31,7 @@ namespace KaomojiFighters.Mobs
             Entity.AddComponent(new BoxCollider(texture.Width, texture.Height));
             if(Entity.Scene is Battle){
                 Entity.AddComponent(new MobHitCalculation() { opponentEntity = Entity.Scene.FindEntity("Kaomoji02") });
+                Entity.AddComponent(new s1() { attackTarget = Entity.Scene.FindEntity("Kaomoji02") });
             }
             Entity.AddComponent(new EasterEgg() { EasterEggString = new Keys[] { Keys.D, Keys.I, Keys.S, Keys.T, Keys.I, Keys.N, Keys.G, Keys.U, Keys.I, Keys.S, Keys.H, Keys.E, Keys.D } });
             ItemList.Add(Entity.AddComponent( new HealthPotion()));
@@ -40,6 +43,10 @@ namespace KaomojiFighters.Mobs
             ItemList.Add(Entity.AddComponent( new HealthPotion()));
             ItemList.Add(Entity.AddComponent(new StrenghtPotion()));
             ItemList.Add(Entity.AddComponent(new SpeedPotion()));
+
+            //Attacks.Add(Entity.AddComponent(new s1()));
+
+            
         }
 
         public void MessageReceived(Telegram message)

@@ -1,3 +1,4 @@
 - Finish the BattleComponent Component
-  Add different Attacks 
+  Add different Attacks
+  Change Attaks from punches to texting
   add Sound 

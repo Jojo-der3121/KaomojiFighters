@@ -1,5 +1,6 @@
 ﻿using KaomojiFighters.Enums;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using Nez.Sprites;
 using Nez.Textures;
@@ -20,6 +21,9 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         private int Lammarsch;
         private MobHitCalculation MyAutsch;
         protected Vector2 OriginalPosition;
+        protected TextComponent attackTxt;
+        protected SpriteRenderer Speechbubble;
+        protected Texture2D Bubble;
 
         public void enableAttack() => attackState = AttackState.approaching;
 
@@ -35,6 +39,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             Lammarsch = Math.Sign(Entity.Position.X - attackTarget.Position.X);
             MyAutsch = Entity.GetComponent<MobHitCalculation>();
             OriginalPosition = Entity.Position;
+            Bubble = Entity.Scene.Content.LoadTexture("SpeachBubble");
         }
 
         protected float GetAttackX() => -Lammarsch*MyAutsch.HitBox.Width/2;
@@ -48,9 +53,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
     }
 
     class s1 : Attack
-    {
-        
-        
+    { 
         protected override void attack()
         {
             if (attackState == AttackState.approaching && oldAttackState != AttackState.approaching)
@@ -79,10 +82,38 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                     TelegramService.SendPrivate(new Telegram(Entity.Name, Entity.Name, "its not your turn", "tach3tach3tach3"));
                     this.Enabled = false;
                 }
-                ).Start();
-                
+                ).Start(); 
             }
             oldAttackState = attackState;
         }
     }
+    class EmotionalDamage : Attack
+    {
+        public override void OnAddedToEntity()
+        {
+            base.OnAddedToEntity();
+            attackTxt = Entity.AddComponent(new TextComponent(Graphics.Instance.BitmapFont,"U ugly",Screen.Center,Color.Black));
+            attackTxt.Enabled = false;
+            Speechbubble = Entity.AddComponent(new SpriteRenderer(Bubble));
+            Speechbubble.Enabled = false;
+        }
+        protected override void attack()
+        {
+            if (attackState == AttackState.approaching && oldAttackState != AttackState.approaching)
+            {
+                attackTxt.Enabled = true;
+                attackTxt.Transform.Position = new Vector2(Screen.Center.X, 250);
+                attackTxt.RenderLayer = -11;
+                Speechbubble.Enabled = true;
+                Speechbubble.Transform.Position = new Vector2(attackTxt.Transform.Position.X - 10, attackTxt.Transform.Position.Y - 10);
+                Speechbubble.RenderLayer = -10;
+
+            }
+        }
+    }
+
+    //class Friendzone: Attack
+    //{
+
+    //}
 }

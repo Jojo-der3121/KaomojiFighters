@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
+using KaomojiFighters.Scenes.DuelMode;
 
 namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 {
@@ -16,7 +17,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         private Player player;
         public SpriteRenderer ItemMenuDisplay;
         public List<SpriteRenderer> Textures;
-        private BattleHUD hud;
+        private HUD hud;
         private VirtualButton Left;
         private VirtualButton Right;
         private VirtualButton Up;
@@ -38,12 +39,12 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             Enter = new VirtualButton().AddKeyboardKey(Keys.Space);
             ExitItemMenu = new VirtualButton().AddKeyboardKey(Keys.Back);
 
-            hud = Entity.GetComponent<BattleHUD>();
+            hud = Entity.GetComponent<HUD>();
             player = playerEntity.GetComponent<Player>();
 
             ItemMenuDisplay = Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("ItemMenu")));
             ItemMenuDisplay.LocalOffset = Screen.Center;
-            ItemMenuDisplay.Enabled = false;
+            ItemMenuDisplay.Enabled = true;
             ItemMenuDisplay.LayerDepth = 0.1f;
 
             SelectionButton =
@@ -51,7 +52,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             SelectionButton.LocalOffset =
                 new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40, Screen.Center.Y - 22);
             SelectionButton.Size = new Vector2(29, 55);
-            SelectionButton.Enabled = false;
+            SelectionButton.Enabled = true;
 
             Textures = new List<SpriteRenderer>();
             for (var i = 0; i < player.ItemList.Count; i++)
@@ -68,7 +69,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 }
                 Textures[i].RenderLayer = 0;
                 Textures[i].LayerDepth = 0;
-                Textures[i].Enabled = false;
+                Textures[i].Enabled = true;
             }
 
 
@@ -126,16 +127,5 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
         }
 
-        private bool PointsAtItem(Vector2 vector2)
-        {
-            foreach (var itemTexture in Textures)
-            {
-                if (vector2 == itemTexture.LocalOffset)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 }

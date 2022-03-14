@@ -15,7 +15,7 @@ namespace KaomojiFighters.Scenes
             var actualTiledMap = Content.LoadTiledMap("OwOWorld");
             var actualLocationofStart = actualTiledMap.ObjectGroups["Objektebene 1"].Objects["Start"];
             var map = CreateEntity("Map").AddComponent(new TiledMapRenderer(actualTiledMap)) ;
-            map.Transform.SetScale((float)WorldScale);
+            map.Transform.SetScale(WorldScale);
             var player = CreateEntity("Player", new Vector2(actualLocationofStart.X, actualLocationofStart.Y) * WorldScale).AddComponent(new WASDMovement()).AddComponent(new Player());
             var webCame = FindEntity("camera");
                 webCame.AddComponent(new FollowCamera(player.Entity, FollowCamera.CameraStyle.CameraWindow)
