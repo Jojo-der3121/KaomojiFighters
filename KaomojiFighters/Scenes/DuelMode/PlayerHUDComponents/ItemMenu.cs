@@ -29,9 +29,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
         public override void OnAddedToEntity()
         {
-          
             base.OnAddedToEntity();
-
             Left = new VirtualButton().AddKeyboardKey(Keys.A);
             Right = new VirtualButton().AddKeyboardKey(Keys.D);
             Up = new VirtualButton().AddKeyboardKey(Keys.W);
@@ -78,10 +76,6 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
         public void Update()
         {
-            if (hud.Enabled)
-            {
-                hud.Enabled = false;
-            }
             if (SelectionButton.LocalOffset.X - 40 >= Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 - Entity.Transform.Position.X && Left.IsPressed)
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X - 40, SelectionButton.LocalOffset.Y);
@@ -90,7 +84,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X + 40, SelectionButton.LocalOffset.Y);
             }
-            if (SelectionButton.LocalOffset.Y - 50 >= Screen.Center.Y - 30 - Entity.Transform.Position.Y&& Up.IsPressed)
+            if (SelectionButton.LocalOffset.Y - 50 >= Screen.Center.Y - 30 - Entity.Transform.Position.Y && Up.IsPressed)
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X, SelectionButton.LocalOffset.Y - 50);
             }
@@ -98,6 +92,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X, SelectionButton.LocalOffset.Y + 50);
             }
+
 
             if (Enter.IsPressed)
             {
