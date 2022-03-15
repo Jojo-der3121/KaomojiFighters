@@ -21,7 +21,7 @@ namespace KaomojiFighters.Scenes
             base.Update();
             if (Start.IsPressed)
             {
-                Core.StartSceneTransition(new TextureWipeTransition(() => new Battle(), Content.LoadTexture("nez/textures/textureWipeTransition/pokemon")));
+                Core.StartSceneTransition(new TextureWipeTransition(() => new OverworldScene(), Content.LoadTexture("nez/textures/textureWipeTransition/pokemon")));
             }
         }
     }

@@ -29,7 +29,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
         public override void OnAddedToEntity()
         {
-            var scene = new Scene();
+          
             base.OnAddedToEntity();
 
             Left = new VirtualButton().AddKeyboardKey(Keys.A);
@@ -43,16 +43,16 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             player = playerEntity.GetComponent<Player>();
 
             ItemMenuDisplay = Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("ItemMenu")));
-            ItemMenuDisplay.LocalOffset = Screen.Center;
-            ItemMenuDisplay.Enabled = true;
+            ItemMenuDisplay.LocalOffset = new Vector2(Screen.Center.X - Entity.Transform.Position.X, Screen.Center.Y - Entity.Transform.Position.Y); ;
+            ItemMenuDisplay.Enabled = false;
             ItemMenuDisplay.LayerDepth = 0.1f;
 
             SelectionButton =
                 Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("SelectionKaoButton")));
             SelectionButton.LocalOffset =
-                new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40, Screen.Center.Y - 22);
+                new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 - Entity.Transform.Position.X, Screen.Center.Y - 22 - Entity.Transform.Position.Y);
             SelectionButton.Size = new Vector2(29, 55);
-            SelectionButton.Enabled = true;
+            SelectionButton.Enabled = false;
 
             Textures = new List<SpriteRenderer>();
             for (var i = 0; i < player.ItemList.Count; i++)
@@ -61,16 +61,17 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 Textures[i].Size = new Vector2(27, 45);
                 if (i < 6)
                 {
-                    Textures[i].LocalOffset = new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i + 1), Screen.Center.Y - 30);
+                    Textures[i].LocalOffset = new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i + 1) - Entity.Transform.Position.X, Screen.Center.Y - 30 - Entity.Transform.Position.Y);
                 }
                 else
                 {
-                    Textures[i].LocalOffset = new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i - 5), Screen.Center.Y + 20);
+                    Textures[i].LocalOffset = new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i - 5) - Entity.Transform.Position.X, Screen.Center.Y+ 20 - Entity.Transform.Position.Y);
                 }
                 Textures[i].RenderLayer = 0;
                 Textures[i].LayerDepth = 0;
-                Textures[i].Enabled = true;
+                Textures[i].Enabled = false;
             }
+            
 
 
         }
@@ -81,19 +82,19 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             {
                 hud.Enabled = false;
             }
-            if (SelectionButton.LocalOffset.X - 40 >= Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 && Left.IsPressed)
+            if (SelectionButton.LocalOffset.X - 40 >= Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 - Entity.Transform.Position.X && Left.IsPressed)
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X - 40, SelectionButton.LocalOffset.Y);
             }
-            if (SelectionButton.LocalOffset.X + 40 <= Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * 6 && Right.IsPressed)
+            if (SelectionButton.LocalOffset.X + 40 <= Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * 6 - Entity.Transform.Position.X && Right.IsPressed)
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X + 40, SelectionButton.LocalOffset.Y);
             }
-            if (SelectionButton.LocalOffset.Y - 50 >= Screen.Center.Y - 30 && Up.IsPressed)
+            if (SelectionButton.LocalOffset.Y - 50 >= Screen.Center.Y - 30 - Entity.Transform.Position.Y&& Up.IsPressed)
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X, SelectionButton.LocalOffset.Y - 50);
             }
-            if (SelectionButton.LocalOffset.Y + 50 <= Screen.Center.Y + 28 && Down.IsPressed)
+            if (SelectionButton.LocalOffset.Y + 50 <= Screen.Center.Y + 28 - Entity.Transform.Position.Y && Down.IsPressed)
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X, SelectionButton.LocalOffset.Y + 50);
             }
@@ -108,6 +109,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                         player.ItemList.RemoveAt(i);
                         Textures[i].Enabled = false;
                         Textures.RemoveAt(i);
+                        break;
                     }
                 }
             }
