@@ -131,7 +131,6 @@ namespace KaomojiFighters.Scenes.DuelMode
             if (message.Head == "its your turn")
             {
                 selectionButton.Enabled = true;
-
             }
 
             if (message.Head == "its not your turn")
