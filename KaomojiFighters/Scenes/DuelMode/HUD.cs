@@ -1,5 +1,6 @@
 ﻿using KaomojiFighters.Mobs;
 using KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents;
+using KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -24,8 +25,9 @@ namespace KaomojiFighters.Scenes.DuelMode
         private VirtualButton Right;
         private VirtualButton Enter;
         private int selectionDestination;
-        private Attack AttackComponent;
+        private Player playerComponent;
         private ItemMenu ItemMenuComponent;
+        private AttackMenu AttackMenuComponent;
      
 
         public override void OnAddedToEntity()
@@ -39,7 +41,8 @@ namespace KaomojiFighters.Scenes.DuelMode
             TelegramService.Register(this, playerStats.Entity.Name);// registers in Telegram Service with Playername
 
             // Adds the executional components for the MenuselectionOptions
-            AttackComponent = playerStats.Entity.GetComponent<Attack>();
+            playerComponent = playerStats.Entity.GetComponent<Player>();
+            AttackMenuComponent = Entity.AddComponent(new AttackMenu() { player = playerComponent });
             ItemMenuComponent = Entity.AddComponent(new ItemMenu() { playerEntity = playerStats.Entity });
 
             // Loads Sprites
@@ -63,7 +66,7 @@ namespace KaomojiFighters.Scenes.DuelMode
 
             //Disable because not used yet
             selectionButton.Enabled = false;
-            AttackComponent.Enabled = false;
+            AttackMenuComponent.Enabled = false;
             ItemMenuComponent.Enabled = false;
         }
         public override RectangleF Bounds => new RectangleF(0,0,1920,1080);
@@ -92,22 +95,23 @@ namespace KaomojiFighters.Scenes.DuelMode
         {
             // allows the selection Button to move and choses an Option if Space is pressed
 
-            if (selectionDestination - 350 >= (int)Screen.Center.X - 350 - 150 && Left.IsPressed && !AttackComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled)
+            if (selectionDestination - 350 >= (int)Screen.Center.X - 350 - 150 && Left.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled)
             {
                 selectionDestination -= 350;
             }
-            if (selectionDestination + 350 <= (int)Screen.Center.X + 350 - 150 && Right.IsPressed && !AttackComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled)
+            if (selectionDestination + 350 <= (int)Screen.Center.X + 350 - 150 && Right.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled)
             {
                 selectionDestination += 350;
             }
             selectionButton.LocalOffset = Vector2.Lerp(selectionButton.LocalOffset, new Vector2(selectionDestination, selectionButton.LocalOffset.Y), 0.06f);
-            if (Enter.IsReleased && !AttackComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled)
+            bool ignoreAttackUpdate = false;
+            if (Enter.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled)
             {
                 switch (selectionDestination)
                 {
                     case 1920/2 - 350 - 150:
-                        AttackComponent.Enabled = true;
-                        AttackComponent.enableAttack();
+                        AttackMenuComponent.Enabled = true;
+                        ignoreAttackUpdate = true;
                         break;
                     case 1920 / 2  - 150:
                         ItemMenuComponent.Enabled = true;
@@ -122,6 +126,10 @@ namespace KaomojiFighters.Scenes.DuelMode
                         playerStats.HP = 0;
                         break;
                 }
+            }
+            if(AttackMenuComponent.Enabled && !ignoreAttackUpdate)
+            {
+                AttackMenuComponent.Update();
             }
         }
         // checks received telegrams to know if its the players turn

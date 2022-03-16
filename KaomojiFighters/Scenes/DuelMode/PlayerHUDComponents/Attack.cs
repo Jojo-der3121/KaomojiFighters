@@ -1,4 +1,6 @@
 ﻿using KaomojiFighters.Enums;
+using KaomojiFighters.Scenes.DuelMode;
+using KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
@@ -24,8 +26,13 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         protected TextComponent attackTxt;
         protected SpriteRenderer Speechbubble;
         protected Texture2D Bubble;
+        public string attackName;
 
-        public void enableAttack() => attackState = AttackState.approaching;
+        public void enableAttack() 
+        { 
+            attackState = AttackState.approaching;
+            
+        }
 
         public override void OnAddedToEntity()
         {
@@ -53,7 +60,13 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
     }
 
     class s1 : Attack
-    { 
+    {
+
+        public override void OnAddedToEntity()
+        {
+            base.OnAddedToEntity();
+            attackName = "s1";
+        }
         protected override void attack()
         {
             if (attackState == AttackState.approaching && oldAttackState != AttackState.approaching)
@@ -80,7 +93,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                     if (Entity == null) return;
                     TelegramService.SendPrivate(new Telegram(Entity.Name, "SpeedoMeter", "I end my turn", "tach3tach3tach3"));
                     TelegramService.SendPrivate(new Telegram(Entity.Name, Entity.Name, "its not your turn", "tach3tach3tach3"));
-                    this.Enabled = false;
+                    
                 }
                 ).Start(); 
             }
@@ -96,6 +109,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             attackTxt.Enabled = false;
             Speechbubble = Entity.AddComponent(new SpriteRenderer(Bubble));
             Speechbubble.Enabled = false;
+            attackName = "Emotional Damage!!";
         }
         protected override void attack()
         {

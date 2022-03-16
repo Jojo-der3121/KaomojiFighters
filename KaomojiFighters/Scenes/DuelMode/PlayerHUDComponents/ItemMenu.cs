@@ -30,6 +30,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         public override void OnAddedToEntity()
         {
             base.OnAddedToEntity();
+            // assigne Buttons
             Left = new VirtualButton().AddKeyboardKey(Keys.A);
             Right = new VirtualButton().AddKeyboardKey(Keys.D);
             Up = new VirtualButton().AddKeyboardKey(Keys.W);
@@ -37,14 +38,17 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             Enter = new VirtualButton().AddKeyboardKey(Keys.Space);
             ExitItemMenu = new VirtualButton().AddKeyboardKey(Keys.Back);
 
+            // get Entities
             hud = Entity.GetComponent<HUD>();
             player = playerEntity.GetComponent<Player>();
 
+            // ItemDisplay Config
             ItemMenuDisplay = Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("ItemMenu")));
             ItemMenuDisplay.LocalOffset = new Vector2(Screen.Center.X - Entity.Transform.Position.X, Screen.Center.Y - Entity.Transform.Position.Y); ;
             ItemMenuDisplay.Enabled = false;
             ItemMenuDisplay.LayerDepth = 0.1f;
 
+            // selecButton config
             SelectionButton =
                 Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("SelectionKaoButton")));
             SelectionButton.LocalOffset =
@@ -52,6 +56,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             SelectionButton.Size = new Vector2(29, 55);
             SelectionButton.Enabled = false;
 
+            // adds ItemList to list of Spriterenderers
             Textures = new List<SpriteRenderer>();
             for (var i = 0; i < player.ItemList.Count; i++)
             {
@@ -76,6 +81,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
         public void Update()
         {
+            //move cursor if not in boarder
             if (SelectionButton.LocalOffset.X - 40 >= Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 - Entity.Transform.Position.X && Left.IsPressed)
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X - 40, SelectionButton.LocalOffset.Y);
@@ -93,7 +99,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X, SelectionButton.LocalOffset.Y + 50);
             }
 
-
+            // choose selected item
             if (Enter.IsPressed)
             {
                 for (var i = 0; i < Textures.Count; i++)
@@ -109,7 +115,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 }
             }
 
-
+            // Exit
             if (ExitItemMenu.IsPressed)
             {
                 ItemMenuDisplay.Enabled = false;
