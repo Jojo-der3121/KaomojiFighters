@@ -11,7 +11,7 @@ using KaomojiFighters.Scenes.DuelMode;
 
 namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 {
-    class ItemMenu : Component, IUpdatable
+    class ItemMenu : Component
     {
         public Entity playerEntity;
         private Player player;

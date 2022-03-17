@@ -9,8 +9,8 @@ namespace KaomojiFighters.Enums
     public enum AttackState
     {
         waiting,
+        approaching,
         attacking,
         returning,
-        approaching,
     }
 }

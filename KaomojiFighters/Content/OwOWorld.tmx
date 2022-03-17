@@ -271,22 +271,22 @@
   <object id="6" name="Goal" x="682.667" y="81.3333"/>
  </objectgroup>
  <objectgroup id="3" name="WallCollisions">
-  <object id="7" type="Square" x="1" y="130" width="189" height="73"/>
+  <object id="7" type="Square" x="1" y="130" width="189" height="78"/>
   <object id="8" type="Square" x="2" y="-1" width="125" height="128"/>
   <object id="9" x="257" y="258" width="62" height="94"/>
-  <object id="10" type="Square" x="320" y="0" width="126" height="173"/>
+  <object id="10" type="Square" x="320" y="0" width="126" height="180"/>
   <object id="11" x="546" y="128" width="220" height="220"/>
-  <object id="12" x="2" y="242" width="27" height="78"/>
-  <object id="13" type="Square" x="450" y="2" width="154" height="42"/>
-  <object id="14" type="Square" x="2" y="204.333" width="151" height="35.6667"/>
-  <object id="15" type="Square" x="126" y="1" width="191" height="16"/>
+  <object id="12" x="2" y="244" width="27" height="76"/>
+  <object id="13" type="Square" x="450" y="2" width="154" height="51"/>
+  <object id="14" type="Square" x="2" y="209.333" width="151" height="35.6667"/>
+  <object id="15" type="Square" x="126" y="1" width="191" height="21"/>
   <object id="16" x="386" y="319" width="156" height="31"/>
   <object id="17" x="2" y="320.667" width="188" height="30.3333"/>
-  <object id="18" x="606" y="2" width="163" height="14"/>
-  <object id="19" x="737" y="18" width="30" height="108"/>
-  <object id="20" x="258" y="130" width="60" height="11"/>
-  <object id="21" x="414" y="175" width="32" height="54"/>
-  <object id="22" x="292" y="142" width="25" height="30"/>
+  <object id="18" x="606" y="2" width="163" height="20"/>
+  <object id="19" x="737" y="25" width="30" height="101"/>
+  <object id="20" x="258" y="130" width="60" height="17"/>
+  <object id="21" x="414" y="183" width="32" height="59"/>
+  <object id="22" x="292" y="149" width="25" height="31"/>
   <object id="23" x="193" y="321" width="63" height="29"/>
   <object id="24" x="321" y="321" width="64" height="29"/>
   <object id="25" x="545" y="98" width="62" height="30"/>
@@ -296,22 +296,22 @@
   <object id="28" type="Polygon" x="321" y="257">
    <polygon points="0,0 -0.666667,62 62,62.6667"/>
   </object>
-  <object id="29" type="Polygon" x="128" y="42">
+  <object id="29" type="Polygon" x="128" y="49">
    <polygon points="0,0 27.4966,-24 -1.17007,-24"/>
   </object>
-  <object id="30" type="Polygon" x="291" y="16">
+  <object id="30" type="Polygon" x="291" y="24">
    <polygon points="0,0 28.6667,24.6667 28,2"/>
   </object>
-  <object id="32" type="Polygon" x="154" y="238">
+  <object id="32" type="Polygon" x="154" y="243">
    <polygon points="0,0 36,-33.3333 0.8,-32.5581"/>
   </object>
-  <object id="33" type="Polygon" x="259" y="143">
-   <polygon points="0,0 31.3333,28 31.3333,-1.33333"/>
+  <object id="33" type="Polygon" x="261" y="150.045">
+   <polygon points="0,0 29.3333,28.9545 29.3333,-1.37878"/>
   </object>
-  <object id="35" type="Polygon" x="361" y="174">
-   <polygon points="0,0 52,54.6667 52,1.33333"/>
+  <object id="35" type="Polygon" x="360" y="183">
+   <polygon points="0,0 52,57.6667 52,1.4065"/>
   </object>
-  <object id="36" type="Polygon" x="605" y="44">
+  <object id="36" type="Polygon" x="605" y="52">
    <polygon points="0,0 0.666667,-28 26,-28"/>
   </object>
   <object id="37" type="Polygon" x="609" y="98">

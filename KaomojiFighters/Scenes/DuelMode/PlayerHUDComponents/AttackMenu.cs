@@ -26,6 +26,7 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
         private VirtualButton ExitAttackMenu;
         private HUD hud;
         private int selectionY;
+        private float selectedElement;
         public override void OnAddedToEntity()
         {
             base.OnAddedToEntity();
@@ -58,6 +59,7 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             {
                 batcher.DrawString(Graphics.Instance.BitmapFont, player.AttackList[i].attackName,new Vector2(Screen.Center.X- 115, Screen.Center.Y + TextButton.Height + 15 + i*25), Color.Black,0f,Vector2.Zero,2.5f,SpriteEffects.None,0f);
             }
+            batcher.DrawString(Graphics.Instance.BitmapFont, player.AttackList[(int)selectedElement / 25].attackName, new Vector2(Screen.Center.X - TextButton.Width/2 +10, Screen.Center.Y + 10), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
         }
 
         public void Update()
@@ -65,17 +67,18 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             if (selectionY - 25 >= Screen.Center.Y + TextButton.Height + 15 && Up.IsPressed)
             {
                selectionY -= 25;
+                selectedElement = selectionY - (Screen.Center.Y + TextButton.Height + 15);
             }
             if (selectionY + 25 <= Screen.Center.Y + TextButton.Height + 115 && Down.IsPressed)
             {
-                selectionY += 25; 
+                selectionY += 25;
+                selectedElement = selectionY - (Screen.Center.Y + TextButton.Height + 15);
             }
 
             // choose selected Attack
             if (Enter.IsPressed)
             {
-                var selection = selectionY - (Screen.Center.Y + TextButton.Height + 15);
-                player.AttackList[(int)selection / 25].enableAttack();
+                player.AttackList[(int)selectedElement / 25].enableAttack();
                 Enabled = false;
             }
 

@@ -105,6 +105,7 @@ namespace KaomojiFighters.Scenes.DuelMode
             }
             selectionButton.LocalOffset = Vector2.Lerp(selectionButton.LocalOffset, new Vector2(selectionDestination, selectionButton.LocalOffset.Y), 0.06f);
             bool ignoreAttackUpdate = false;
+            bool ignoreItemUpdate = false;
             if (Enter.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled)
             {
                 switch (selectionDestination)
@@ -121,6 +122,7 @@ namespace KaomojiFighters.Scenes.DuelMode
                         {
                             element.Enabled = true;
                         }
+                        ignoreItemUpdate = true;
                         break;
                     case 1920 / 2+ 350 - 150:
                         playerStats.HP = 0;
@@ -130,6 +132,10 @@ namespace KaomojiFighters.Scenes.DuelMode
             if(AttackMenuComponent.Enabled && !ignoreAttackUpdate)
             {
                 AttackMenuComponent.Update();
+            }
+            if(ItemMenuComponent.Enabled && !ignoreItemUpdate)
+            {
+                ItemMenuComponent.Update();
             }
         }
         // checks received telegrams to know if its the players turn
