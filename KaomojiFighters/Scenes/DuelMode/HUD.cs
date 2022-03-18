@@ -28,6 +28,7 @@ namespace KaomojiFighters.Scenes.DuelMode
         private Player playerComponent;
         private ItemMenu ItemMenuComponent;
         private AttackMenu AttackMenuComponent;
+        private Sprite BatterieHPBar;
      
 
         public override void OnAddedToEntity()
@@ -50,6 +51,7 @@ namespace KaomojiFighters.Scenes.DuelMode
             AttackButton = new Sprite(Entity.Scene.Content.LoadTexture("AttackKaoButton"));
             ItemButton = new Sprite(Entity.Scene.Content.LoadTexture("ItemKaoButton"));
             SaturdayButton = new Sprite(Entity.Scene.Content.LoadTexture("SamstagKaoButton"));
+            BatterieHPBar = new Sprite(Entity.Scene.Content.LoadTexture("BatterieHPBar"));
 
             // defines MenuControlls
             Left = new VirtualButton().AddKeyboardKey(Keys.A);
@@ -76,10 +78,12 @@ namespace KaomojiFighters.Scenes.DuelMode
         protected override void Render(Batcher batcher, Camera camera)
         {
             // draws Healthbars
-            batcher.DrawRect(new Rectangle((int)Screen.Center.X-700-10, 146, 700, 55), Color.Red);
-            batcher.DrawRect(new Rectangle((int)Screen.Center.X+10, 146, 700, 55), Color.Red);
-            batcher.DrawRect(new Rectangle((int)Screen.Center.X-700-10+ (int)(700 *(1- playerStats.HP / playerMaxHealth)), 146,  (int)(700*playerStats.HP / playerMaxHealth) +1, 55), Color.DarkGreen);
-            batcher.DrawRect(new Rectangle((int)Screen.Center.X+10, 146, (int)(700 * opponentStats.HP / opponentMaxHealth), 55), Color.DarkGreen);
+            batcher.DrawRect(new Rectangle((int)Screen.Center.X-700-20, 146, 700, 55), Color.Red);
+            batcher.DrawRect(new Rectangle((int)Screen.Center.X+20, 146, 700, 55), Color.Red);
+            batcher.DrawRect(new Rectangle((int)Screen.Center.X-700-20+ (int)(700 *(1- playerStats.HP / playerMaxHealth)), 146,  (int)(700*playerStats.HP / playerMaxHealth) +1, 55), Color.DarkGreen);
+            batcher.DrawRect(new Rectangle((int)Screen.Center.X+20, 146, (int)(700 * opponentStats.HP / opponentMaxHealth), 55), Color.DarkGreen);
+            batcher.Draw(BatterieHPBar, new Vector2((int)Screen.Center.X - 700 - 20-25, 146-10), Color.White,0,  Vector2.Zero, 1, SpriteEffects.None, 0);
+            batcher.Draw(BatterieHPBar, new Vector2((int)Screen.Center.X+700 +45, 146 - 10+75), Color.White,3.14f,  Vector2.Zero, 1, SpriteEffects.None, 0);
             //draws VSSing
             batcher.Draw(VSSinge, new Vector2(Screen.Center.X-VSSinge.Center.X*0.5f-20, 125),Color.White,0,Vector2.Zero,0.5f,SpriteEffects.None,0);
             if (selectionButton.Enabled)
@@ -95,18 +99,18 @@ namespace KaomojiFighters.Scenes.DuelMode
         {
             // allows the selection Button to move and choses an Option if Space is pressed
 
-            if (selectionDestination - 350 >= (int)Screen.Center.X - 350 - 150 && Left.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled)
+            if (selectionDestination - 350 >= (int)Screen.Center.X - 350 - 150 && Left.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled && playerStats.HP > 0)
             {
                 selectionDestination -= 350;
             }
-            if (selectionDestination + 350 <= (int)Screen.Center.X + 350 - 150 && Right.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled)
+            if (selectionDestination + 350 <= (int)Screen.Center.X + 350 - 150 && Right.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled && playerStats.HP > 0)
             {
                 selectionDestination += 350;
             }
             selectionButton.LocalOffset = Vector2.Lerp(selectionButton.LocalOffset, new Vector2(selectionDestination, selectionButton.LocalOffset.Y), 0.06f);
             bool ignoreAttackUpdate = false;
             bool ignoreItemUpdate = false;
-            if (Enter.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled)
+            if (Enter.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled && playerStats.HP > 0)
             {
                 switch (selectionDestination)
                 {

@@ -133,21 +133,23 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 collider.LocalOffset = new Vector2(GetAttackX(), -50);
                 EntitySprite.SetSprite(new Sprite(stat.sprites.Attack), SpriteRenderer.SizingMode.Resize);
                 TelegramService.SendPrivate(new Telegram(Entity.Name, attackTarget.Name, "auf die Fresse", "tach3tach3tach3"));
-                Core.Schedule(0.5f, (x) => attackState = AttackState.attacking);
+                Core.Schedule(0.7f, (x) => attackState = AttackState.attacking);
             }
             if (attackState == AttackState.attacking && oldAttackState != AttackState.attacking)
             {
                 collider.Enabled = false;
                 EntitySprite.SetSprite(new Sprite(stat.sprites.Normal), SpriteRenderer.SizingMode.Resize);
-                Core.Schedule(0.7f, (x) => attackState = AttackState.returning);
+                Core.Schedule(1f, (x) => attackState = AttackState.returning);
             }
             if (attackState == AttackState.returning && oldAttackState != AttackState.returning)
             {
-                
                 if (Entity == null) return;
+                Core.Schedule(1.5f, (x) => attackState = AttackState.waiting);
+            }
+            if (attackState == AttackState.waiting && oldAttackState != AttackState.waiting)
+            {
                 TelegramService.SendPrivate(new Telegram(Entity.Name, "SpeedoMeter", "I end my turn", "tach3tach3tach3"));
                 TelegramService.SendPrivate(new Telegram(Entity.Name, Entity.Name, "its not your turn", "tach3tach3tach3"));
-                Core.Schedule(0.7f, (x) => attackState = AttackState.waiting);
             }
             oldAttackState = attackState;
         }
@@ -156,22 +158,22 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         {
             if (attackState == AttackState.approaching || attackState == AttackState.attacking || attackState == AttackState.returning)
             {
-                batcher.Draw(Bubble, new Rectangle(fixedXPosition -10 , 300-5,180,30));
-                batcher.DrawString(Graphics.Instance.BitmapFont, "Get a real Job",new Vector2(fixedXPosition,300), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+                batcher.Draw(Bubble, new Rectangle(fixedXPosition - 10, 300 - 5, 180, 30));
+                batcher.DrawString(Graphics.Instance.BitmapFont, "Get a real Job", new Vector2(fixedXPosition, 300), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
             }
-            if(attackState == AttackState.approaching)
+            if (attackState == AttackState.approaching)
             {
-                batcher.DrawString(Graphics.Instance.BitmapFont, "- Emotional DAMAGE", new Vector2( fixedEnemyXPosition + EnemySprite.Width, attackTarget.LocalPosition.Y), Color.Red, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
+                batcher.DrawString(Graphics.Instance.BitmapFont, "- Emotional DAMAGE", new Vector2(fixedEnemyXPosition + EnemySprite.Width, attackTarget.LocalPosition.Y), Color.Red, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
             }
             if (attackState == AttackState.attacking || attackState == AttackState.returning)
             {
-                batcher.Draw(Bubble, new Rectangle(fixedEnemyXPosition-20 + 100, 350 - 5, 500, 30));
+                batcher.Draw(Bubble, new Rectangle(fixedEnemyXPosition - 20 + 100, 350 - 5, 500, 30));
                 batcher.DrawString(Graphics.Instance.BitmapFont, "beeing a scamer is a real Job, OK ?!", new Vector2(fixedEnemyXPosition + 100, 350), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
             }
-            if (attackState == AttackState.returning )
+            if (attackState == AttackState.returning)
             {
-                batcher.Draw(Bubble, new Rectangle(fixedXPosition -25, 400 - 5, 650, 30));
-                batcher.DrawString(Graphics.Instance.BitmapFont, "And im sure you're parents are really proud of you", new Vector2(fixedXPosition, 400), Color.Black,0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+                batcher.Draw(Bubble, new Rectangle(fixedXPosition - 25, 400 - 5, 650, 30));
+                batcher.DrawString(Graphics.Instance.BitmapFont, "And im sure you're parents are really proud of you", new Vector2(fixedXPosition, 400), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
             }
 
             // FIX EX POSITION 

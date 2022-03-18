@@ -1,3 +1,10 @@
   Add different Attacks
   Change Attaks from punches to texting
   add Sound 
+
+  Ideas For Battle:
+  no attack stack => list of words (-> you builed your own insults)
+  in the beginning of the game the player has only a few words to choose from.
+  after every battle the player gets a random word from the inventory of the opponent (only cards the player doesnt already have)
+
+  Each words also grants a genrell stat boost.
