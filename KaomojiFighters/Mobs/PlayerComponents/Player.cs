@@ -18,7 +18,8 @@ namespace KaomojiFighters.Mobs
         private SpriteRenderer texture;
 
         public List<Item> ItemList = new List<Item>();
-        public List<Attack> AttackList = new List<Attack>();
+     
+        public List<word> WordList = new List<word>();
 
 
         public override void OnAddedToEntity()
@@ -26,22 +27,19 @@ namespace KaomojiFighters.Mobs
 
             base.OnAddedToEntity();
             TelegramService.Register(this, Entity.Name);
-            stats = Entity.AddComponent(new Stats() { HP = 35, AttackValue = 7, Speed = 15, sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurt"))) });
+            stats = Entity.AddComponent(new Stats() { HP = 35, AttackValue = 7, Defence = 3, Speed = 15, sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurt"))) }); ;
             texture = Entity.AddComponent(new SpriteRenderer(stats.sprites.Normal));
             Entity.AddComponent(new BoxCollider(texture.Width, texture.Height));
             if (Entity.Scene is Battle)
             {
                 var enemy = Entity.Scene.FindEntity("Kaomoji02");
                 Entity.AddComponent(new MobHitCalculation() { opponentEntity = enemy });
-                AttackList.Add(Entity.AddComponent(new s1()));
-                AttackList.Add(Entity.AddComponent(new EmotionalDamage()));
-                foreach (var element in AttackList)
-                {
-                    element.attackTarget = enemy;
-                }
-
             }
             Entity.AddComponent(new EasterEgg() { EasterEggString = new Keys[] { Keys.D, Keys.I, Keys.S, Keys.T, Keys.I, Keys.N, Keys.G, Keys.U, Keys.I, Keys.S, Keys.H, Keys.E, Keys.D } });
+            WordList.Add(Entity.AddComponent(new I() ));
+            WordList.Add(Entity.AddComponent( new ducked()));
+            WordList.Add(Entity.AddComponent(new YourMom() ));
+           
             ItemList.Add(Entity.AddComponent(new HealthPotion()));
             ItemList.Add(Entity.AddComponent(new StrenghtPotion()));
             ItemList.Add(Entity.AddComponent(new SpeedPotion()));
