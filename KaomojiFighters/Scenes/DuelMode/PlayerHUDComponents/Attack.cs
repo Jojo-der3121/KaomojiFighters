@@ -63,7 +63,6 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         protected float EnemyXPosition() => attackTarget.Position.X + Lammarsch * (+EnemySprite.Width / 2 + EntitySprite.Width / 2 + 10);
 
     }
-
     class s1 : Attack
     {
 
@@ -241,6 +240,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         {
             if (attackState == AttackState.returning)
             {
+                batcher.Draw(Bubble, new Rectangle((int)Screen.Center.X+ 25 ,292, attackMenu.GetWordXLocation(sentenceWords.Count, sentenceWords),50));
                 for (int i = 0; i < sentenceWords.Count; i++)
                 {
                     batcher.DrawString(Graphics.Instance.BitmapFont, sentenceWords[i].actualWord, new Vector2(Screen.Center.X + 50 + attackMenu.GetWordXLocation(i, sentenceWords), 300), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);

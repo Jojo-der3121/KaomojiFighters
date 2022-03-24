@@ -27,7 +27,7 @@ namespace KaomojiFighters.Mobs
 
             base.OnAddedToEntity();
             TelegramService.Register(this, Entity.Name);
-            stats = Entity.AddComponent(new Stats() { HP = 35, AttackValue = 7, Defence = 3, Speed = 15, sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurt"))) }); ;
+            stats = Entity.AddComponent(new Stats() {  Speed = 15, sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurt"))) }); ;
             texture = Entity.AddComponent(new SpriteRenderer(stats.sprites.Normal));
             Entity.AddComponent(new BoxCollider(texture.Width, texture.Height));
             if (Entity.Scene is Battle)
@@ -39,6 +39,22 @@ namespace KaomojiFighters.Mobs
             WordList.Add(Entity.AddComponent(new I() ));
             WordList.Add(Entity.AddComponent( new ducked()));
             WordList.Add(Entity.AddComponent(new YourMom() ));
+            WordList.Add(Entity.AddComponent(new And() ));
+            WordList.Add(Entity.AddComponent(new StepOn() ));
+            WordList.Add(Entity.AddComponent(new Hope() ));
+            WordList.Add(Entity.AddComponent(new You() ));
+            WordList.Add(Entity.AddComponent(new Legos() ));
+
+            WordList.Add(Entity.AddComponent(new DogFood() ));
+            WordList.Add(Entity.AddComponent( new ducked()));
+            WordList.Add(Entity.AddComponent(new YourMom() ));
+            WordList.Add(Entity.AddComponent(new And() ));
+            WordList.Add(Entity.AddComponent(new StepOn() ));
+            WordList.Add(Entity.AddComponent(new Hope() ));
+            WordList.Add(Entity.AddComponent(new AFishHead()));
+            WordList.Add(Entity.AddComponent(new Legos() ));
+            
+            
            
             ItemList.Add(Entity.AddComponent(new HealthPotion()));
             ItemList.Add(Entity.AddComponent(new StrenghtPotion()));

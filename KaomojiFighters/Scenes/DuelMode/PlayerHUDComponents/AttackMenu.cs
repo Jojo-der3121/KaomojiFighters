@@ -18,6 +18,7 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
     {
 
         public List<TextComponent> attackList = new List<TextComponent>();
+        public HUD hud;
         public Player player;
         private Texture2D TextButton;
         private Texture2D AttackOptionsMenu;
@@ -30,17 +31,17 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
         private float selectedElement;
         private List<word> attackSentence;
         private Stats stat;
-        
+        private Texture2D Bubble;
+        private bool draw;
+
         public override void OnAddedToEntity()
         {
             base.OnAddedToEntity();
+            Bubble = Entity.Scene.Content.LoadTexture("SpeachBubble");
             TextButton = Entity.Scene.Content.LoadTexture("TextButton");
             AttackOptionsMenu = Entity.Scene.Content.LoadTexture("AttackOptions");
             attackSentence = new List<word>();
-            foreach (var item in player.WordList)
-            {
-                attackList.Add(Entity.AddComponent(new TextComponent()));
-            }
+            
 
             // define Buttons
             Up = new VirtualButton().AddKeyboardKey(Keys.W);
@@ -52,25 +53,43 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             selectionY = (int)Screen.Center.Y + TextButton.Height + 15;
             stat = player.GetComponent<Stats>();
         }
-       
+
+        public override void OnEnabled()
+        {
+            base.OnEnabled();
+            foreach (var item in hud.Hand)
+            {
+                attackList.Add(Entity.AddComponent(new TextComponent()));
+            }
+        }
+
 
         public override RectangleF Bounds => new RectangleF(0, 0, 1920, 1080);
         public override bool IsVisibleFromCamera(Camera camera) => true;
+
+        
 
         protected override void Render(Batcher batcher, Camera camera)
         {
             batcher.Draw(TextButton, new Vector2(Screen.Center.X - TextButton.Width / 2, Screen.Center.Y));
             batcher.Draw(AttackOptionsMenu, new RectangleF(Screen.Center.X - 125, Screen.Center.Y + TextButton.Height + 10, 250, 150));
             batcher.DrawRect(new Rectangle((int)Screen.Center.X - 118, selectionY, 236, 25), Color.DarkOliveGreen);
-            for (int i = 0; i < player.WordList.Count; i++)
+            for (int i = 0; i < hud.Hand.Count; i++)
             {
-                batcher.DrawString(Graphics.Instance.BitmapFont, player.WordList[i].actualWord, new Vector2(Screen.Center.X - 115, Screen.Center.Y + TextButton.Height + 15 + i * 25), Color.Black, 0f, Vector2.Zero, 2.5f, SpriteEffects.None, 0f);
+                batcher.DrawString(Graphics.Instance.BitmapFont, hud.Hand[i].actualWord, new Vector2(Screen.Center.X - 115, Screen.Center.Y + TextButton.Height + 15 + i * 25), Color.Black, 0f, Vector2.Zero, 2.5f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < attackSentence.Count; i++)
             {
                 batcher.DrawString(Graphics.Instance.BitmapFont, attackSentence[i].actualWord, new Vector2(Screen.Center.X - TextButton.Width / 2 + 10 + GetWordXLocation(i, attackSentence), Screen.Center.Y + 10), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
             }
-            
+            if (draw)
+            {
+                batcher.Draw(Bubble, new Rectangle((int) Screen.Center.X - 65 - GetWordXLocation(attackSentence.Count, attackSentence), 292, GetWordXLocation(attackSentence.Count, attackSentence), 50));
+                for (int i = 0; i < attackSentence.Count; i++)
+                {
+                    batcher.DrawString(Graphics.Instance.BitmapFont, attackSentence[i].actualWord, new Vector2(Screen.Center.X - 50 - GetWordXLocation(attackSentence.Count, attackSentence)+ GetWordXLocation(i, attackSentence), 300), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
+                }
+            }
         }
 
         public void Update()
@@ -87,19 +106,20 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             }
 
             // choose selected Attack
-            if (Enter.IsPressed && IsAllowedWord(player.WordList[(int)selectedElement / 25].allowedPreviouseWords, attackSentence))
+            if (Enter.IsPressed && IsAllowedWord(hud.Hand[(int)selectedElement / 25].allowedPreviouseWords, attackSentence))
             {
-                attackSentence.Add(player.WordList[(int)selectedElement / 25]);
+                attackSentence.Add(hud.Hand[(int)selectedElement / 25]);
             }
-            else if (Enter.IsPressed && !IsAllowedWord(player.WordList[(int)selectedElement / 25].allowedPreviouseWords, attackSentence))
+            else if (Enter.IsPressed && !IsAllowedWord(hud.Hand[(int)selectedElement / 25].allowedPreviouseWords, attackSentence))
             {
                 stat.HP -= 3;
             }
 
             if (executeAttack.IsPressed && attackSentence.Count >= 1)
             {
-                if (attackSentence[attackSentence.Count - 1].isEnder)
+                if (attackSentence[attackSentence.Count - 1].typeOfWord == wordType.Nomen)
                 {
+                    draw = true;
                     foreach (var element in attackSentence)
                     {
                         element.wordEffekt();
@@ -108,11 +128,15 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
                     TelegramService.SendPrivate(new Telegram(player.Entity.Name, "Kaomoji02", "auf die Fresse", "tach3tach3tach3")); //make later more generic
                     Core.Schedule(1.3f, (x) =>
                     {
+                        draw = false;
+                        attackSentence.Clear();
                         TelegramService.SendPrivate(new Telegram(player.Entity.Name, "SpeedoMeter", "I end my turn", "tach3tach3tach3"));
                         TelegramService.SendPrivate(new Telegram(player.Entity.Name, Entity.Name, "its not your turn", "tach3tach3tach3"));// maybe bug ? :thinking:
                         Enabled = false;
+                        hud.GY.AddRange(hud.Hand);
+                        hud.Hand.Clear();
                     });
-                    attackSentence.Clear();
+                    
                 }
                 else
                 {
@@ -123,6 +147,7 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             // Exit
             if (ExitAttackMenu.IsPressed)
             {
+                attackSentence.Clear();
                 Enabled = false;
             }
         }

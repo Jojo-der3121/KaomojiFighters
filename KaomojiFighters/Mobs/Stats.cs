@@ -15,12 +15,12 @@ namespace KaomojiFighters.Mobs
     {
 
         [Inspectable]
-        public int HP { get; set; }
+        public int HP = 42;
         [Inspectable]
-        public int AttackValue;
+        public int AttackValue = 1;
         public int Speed;
         public (Sprite Normal,Sprite Attack, Sprite Hurt) sprites;
-        public int Defence;
+        public int Defence = 1;
         public string weakness;
 
         public override void OnAddedToEntity() => Entity.Scene.GetSceneComponent<SpeedoMeter>()?.EntityList.Add(this);

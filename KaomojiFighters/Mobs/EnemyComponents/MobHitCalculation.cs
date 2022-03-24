@@ -17,7 +17,6 @@ namespace KaomojiFighters.Mobs
     {
         public Stats Stats;
         public Entity opponentEntity;
-        private List<Attack> EnemyAttacks;
         public BoxCollider HitBox;
         private SpriteRenderer sprite;
         private int lastTurnHP;
@@ -29,7 +28,6 @@ namespace KaomojiFighters.Mobs
 
             base.OnAddedToEntity();
             Stats = Entity.GetComponent<Stats>();
-            EnemyAttacks = opponentEntity.GetComponents<Attack>();
             TelegramService.Register(this, Entity.Name);
             sprite = Entity.GetComponent<SpriteRenderer>();
             HitBox = Entity.AddComponent(new BoxCollider(sprite.Width, sprite.Height));

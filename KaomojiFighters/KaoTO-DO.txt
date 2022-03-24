@@ -8,3 +8,11 @@
   after every battle the player gets a random word from the inventory of the opponent (only cards the player doesnt already have)
 
   Each words also grants a genrell stat boost.
+
+//  aufzieh-/ und ablegestapel, costen berücksichtigen.
+//  speudo scrollen wenn hand > 5 (einfach andere bereiche zeichnen)
+//  wenn keine Kosten mehr und keine änder -3 und satz leer
+item details
+music inspiration ?
+
+epic music playList. Themabattle ? => duke devlin + Friday night Funkin ?

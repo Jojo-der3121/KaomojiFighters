@@ -16,7 +16,6 @@ namespace KaomojiFighters.Mobs
         public wordType typeOfWord;
         public List<wordType> allowedPreviouseWords;
         public Stats stats;
-        public bool isEnder;
         public int cost;
 
         public override void OnAddedToEntity()
@@ -52,7 +51,6 @@ namespace KaomojiFighters.Mobs
             sensitivTopic = "Mom Jokes";
             typeOfWord = wordType.Nomen;
             allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
-            isEnder = true;
             cost = 3;
         }
 
@@ -68,7 +66,6 @@ namespace KaomojiFighters.Mobs
             sensitivTopic = "none";
             typeOfWord = wordType.Konjunktion;
             allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Verb };
-            isEnder = false;
             cost = 1;
         }
         public override void wordEffekt() => stats.Speed=+ 2;
@@ -82,7 +79,6 @@ namespace KaomojiFighters.Mobs
             sensitivTopic = "appearance";
             typeOfWord = wordType.Nomen;
             allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
-            isEnder = false;
             cost = 5;
         }
         public override void wordEffekt () =>   stats.Defence ++;
@@ -96,7 +92,6 @@ namespace KaomojiFighters.Mobs
             sensitivTopic = "none";
             typeOfWord = wordType.Nomen;
             allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
-            isEnder = false;
             cost = 5;
         }
         public override void wordEffekt() => stats.HP+= 3;
@@ -110,7 +105,6 @@ namespace KaomojiFighters.Mobs
             sensitivTopic = "none";
             typeOfWord = wordType.Nomen;
             allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion };
-            isEnder = false;
             cost = 2;
         }
 
@@ -124,7 +118,6 @@ namespace KaomojiFighters.Mobs
             sensitivTopic = "insecure";
             typeOfWord = wordType.Nomen;
             allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion, wordType.Verb };
-            isEnder = false;
             cost = 2;
         }
 
@@ -138,7 +131,6 @@ namespace KaomojiFighters.Mobs
             sensitivTopic = "ptsd";
             typeOfWord = wordType.Nomen;
             allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion, wordType.Verb };
-            isEnder = false;
             cost = 2;
         }
 
@@ -152,7 +144,6 @@ namespace KaomojiFighters.Mobs
             sensitivTopic = "clumsy";
             typeOfWord = wordType.Verb;
             allowedPreviouseWords = new List<wordType> {  wordType.Konjunktion, wordType.Nomen };
-            isEnder = false;
             cost = 2;
         }
 
@@ -166,7 +157,6 @@ namespace KaomojiFighters.Mobs
             sensitivTopic = "insecure";
             typeOfWord = wordType.Verb;
             allowedPreviouseWords = new List<wordType> { wordType.Konjunktion, wordType.Nomen };
-            isEnder = false;
             cost = 2;
         }
 
@@ -181,7 +171,6 @@ namespace KaomojiFighters.Mobs
             sensitivTopic = "honor";
             typeOfWord = wordType.Verb;
             allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Konjunktion };
-            isEnder = false;
             cost = 5;
         }
 
