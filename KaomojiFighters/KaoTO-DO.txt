@@ -9,10 +9,15 @@
 
   Each words also grants a genrell stat boost.
 
-//  aufzieh-/ und ablegestapel, costen berücksichtigen.
+//  , costen berücksichtigen.
 //  speudo scrollen wenn hand > 5 (einfach andere bereiche zeichnen)
 //  wenn keine Kosten mehr und keine änder -3 und satz leer
 item details
 music inspiration ?
+
+TO-DO:
+der Gegner muss ein richtiges Satzende beachten.
+Energy bar
+add Costs for items and Attacks;
 
 epic music playList. Themabattle ? => duke devlin + Friday night Funkin ?

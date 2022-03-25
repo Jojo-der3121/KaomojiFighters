@@ -179,6 +179,8 @@ namespace KaomojiFighters.Scenes.DuelMode
                 Deck.AddRange(GY);
                 GY.Clear();
             }
+
+
         }
         // checks received telegrams to know if its the players turn
 

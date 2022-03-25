@@ -68,7 +68,11 @@ namespace KaomojiFighters.Mobs
             allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Verb };
             cost = 1;
         }
-        public override void wordEffekt() => stats.Speed=+ 2;
+        public override void wordEffekt()
+        {
+            stats.energy += 1;
+            stats.Defence += 2; 
+        }
     }
 
     class AFishHead : word
@@ -147,7 +151,7 @@ namespace KaomojiFighters.Mobs
             cost = 2;
         }
 
-        public override void wordEffekt() => stats.Speed += 3;
+        public override void wordEffekt() => stats.Speed += 0; // fix later (3)
     }
     class Hope : word
     {

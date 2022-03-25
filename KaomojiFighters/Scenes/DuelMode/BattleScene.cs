@@ -16,6 +16,7 @@ namespace KaomojiFighters
         {
             AddRenderer(new DefaultRenderer());
             base.Initialize();
+            TelegramService.DeregisterAll();
             Background = CreateEntity("BackgroundClouds").SetScale(3).SetPosition(0, 270).AddComponent(new TiledMapRenderer(Content.LoadTiledMap("KaomojiDisplayMap")));
             Background.Transform.Position = new Vector2(0f,0f);
             Background.RenderLayer = 100;

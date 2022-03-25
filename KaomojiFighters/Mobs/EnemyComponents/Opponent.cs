@@ -48,7 +48,11 @@ namespace KaomojiFighters.Mobs
             words.Add(Entity.AddComponent(new You()));
             words.Add(Entity.AddComponent(new StepOn()));
             words.Add(Entity.AddComponent(new Legos()));
-
+            words.Add(Entity.AddComponent(new I()));
+            words.Add(Entity.AddComponent(new Hope()));
+            words.Add(Entity.AddComponent(new You()));
+            words.Add(Entity.AddComponent(new StepOn()));
+            words.Add(Entity.AddComponent(new YourMom()));
         }
 
         

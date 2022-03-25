@@ -30,11 +30,9 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         protected int fixedEnemyXPosition;
         protected float textBuffer;
 
-        public void enableAttack()
-        {
-            attackState = AttackState.approaching;
+        public void enableAttack() => attackState = AttackState.approaching;
 
-        }
+
         public override RectangleF Bounds => new RectangleF(0, 0, 1920, 1080);
         public override bool IsVisibleFromCamera(Camera camera) => true;
 
@@ -181,25 +179,43 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
     class EnemyTextAttack : Attack
     {
-        private List<word> wordList;
+        public List<word> Deck = new List<word>();
+        public List<word> Hand = new List<word>();
+        public List<word> GY = new List<word>();
+        public List<int> IndexOfAllreadyUsedCards = new List<int>();
         private List<word> sentenceWords;
         private AttackMenu attackMenu;
         public override void OnAddedToEntity()
         {
             base.OnAddedToEntity();
-            wordList = new List<word>();
-            wordList.AddRange(Entity.GetComponent<Opponent>().words);
+            Deck = new List<word>();
+            Deck.AddRange(Entity.GetComponent<Opponent>().words);
             sentenceWords = new List<word>();
             attackMenu = new AttackMenu();
         }
         protected override void attack()
         {
-
+            if (Deck.Count == 0)
+            {
+                Deck.AddRange(GY);
+                GY.Clear();
+            }
             if (attackState == AttackState.approaching)
             {
-                if (oldAttackState != AttackState.approaching && wordList.Count == 0)
+                if (oldAttackState != AttackState.approaching)
                 {
-                    wordList.AddRange(Entity.GetComponent<Opponent>().words);
+                    if (Deck.Count >= 5 && Hand.Count == 0)
+                    {
+                        for (var i = 0; i < 5; i++)
+                        {
+                            var r = Nez.Random.NextInt(Deck.Count);
+                            Hand.Add(Deck[r]);
+                        }
+                    }
+                    else if (Hand.Count == 0)
+                    {
+                        Hand.AddRange(Deck);
+                    }
                 }
                 var nextValidWord = GetNextValidWord();
                 if (nextValidWord == null)
@@ -209,15 +225,24 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 else
                 {
                     sentenceWords.Add(nextValidWord);
-                    wordList.Remove(nextValidWord);
                 }
             }
             if (attackState == AttackState.attacking && oldAttackState != AttackState.attacking)
             {
-                foreach (var element in sentenceWords)
+                if (sentenceWords.Count != 0)
                 {
-                    element.wordEffekt();
+                    foreach (var element in sentenceWords)
+                    {
+                        element.wordEffekt();
+                    }
                 }
+                else
+                {
+                    stat.HP -= 3;
+                    TelegramService.SendPrivate(new Telegram(Entity.Name, "SpeedoMeter", "I end my turn", "tach3tach3tach3"));
+                    TelegramService.SendPrivate(new Telegram(Entity.Name, Entity.Name, "its not your turn", "tach3tach3tach3"));
+                }
+
 
                 Core.Schedule(1.3f, (x) => attackState = AttackState.returning);
             }
@@ -228,8 +253,9 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             }
             if (attackState == AttackState.waiting && oldAttackState != AttackState.waiting)
             {
+                GY.AddRange(Hand);
+                Hand.Clear();
                 sentenceWords.Clear();
-                wordList = Entity.GetComponent<Opponent>().words;
                 TelegramService.SendPrivate(new Telegram(Entity.Name, "SpeedoMeter", "I end my turn", "tach3tach3tach3"));
                 TelegramService.SendPrivate(new Telegram(Entity.Name, Entity.Name, "its not your turn", "tach3tach3tach3"));
             }
@@ -240,7 +266,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         {
             if (attackState == AttackState.returning)
             {
-                batcher.Draw(Bubble, new Rectangle((int)Screen.Center.X+ 25 ,292, attackMenu.GetWordXLocation(sentenceWords.Count, sentenceWords),50));
+                batcher.Draw(Bubble, new Rectangle((int)Screen.Center.X + 25, 292, attackMenu.GetWordXLocation(sentenceWords.Count, sentenceWords), 50));
                 for (int i = 0; i < sentenceWords.Count; i++)
                 {
                     batcher.DrawString(Graphics.Instance.BitmapFont, sentenceWords[i].actualWord, new Vector2(Screen.Center.X + 50 + attackMenu.GetWordXLocation(i, sentenceWords), 300), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
@@ -250,22 +276,33 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
         private word GetNextValidWord()
         {
-            foreach (var e in wordList)
+            for (var e = 0; e < Hand.Count; e++)
             {
-                foreach (var element in e.allowedPreviouseWords)
+                foreach (var element in Hand[e].allowedPreviouseWords)
                 {
-                    if (sentenceWords.Count == 0 && wordType.nothing == element)
+                    if (sentenceWords.Count == 0 && wordType.nothing == element && NotUsedAllready(e))
                     {
-                        return e;
+                        IndexOfAllreadyUsedCards.Add(e);
+                        return Hand[e];
                     }
-                    else if (sentenceWords.Count > 0 && element == sentenceWords[sentenceWords.Count - 1].typeOfWord)
+                    else if (sentenceWords.Count > 0 && element == sentenceWords[sentenceWords.Count - 1].typeOfWord && NotUsedAllready(e))
                     {
-                        return e;
+                        IndexOfAllreadyUsedCards.Add(e);
+                        return Hand[e];
                     }
                 }
             }
 
             return null;
+        }
+
+        private bool NotUsedAllready(int e)
+        {
+            foreach (var element in IndexOfAllreadyUsedCards)
+            {
+                if (element == e) return false;
+            }
+            return true;
         }
     }
 
