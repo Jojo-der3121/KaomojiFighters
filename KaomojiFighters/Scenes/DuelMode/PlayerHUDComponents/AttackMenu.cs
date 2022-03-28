@@ -112,10 +112,11 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             }
 
             // choose selected Attack
-            if (Enter.IsPressed && IsAllowedWord(hud.Hand[(int)selectedElement / 25].allowedPreviouseWords, attackSentence) && NotChosenAlready((int)selectedElement / 25))
+            if (Enter.IsPressed && IsAllowedWord(hud.Hand[(int)selectedElement / 25].allowedPreviouseWords, attackSentence) && NotChosenAlready((int)selectedElement / 25) && stat.energy - hud.Hand[(int)selectedElement / 25].cost >= 0)
             {
                 attackSentence.Add(hud.Hand[(int)selectedElement / 25]);
                 chosenAttackIndex.Add((int)selectedElement / 25);
+                stat.energy -= hud.Hand[(int)selectedElement / 25].cost;
             }
             else if (Enter.IsPressed && !IsAllowedWord(hud.Hand[(int)selectedElement / 25].allowedPreviouseWords, attackSentence))
             {
@@ -156,6 +157,10 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             if (brickButton.IsPressed)
             {
                 stat.HP -= 3;
+                foreach (var element in attackSentence)
+                {
+                    stat.energy += element.cost;
+                }
                 Core.Schedule(1.3f, (x) =>
                 {
                     draw = false;
@@ -172,6 +177,10 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             // Exit
             if (ExitAttackMenu.IsPressed)
             {
+                foreach(var element in attackSentence)
+                {
+                    stat.energy += element.cost;
+                }
                 attackSentence.Clear();
                 chosenAttackIndex.Clear();
                 Enabled = false;

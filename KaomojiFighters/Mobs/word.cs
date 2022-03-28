@@ -40,7 +40,10 @@ namespace KaomojiFighters.Mobs
             return false;
         }
 
-        public abstract void wordEffekt();
+        public virtual void wordEffekt()
+        {
+            stats.energy -= cost;
+        }
     }
 
     class YourMom : word

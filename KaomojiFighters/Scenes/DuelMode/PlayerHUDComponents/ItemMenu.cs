@@ -25,6 +25,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         private VirtualButton Enter;
         private VirtualButton ExitItemMenu;
         public SpriteRenderer SelectionButton;
+        private Stats stats;
 
 
         public override void OnAddedToEntity()
@@ -41,6 +42,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             // get Entities
             hud = Entity.GetComponent<HUD>();
             player = playerEntity.GetComponent<Player>();
+            stats = player.Entity.GetComponent<Stats>();
 
             // ItemDisplay Config
             ItemMenuDisplay = Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("ItemMenu")));
@@ -104,7 +106,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             {
                 for (var i = 0; i < Textures.Count; i++)
                 {
-                    if (SelectionButton.LocalOffset.X == Textures[i].LocalOffset.X && SelectionButton.LocalOffset.Y-8 == Textures[i].LocalOffset.Y)
+                    if (SelectionButton.LocalOffset.X == Textures[i].LocalOffset.X && SelectionButton.LocalOffset.Y-8 == Textures[i].LocalOffset.Y && stats.energy - player.ItemList[i].cost >= 0)
                     {
                         player.ItemList[i].ItemEffect();
                         player.ItemList.RemoveAt(i);

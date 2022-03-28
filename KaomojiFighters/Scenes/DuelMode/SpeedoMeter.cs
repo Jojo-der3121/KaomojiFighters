@@ -47,7 +47,7 @@ namespace KaomojiFighters.Scenes.DuelMode
             LastPlayerFinished = false;
 
 
-            //Überprüfe ob jeder dran war und falls ja erhöhe den Speed von allen wieder auf den "Startwert"
+            //Überprüfe ob jeder dran war und falls ja erhöhe den Speed von allen wieder auf den "Startwert" and also give every character 10 energy
             if (HadEveryoneTheChanceToDoSomething())
             {
                 foreach (var element in EntityList)
@@ -56,6 +56,7 @@ namespace KaomojiFighters.Scenes.DuelMode
                     {
                         element.Speed += 10;
                     }
+                    element.energy += 10;
                 }
             }
 

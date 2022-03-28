@@ -8,21 +8,24 @@ using System.Threading.Tasks;
 
 namespace KaomojiFighters.Objects
 {
-    public class Item : Component
+    abstract class Item : Component
     {
         public string ItemType { get; set; }
+        public int cost;
+        public Stats stats;
+        
         public virtual void ItemEffect()
         {
-
+            var stats = Entity.GetComponent<Stats>();
+            stats.energy -= cost;
         }
     }
-    public class HealthPotion : Item
+    class HealthPotion : Item
     {
-        private Stats stats;
-
-        public HealthPotion()
+       public HealthPotion()
         {
             ItemType = "HealthPotions";
+            cost = 7;
         }
 
         public override void ItemEffect()
@@ -33,13 +36,12 @@ namespace KaomojiFighters.Objects
         }
     }
 
-    public class SpeedPotion : Item
+    class SpeedPotion : Item
     {
-        private Stats stats;
-
-        public SpeedPotion()
+      public SpeedPotion()
         {
             ItemType = "SpeedPotions";
+            cost = -10;
         }
 
         public override void ItemEffect()
@@ -50,13 +52,12 @@ namespace KaomojiFighters.Objects
         }
     }
 
-    public class StrenghtPotion : Item
+    class StrenghtPotion : Item
     {
-        private Stats stats;
-
         public StrenghtPotion()
         {
             ItemType = "StrenghtPotions";
+            cost = 5;
         }
 
         public override void ItemEffect()

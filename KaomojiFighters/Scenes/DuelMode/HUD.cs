@@ -22,6 +22,7 @@ namespace KaomojiFighters.Scenes.DuelMode
         private Sprite AttackButton;
         private Sprite ItemButton;
         private Sprite SaturdayButton;
+        private Sprite EnergyStar;
         private VirtualButton Left;
         private VirtualButton Right;
         private VirtualButton Enter;
@@ -34,6 +35,7 @@ namespace KaomojiFighters.Scenes.DuelMode
         public List<word> Deck = new List<word>();
         public List<word> Hand = new List<word>();
         public List<word> GY = new List<word>();
+       
 
 
         public override void OnAddedToEntity()
@@ -57,6 +59,7 @@ namespace KaomojiFighters.Scenes.DuelMode
             ItemButton = new Sprite(Entity.Scene.Content.LoadTexture("ItemKaoButton"));
             SaturdayButton = new Sprite(Entity.Scene.Content.LoadTexture("SamstagKaoButton"));
             BatterieHPBar = new Sprite(Entity.Scene.Content.LoadTexture("BatterieHPBar"));
+            EnergyStar = new Sprite(Entity.Scene.Content.LoadTexture("CostStar"));
 
             // defines MenuControlls
             Left = new VirtualButton().AddKeyboardKey(Keys.A);
@@ -107,6 +110,13 @@ namespace KaomojiFighters.Scenes.DuelMode
                 batcher.Draw(AttackButton, new Rectangle((int)Screen.Center.X - 350 - 150 + 20, 860 - 112 + 15, 260, 185));
                 batcher.Draw(ItemButton, new Rectangle((int)Screen.Center.X - 150 + 20, 860 - 112 + 15, 260, 185));
                 batcher.Draw(SaturdayButton, new Rectangle((int)Screen.Center.X + 350 - 150 + 20, 860 - 112 + 15, 260, 185));
+            }
+
+            // drwas energy Bar
+            for ( var i = 1; i <= playerStats.energy; i++)
+            {
+                batcher.Draw(EnergyStar, new Rectangle(50, 1080 - 250 - i*50,45,45));
+                batcher.DrawString(Graphics.Instance.BitmapFont,  i.ToString(), new Vector2(25, 1080 - 250 - i * 50), Color.White, 0f, Vector2.Zero, 3f, SpriteEffects.None,0f);
             }
         }
 
