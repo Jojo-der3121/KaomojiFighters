@@ -12,6 +12,7 @@ namespace KaomojiFighters.Objects
     {
         public string ItemType { get; set; }
         public int cost;
+        public string description;
         public Stats stats;
         
         public virtual void ItemEffect()
@@ -25,6 +26,7 @@ namespace KaomojiFighters.Objects
        public HealthPotion()
         {
             ItemType = "HealthPotions";
+            description = "recovers 15 HP";
             cost = 7;
         }
 
@@ -41,6 +43,7 @@ namespace KaomojiFighters.Objects
       public SpeedPotion()
         {
             ItemType = "SpeedPotions";
+            description = "recovers 10 Energy";
             cost = -10;
         }
 
@@ -48,7 +51,6 @@ namespace KaomojiFighters.Objects
         {
             base.ItemEffect();
             stats = Entity.GetComponent<Stats>();
-            stats.Speed += 20;
         }
     }
 
@@ -57,6 +59,7 @@ namespace KaomojiFighters.Objects
         public StrenghtPotion()
         {
             ItemType = "StrenghtPotions";
+            description = "increases ATK by 5";
             cost = 5;
         }
 

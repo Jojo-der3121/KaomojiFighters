@@ -8,10 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using KaomojiFighters.Scenes.DuelMode;
+using Nez.Textures;
+using KaomojiFighters.Objects;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 {
-    class ItemMenu : Component
+    class ItemMenu : RenderableComponent
     {
         public Entity playerEntity;
         private Player player;
@@ -26,6 +29,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         private VirtualButton ExitItemMenu;
         public SpriteRenderer SelectionButton;
         private Stats stats;
+        private Sprite descriptionBox;
 
 
         public override void OnAddedToEntity()
@@ -58,6 +62,9 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             SelectionButton.Size = new Vector2(29, 55);
             SelectionButton.Enabled = false;
 
+            // load texture
+            descriptionBox = new Sprite(Entity.Scene.Content.LoadTexture("AttackOptions"));
+
             // adds ItemList to list of Spriterenderers
             Textures = new List<SpriteRenderer>();
             for (var i = 0; i < player.ItemList.Count; i++)
@@ -70,13 +77,13 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 }
                 else
                 {
-                    Textures[i].LocalOffset = new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i - 5) - Entity.Transform.Position.X, Screen.Center.Y+ 20 - Entity.Transform.Position.Y);
+                    Textures[i].LocalOffset = new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i - 5) - Entity.Transform.Position.X, Screen.Center.Y + 20 - Entity.Transform.Position.Y);
                 }
                 Textures[i].RenderLayer = 0;
                 Textures[i].LayerDepth = 0;
                 Textures[i].Enabled = false;
             }
-            
+
 
 
         }
@@ -104,17 +111,14 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             // choose selected item
             if (Enter.IsPressed)
             {
-                for (var i = 0; i < Textures.Count; i++)
-                {
-                    if (SelectionButton.LocalOffset.X == Textures[i].LocalOffset.X && SelectionButton.LocalOffset.Y-8 == Textures[i].LocalOffset.Y && stats.energy - player.ItemList[i].cost >= 0)
-                    {
-                        player.ItemList[i].ItemEffect();
-                        player.ItemList.RemoveAt(i);
-                        Textures[i].Enabled = false;
-                        Textures.RemoveAt(i);
-                        break;
-                    }
-                }
+                var itemIndex = GetSelectedItemIndex();
+
+                player.ItemList[itemIndex].ItemEffect();
+                player.ItemList.RemoveAt(itemIndex);
+                Textures[itemIndex].Enabled = false;
+                Textures.RemoveAt(itemIndex);
+
+
             }
 
             // Exit
@@ -131,6 +135,36 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             }
 
         }
+
+        protected override void Render(Batcher batcher, Camera camera)
+        {
+            if (GetSelectedItemIndex() != -1)
+            {
+                batcher.Draw(descriptionBox, new RectangleF(Screen.Center.X + 135, Screen.Center.Y +40, 250, 150));
+                batcher.DrawString(Graphics.Instance.BitmapFont, player.ItemList[GetSelectedItemIndex()].description, new Vector2(Screen.Center.X + 150, Screen.Center.Y +30 + 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+
+                for (var i = 0; i < Math.Abs(player.ItemList[GetSelectedItemIndex()].cost); i++)
+                {
+                    batcher.Draw(hud.EnergyStar, new Rectangle((int)Screen.Center.X + 150 + i * 25, (int)Screen.Center.Y +30 + 35, 25, 25), player.ItemList[GetSelectedItemIndex()].cost > 0 ? Color.Red : Color.CornflowerBlue);
+                }
+            }
+        }
+        private int GetSelectedItemIndex()
+        {
+            for (var i = 0; i < Textures.Count; i++)
+            {
+                if (SelectionButton.LocalOffset.X == Textures[i].LocalOffset.X && SelectionButton.LocalOffset.Y - 8 == Textures[i].LocalOffset.Y && stats.energy - player.ItemList[i].cost >= 0)
+                {
+                    return i;
+
+                }
+            }
+            return -1;
+        }
+
+        public override RectangleF Bounds => new RectangleF(0, 0, 1920, 1080);
+        public override bool IsVisibleFromCamera(Camera camera) => true;
+
 
     }
 }

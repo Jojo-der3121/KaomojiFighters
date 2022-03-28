@@ -18,6 +18,7 @@ namespace KaomojiFighters.Mobs
         private Attack attack;
         private Entity opponent;
         public List<word> words;
+        private SpriteRenderer sprite;
 
         public void MessageReceived(Telegram message)
         {
@@ -40,7 +41,8 @@ namespace KaomojiFighters.Mobs
             stats = Entity.AddComponent(new Stats() { Speed = 7, sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Hurt"))) });
             attack = Entity.AddComponent(new EnemyTextAttack() { attackTarget = opponent });
             attack.Enabled = false;
-            Entity.AddComponent(new SpriteRenderer(stats.sprites.Normal));
+            sprite = Entity.AddComponent(new SpriteRenderer(stats.sprites.Normal));
+            sprite.RenderLayer = 2;
             Entity.AddComponent(new MobHitCalculation() { opponentEntity = opponent});
             words = new List<word>();
             words.Add(Entity.AddComponent(new I()));

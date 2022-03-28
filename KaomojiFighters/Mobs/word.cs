@@ -13,6 +13,7 @@ namespace KaomojiFighters.Mobs
     {
         public string actualWord;
         public string sensitivTopic;
+        public string description;
         public wordType typeOfWord;
         public List<wordType> allowedPreviouseWords;
         public Stats stats;
@@ -52,6 +53,7 @@ namespace KaomojiFighters.Mobs
         {
             actualWord = "Your Mom";
             sensitivTopic = "Mom Jokes";
+            description = "decreases ATK by 3";
             typeOfWord = wordType.Nomen;
             allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
             cost = 3;
@@ -67,13 +69,13 @@ namespace KaomojiFighters.Mobs
         {
             actualWord = "and";
             sensitivTopic = "none";
+            description = "increases DEF by 2";
             typeOfWord = wordType.Konjunktion;
             allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Verb };
-            cost = 1;
+            cost = -1;
         }
         public override void wordEffekt()
         {
-            stats.energy += 1;
             stats.Defence += 2; 
         }
     }
@@ -84,6 +86,7 @@ namespace KaomojiFighters.Mobs
         {
             actualWord = "a Fish head";
             sensitivTopic = "appearance";
+            description = "increases DEF by 1";
             typeOfWord = wordType.Nomen;
             allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
             cost = 5;
@@ -97,6 +100,7 @@ namespace KaomojiFighters.Mobs
         {
             actualWord = "Dog Food";
             sensitivTopic = "none";
+            description = "recovers 3 HP";
             typeOfWord = wordType.Nomen;
             allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
             cost = 5;
@@ -110,6 +114,7 @@ namespace KaomojiFighters.Mobs
         {
             actualWord = "I";
             sensitivTopic = "none";
+            description = "increases DEF by 1";
             typeOfWord = wordType.Nomen;
             allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion };
             cost = 2;
@@ -123,6 +128,7 @@ namespace KaomojiFighters.Mobs
         {
             actualWord = "You";
             sensitivTopic = "insecure";
+            description = "increases ATK by 1";
             typeOfWord = wordType.Nomen;
             allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion, wordType.Verb };
             cost = 2;
@@ -136,6 +142,7 @@ namespace KaomojiFighters.Mobs
         {
             actualWord = "Legos";
             sensitivTopic = "ptsd";
+            description = "increases ATK by 10";
             typeOfWord = wordType.Nomen;
             allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion, wordType.Verb };
             cost = 2;
@@ -149,6 +156,7 @@ namespace KaomojiFighters.Mobs
         {
             actualWord = "step on";
             sensitivTopic = "clumsy";
+            description = " used to do stuff ^^`";
             typeOfWord = wordType.Verb;
             allowedPreviouseWords = new List<wordType> {  wordType.Konjunktion, wordType.Nomen };
             cost = 2;
@@ -162,6 +170,7 @@ namespace KaomojiFighters.Mobs
         {
             actualWord = "hope";
             sensitivTopic = "insecure";
+            description = "restores 3 HP";
             typeOfWord = wordType.Verb;
             allowedPreviouseWords = new List<wordType> { wordType.Konjunktion, wordType.Nomen };
             cost = 2;
@@ -174,8 +183,9 @@ namespace KaomojiFighters.Mobs
     {
         public override void CalibratePerameters()
         {
-            actualWord = "ducked";
+            actualWord = "f*cked";
             sensitivTopic = "honor";
+            description = "increases ATK by 5";
             typeOfWord = wordType.Verb;
             allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Konjunktion };
             cost = 5;

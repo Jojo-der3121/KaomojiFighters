@@ -22,7 +22,7 @@ namespace KaomojiFighters.Scenes.DuelMode
         private Sprite AttackButton;
         private Sprite ItemButton;
         private Sprite SaturdayButton;
-        private Sprite EnergyStar;
+        public Sprite EnergyStar;
         private VirtualButton Left;
         private VirtualButton Right;
         private VirtualButton Enter;
@@ -113,7 +113,7 @@ namespace KaomojiFighters.Scenes.DuelMode
             }
 
             // drwas energy Bar
-            for ( var i = 1; i <= playerStats.energy; i++)
+            for ( var i = 1; i <= playerStats.energy; i++) 
             {
                 batcher.Draw(EnergyStar, new Rectangle(50, 1080 - 250 - i*50,45,45));
                 batcher.DrawString(Graphics.Instance.BitmapFont,  i.ToString(), new Vector2(25, 1080 - 250 - i * 50), Color.White, 0f, Vector2.Zero, 3f, SpriteEffects.None,0f);

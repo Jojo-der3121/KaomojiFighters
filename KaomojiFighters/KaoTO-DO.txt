@@ -1,23 +1,19 @@
-  Add different Attacks
-  Change Attaks from punches to texting
-  add Sound 
+add Sound 
 
-  Ideas For Battle:
-  no attack stack => list of words (-> you builed your own insults)
-  in the beginning of the game the player has only a few words to choose from.
   after every battle the player gets a random word from the inventory of the opponent (only cards the player doesnt already have)
 
   Each words also grants a genrell stat boost.
 
-//  , costen berücksichtigen.
 //  speudo scrollen wenn hand > 5 (einfach andere bereiche zeichnen)
-//  wenn keine Kosten mehr und keine änder -3 und satz leer
 item details
 music inspiration ?
 
 TO-DO:
 der Gegner muss ein richtiges Satzende beachten.
-Energy bar
-add Costs for items and Attacks;
+
+stonks sound
+
+Sensitiv Topic via Telegramm.
+Immune sign (grey: immune )+ sensitiv Topic sign (red: -sensitiv Topic)
 
 epic music playList. Themabattle ? => duke devlin + Friday night Funkin ?

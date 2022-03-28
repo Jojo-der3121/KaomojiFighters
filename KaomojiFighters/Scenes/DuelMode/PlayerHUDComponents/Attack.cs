@@ -220,7 +220,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 var nextValidWord = GetNextValidWord();
                 if (nextValidWord == null)
                 {
-                    attackState = AttackState.attacking;
+                     attackState = AttackState.attacking;
                 }
                 else
                 {
@@ -239,6 +239,10 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 else
                 {
                     stat.HP -= 3;
+                    GY.AddRange(Hand);
+                    Hand.Clear();
+                    sentenceWords.Clear();
+                    IndexOfAllreadyUsedCards.Clear();
                     TelegramService.SendPrivate(new Telegram(Entity.Name, "SpeedoMeter", "I end my turn", "tach3tach3tach3"));
                     TelegramService.SendPrivate(new Telegram(Entity.Name, Entity.Name, "its not your turn", "tach3tach3tach3"));
                 }
@@ -256,6 +260,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 GY.AddRange(Hand);
                 Hand.Clear();
                 sentenceWords.Clear();
+                IndexOfAllreadyUsedCards.Clear();
                 TelegramService.SendPrivate(new Telegram(Entity.Name, "SpeedoMeter", "I end my turn", "tach3tach3tach3"));
                 TelegramService.SendPrivate(new Telegram(Entity.Name, Entity.Name, "its not your turn", "tach3tach3tach3"));
             }

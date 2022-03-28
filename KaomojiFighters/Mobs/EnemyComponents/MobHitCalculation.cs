@@ -39,7 +39,11 @@ namespace KaomojiFighters.Mobs
         {
             if (message.Head == "auf die Fresse")
             {
-                Stats.HP -= opponentEntity.GetComponent<Stats>().AttackValue;
+                var damage = opponentEntity.GetComponent<Stats>().AttackValue - Stats.Defence;
+                if (damage > 0)
+                {
+                    Stats.HP -= damage;
+                }
             }
         }
 

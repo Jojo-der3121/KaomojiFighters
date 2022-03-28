@@ -77,6 +77,20 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             batcher.Draw(TextButton, new Vector2(Screen.Center.X - TextButton.Width / 2, Screen.Center.Y));
             batcher.Draw(AttackOptionsMenu, new RectangleF(Screen.Center.X - 125, Screen.Center.Y + TextButton.Height + 10, 250, 150));
             batcher.DrawRect(new Rectangle((int)Screen.Center.X - 118, selectionY, 236, 25), Color.DarkOliveGreen);
+
+            if (NotChosenAlready((int)selectedElement / 25) && (int)selectedElement / 25 < hud.Hand.Count)
+            {
+                batcher.Draw(AttackOptionsMenu, new RectangleF(Screen.Center.X + 135, Screen.Center.Y + TextButton.Height + 10, 250, 150));
+                batcher.DrawString(Graphics.Instance.BitmapFont, hud.Hand[(int)selectedElement / 25].description, new Vector2(Screen.Center.X + 150, Screen.Center.Y + TextButton.Height + 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+                
+                for (var i = 0; i < Math.Abs( hud.Hand[(int)selectedElement / 25].cost); i++)
+                {
+                    batcher.Draw(hud.EnergyStar, new Rectangle((int)Screen.Center.X + 150 + i * 25, (int)Screen.Center.Y + TextButton.Height + 35, 25, 25), hud.Hand[(int)selectedElement / 25].cost > 0 ?  Color.Red: Color.CornflowerBlue);
+                }
+            }
+            
+
+
             for (int i = 0; i < hud.Hand.Count; i++)
             {
                 if (NotChosenAlready(i))
