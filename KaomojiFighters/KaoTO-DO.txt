@@ -9,6 +9,7 @@ item details
 music inspiration ?
 
 TO-DO:
+fix die plazierung des Item Description Menüs.
 der Gegner muss ein richtiges Satzende beachten.
 
 stonks sound
