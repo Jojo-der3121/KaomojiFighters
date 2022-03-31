@@ -56,7 +56,7 @@ namespace KaomojiFighters.Scenes.DuelMode
                     {
                         element.Speed += 10;
                     }
-                    element.energy += 10;
+                    element.energy += 7; //achsel schmied
                 }
             }
 

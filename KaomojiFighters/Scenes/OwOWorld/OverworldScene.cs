@@ -26,6 +26,10 @@ namespace KaomojiFighters.Scenes
                 {
                     map.AddComponent(new OwOWorldTrigger((int)element.Width, (int)element.Height) { owoWorldTriggerType = OwOWOrldTriggerTypes.battle}).SetLocalOffset(new Vector2(element.X, element.Y));
                 }
+                if (element.Type == "Goal")
+                {
+                    map.AddComponent(new OwOWorldTrigger((int)element.Width, (int)element.Height) { owoWorldTriggerType = OwOWOrldTriggerTypes.Goal }).SetLocalOffset(new Vector2(element.X, element.Y));
+                }
             }
             foreach (var element in actualTiledMap.ObjectGroups["WallCollisions"].Objects)
             {

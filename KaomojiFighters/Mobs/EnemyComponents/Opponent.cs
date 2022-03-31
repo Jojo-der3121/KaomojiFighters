@@ -38,7 +38,7 @@ namespace KaomojiFighters.Mobs
             base.OnAddedToEntity();
             TelegramService.Register(this, Entity.Name);
             opponent = Entity.Scene.FindEntity("Kaomoji01"); 
-            stats = Entity.AddComponent(new Stats() { Speed = 7, sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Hurt"))) });
+            stats = Entity.AddComponent(new Stats() { Speed = 7,weakness = "Mom Jokes", sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Hurt"))) });
             attack = Entity.AddComponent(new EnemyTextAttack() { attackTarget = opponent });
             attack.Enabled = false;
             sprite = Entity.AddComponent(new SpriteRenderer(stats.sprites.Normal));
@@ -50,10 +50,8 @@ namespace KaomojiFighters.Mobs
             words.Add(Entity.AddComponent(new You()));
             words.Add(Entity.AddComponent(new StepOn()));
             words.Add(Entity.AddComponent(new Legos()));
-            words.Add(Entity.AddComponent(new I()));
-            words.Add(Entity.AddComponent(new Hope()));
-            words.Add(Entity.AddComponent(new You()));
-            words.Add(Entity.AddComponent(new StepOn()));
+            words.Add(Entity.AddComponent(new DogFood()));
+            words.Add(Entity.AddComponent(new ducked()));
             words.Add(Entity.AddComponent(new YourMom()));
         }
 

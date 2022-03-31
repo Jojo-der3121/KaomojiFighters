@@ -43,14 +43,8 @@ namespace KaomojiFighters.Objects
       public SpeedPotion()
         {
             ItemType = "SpeedPotions";
-            description = "recovers 10 Energy";
-            cost = -10;
-        }
-
-        public override void ItemEffect()
-        {
-            base.ItemEffect();
-            stats = Entity.GetComponent<Stats>();
+            description = "recovers 9 Energy";
+            cost = -9;
         }
     }
 

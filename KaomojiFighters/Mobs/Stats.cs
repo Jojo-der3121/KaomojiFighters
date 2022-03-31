@@ -19,7 +19,7 @@ namespace KaomojiFighters.Mobs
         [Inspectable]
         public int AttackValue = 1;
         public int Speed;
-        public int energy = 10;
+        public int energy = 7;
         public (Sprite Normal,Sprite Attack, Sprite Hurt) sprites;
         public int Defence = 1;
         public string weakness;

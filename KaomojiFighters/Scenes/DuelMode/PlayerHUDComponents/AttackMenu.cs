@@ -73,11 +73,12 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
 
 
         protected override void Render(Batcher batcher, Camera camera)
-        {
+        {   // draws attack selection
             batcher.Draw(TextButton, new Vector2(Screen.Center.X - TextButton.Width / 2, Screen.Center.Y));
             batcher.Draw(AttackOptionsMenu, new RectangleF(Screen.Center.X - 125, Screen.Center.Y + TextButton.Height + 10, 250, 150));
             batcher.DrawRect(new Rectangle((int)Screen.Center.X - 118, selectionY, 236, 25), Color.DarkOliveGreen);
 
+            // draws selection Descriptions
             if (NotChosenAlready((int)selectedElement / 25) && (int)selectedElement / 25 < hud.Hand.Count)
             {
                 batcher.Draw(AttackOptionsMenu, new RectangleF(Screen.Center.X + 135, Screen.Center.Y + TextButton.Height + 10, 250, 150));
@@ -90,7 +91,7 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             }
             
 
-
+            // draws alll non selected words
             for (int i = 0; i < hud.Hand.Count; i++)
             {
                 if (NotChosenAlready(i))
@@ -98,13 +99,15 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
                     batcher.DrawString(Graphics.Instance.BitmapFont, hud.Hand[i].actualWord, new Vector2(Screen.Center.X - 115, Screen.Center.Y + TextButton.Height + 15 + i * 25), Color.Black, 0f, Vector2.Zero, 2.5f, SpriteEffects.None, 0f);
                 }
             }
+            // draws the attacksentece
             for (int i = 0; i < attackSentence.Count; i++)
             {
                 batcher.DrawString(Graphics.Instance.BitmapFont, attackSentence[i].actualWord, new Vector2(Screen.Center.X - TextButton.Width / 2 + 10 + GetWordXLocation(i, attackSentence), Screen.Center.Y + 10), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
             }
+            //draws the attack speechBubble
             if (draw)
             {
-                batcher.Draw(Bubble, new Rectangle((int)Screen.Center.X - 65 - GetWordXLocation(attackSentence.Count, attackSentence), 292, GetWordXLocation(attackSentence.Count, attackSentence), 50));
+                batcher.Draw(Bubble, new Rectangle((int)Screen.Center.X - 65 - GetWordXLocation(attackSentence.Count, attackSentence), 292, GetWordXLocation(attackSentence.Count, attackSentence)+30, 50));
                 for (int i = 0; i < attackSentence.Count; i++)
                 {
                     batcher.DrawString(Graphics.Instance.BitmapFont, attackSentence[i].actualWord, new Vector2(Screen.Center.X - 50 - GetWordXLocation(attackSentence.Count, attackSentence) + GetWordXLocation(i, attackSentence), 300), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);

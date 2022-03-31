@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using KaomojiFighters.Scenes;
 using KaomojiFighters.Scenes.OwOWorld;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -34,6 +35,9 @@ namespace KaomojiFighters.Mobs
                 {
                     case Enums.OwOWOrldTriggerTypes.battle:
                         Core.StartSceneTransition(new TextureWipeTransition(() => new Battle(), Core.Content.LoadTexture("nez/textures/textureWipeTransition/pokemon")));
+                        break;
+                    case Enums.OwOWOrldTriggerTypes.Goal:
+                        Core.StartSceneTransition(new TextureWipeTransition(() => new MenuScene(), Core.Content.LoadTexture("a")));
                         break;
                 }
 

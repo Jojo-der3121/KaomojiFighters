@@ -179,12 +179,15 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
     class EnemyTextAttack : Attack
     {
+
         public List<word> Deck = new List<word>();
+        [Inspectable]
         public List<word> Hand = new List<word>();
         public List<word> GY = new List<word>();
         public List<int> IndexOfAllreadyUsedCards = new List<int>();
         private List<word> sentenceWords;
         private AttackMenu attackMenu;
+        private word attackSentenceEnd;
         public override void OnAddedToEntity()
         {
             base.OnAddedToEntity();
@@ -202,25 +205,25 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             }
             if (attackState == AttackState.approaching)
             {
-                if (oldAttackState != AttackState.approaching)
+                if (Deck.Count >= 5 && oldAttackState != AttackState.approaching)
                 {
-                    if (Deck.Count >= 5 && Hand.Count == 0)
+                    for (var i = 0; i < 5; i++)
                     {
-                        for (var i = 0; i < 5; i++)
-                        {
-                            var r = Nez.Random.NextInt(Deck.Count);
-                            Hand.Add(Deck[r]);
-                        }
-                    }
-                    else if (Hand.Count == 0)
-                    {
-                        Hand.AddRange(Deck);
+                        var r = Nez.Random.NextInt(Deck.Count);
+                        Hand.Add(Deck[r]);
+                        Deck.RemoveAt(r);
                     }
                 }
+                else if (oldAttackState != AttackState.approaching)
+                {
+                    Hand.AddRange(Deck);
+                    Deck.Clear();
+                }
+
                 var nextValidWord = GetNextValidWord();
                 if (nextValidWord == null)
                 {
-                     attackState = AttackState.attacking;
+                    attackState = AttackState.attacking;
                 }
                 else
                 {
@@ -229,14 +232,12 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             }
             if (attackState == AttackState.attacking && oldAttackState != AttackState.attacking)
             {
-                if (sentenceWords.Count != 0)
+                foreach (var element in sentenceWords)
                 {
-                    foreach (var element in sentenceWords)
-                    {
-                        element.wordEffekt();
-                    }
+                    element.wordEffekt();
                 }
-                else
+
+                if (sentenceWords.Count == 0 && attackSentenceEnd == null)
                 {
                     stat.HP -= 3;
                     GY.AddRange(Hand);
@@ -247,7 +248,13 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                     TelegramService.SendPrivate(new Telegram(Entity.Name, Entity.Name, "its not your turn", "tach3tach3tach3"));
                 }
 
-
+                if (sentenceWords[sentenceWords.Count - 1].typeOfWord == wordType.Verb)
+                {
+                    sentenceWords.Add(attackSentenceEnd);
+                    attackSentenceEnd?.wordEffekt();
+                    stat.energy -= attackSentenceEnd.cost;
+                }
+                attackSentenceEnd = null;
                 Core.Schedule(1.3f, (x) => attackState = AttackState.returning);
             }
             if (attackState == AttackState.returning && oldAttackState != AttackState.returning)
@@ -271,7 +278,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         {
             if (attackState == AttackState.returning)
             {
-                batcher.Draw(Bubble, new Rectangle((int)Screen.Center.X + 25, 292, attackMenu.GetWordXLocation(sentenceWords.Count, sentenceWords), 50));
+                batcher.Draw(Bubble, new Rectangle((int)Screen.Center.X + 25, 292, attackMenu.GetWordXLocation(sentenceWords.Count, sentenceWords) + 50, 50));
                 for (int i = 0; i < sentenceWords.Count; i++)
                 {
                     batcher.DrawString(Graphics.Instance.BitmapFont, sentenceWords[i].actualWord, new Vector2(Screen.Center.X + 50 + attackMenu.GetWordXLocation(i, sentenceWords), 300), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
@@ -283,17 +290,28 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         {
             for (var e = 0; e < Hand.Count; e++)
             {
+              
+                if (attackSentenceEnd == null && Hand[e].typeOfWord == wordType.Nomen)
+                {
+                    attackSentenceEnd = Hand[e];
+                    IndexOfAllreadyUsedCards.Add(e);
+                }
                 foreach (var element in Hand[e].allowedPreviouseWords)
                 {
-                    if (sentenceWords.Count == 0 && wordType.nothing == element && NotUsedAllready(e))
+                    if (sentenceWords.Count == 0 && wordType.nothing == element && stat.energy - Hand[e].cost >= 0 && NotUsedAllready(e))
                     {
                         IndexOfAllreadyUsedCards.Add(e);
+                        stat.energy -= Hand[e].cost;
                         return Hand[e];
                     }
-                    else if (sentenceWords.Count > 0 && element == sentenceWords[sentenceWords.Count - 1].typeOfWord && NotUsedAllready(e))
+                    if (sentenceWords.Count > 0 && element == sentenceWords[sentenceWords.Count - 1].typeOfWord && NotUsedAllready(e))
                     {
-                        IndexOfAllreadyUsedCards.Add(e);
-                        return Hand[e];
+                        if ((!(Hand[e].typeOfWord == wordType.Verb) && stat.energy - Hand[e].cost >= 0) || (Hand[e].typeOfWord == wordType.Verb && stat.energy - (Hand[e].cost + attackSentenceEnd.cost) >= 0))
+                        {
+                            IndexOfAllreadyUsedCards.Add(e);
+                            stat.energy -= Hand[e].cost;
+                            return Hand[e];
+                        }
                     }
                 }
             }

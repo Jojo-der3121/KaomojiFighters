@@ -99,10 +99,8 @@ namespace KaomojiFighters.Scenes.DuelMode
             //draws VSSing
             batcher.Draw(VSSinge, new Vector2(Screen.Center.X - VSSinge.Center.X * 0.5f - 20, 125), Color.White, 0, Vector2.Zero, 0.5f, SpriteEffects.None, 0);
             //draws ablage-/aufzieh- Stappel 
-            batcher.Draw(deckTexture, new Rectangle(20, 1020 - 175, 150, 150));
-            batcher.Draw(deckTexture, new Rectangle(1920 - 170, 1020 - 175, 150, 150));
-            batcher.DrawString(Graphics.Instance.BitmapFont, Deck.Count.ToString(), new Vector2(35, 1020 - 150), Color.Black, 0f, Vector2.Zero, 7f, SpriteEffects.None, 0f);
-            batcher.DrawString(Graphics.Instance.BitmapFont, GY.Count.ToString(), new Vector2(1920 - 145, 1020 - 150), Color.Black, 0f, Vector2.Zero, 7f, SpriteEffects.None, 0f);
+            batcher.DrawString(Graphics.Instance.BitmapFont, Deck.Count.ToString(), new Vector2(85, 1020 - 117), Color.DarkGreen, 0f, Vector2.Zero, 7f, SpriteEffects.None, 0f);
+            batcher.DrawString(Graphics.Instance.BitmapFont, GY.Count.ToString(), new Vector2(1920 - 130, 1020 - 117), Color.DarkGreen, 0f, Vector2.Zero, 7f, SpriteEffects.None, 0f);
 
             //draws MenuOptions
             if (selectionButton.Enabled)
@@ -115,8 +113,8 @@ namespace KaomojiFighters.Scenes.DuelMode
             // drwas energy Bar
             for ( var i = 1; i <= playerStats.energy; i++) 
             {
-                batcher.Draw(EnergyStar, new Rectangle(50, 1080 - 250 - i*50,45,45));
-                batcher.DrawString(Graphics.Instance.BitmapFont,  i.ToString(), new Vector2(25, 1080 - 250 - i * 50), Color.White, 0f, Vector2.Zero, 3f, SpriteEffects.None,0f);
+                batcher.Draw(EnergyStar, new Rectangle(85, 1080 - 290 - i*40,45,45), Color.CornflowerBlue);
+                batcher.DrawString(Graphics.Instance.BitmapFont,  i.ToString(), new Vector2(75, 1080 - 280 - i * 40), Color.CornflowerBlue, 0f, Vector2.Zero, 3f, SpriteEffects.None,0f);
             }
         }
 
