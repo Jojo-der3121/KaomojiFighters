@@ -12,8 +12,6 @@ namespace KaomojiFighters.Scenes.SellerScene
     class ShopHUD : Component, IUpdatable
     {
         VirtualButton ExitShop;
-        public Vector2 returnPosition;
-
         public override void OnAddedToEntity()
         {
             base.OnAddedToEntity();
@@ -24,7 +22,7 @@ namespace KaomojiFighters.Scenes.SellerScene
         {
             if (ExitShop.IsPressed)
             {
-                Core.StartSceneTransition(new TextureWipeTransition(() => new OverworldScene(returnPosition) , Entity.Scene.Content.LoadTexture("c")));
+                Core.StartSceneTransition(new TextureWipeTransition(() => new OverworldScene(SafeFileLoader.LoadStats().OwOworldPosition) , Entity.Scene.Content.LoadTexture("c")));
             }
         }
     }

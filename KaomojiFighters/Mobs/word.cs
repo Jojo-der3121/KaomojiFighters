@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace KaomojiFighters.Mobs
 {
@@ -28,17 +29,26 @@ namespace KaomojiFighters.Mobs
         [JsonIgnore]
         public List<wordType> allowedPreviouseWords;
         [JsonIgnore]
-        public Stats stats;
-        [JsonIgnore]
         public int cost;
         public Wort Word;
         [JsonIgnore]
-        public Action wordEffect;
+        public Action<Stats> wordEffect;
 
-        public word(Stats stats, Wort wort)
+        public word(Wort wort)
         {
-            this.stats = stats;
             Word = wort;
+            GetRightWordProperties();
+        }
+
+        [JsonConstructor]
+        public word()
+        {
+            
+        }
+
+        public void GetRightWordProperties()
+        {
+
             switch (Word)
             {
                 case Wort.YourMom:
@@ -48,7 +58,7 @@ namespace KaomojiFighters.Mobs
                     typeOfWord = wordType.Nomen;
                     allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
                     cost = 3;
-                    wordEffect = () => stats.AttackValue -= 3;
+                    wordEffect = (x) => x.AttackValue -= 3;
                     break;
                 case Wort.And:
                     actualWord = "and";
@@ -57,7 +67,7 @@ namespace KaomojiFighters.Mobs
                     typeOfWord = wordType.Konjunktion;
                     allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Verb };
                     cost = -1;
-                    wordEffect = () => stats.Defence += 2;
+                    wordEffect = (x) => x.Defence += 2;
                     break;
                 case Wort.AFishHead:
                     actualWord = "a Fish head";
@@ -66,7 +76,7 @@ namespace KaomojiFighters.Mobs
                     typeOfWord = wordType.Nomen;
                     allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
                     cost = 5;
-                    wordEffect = () => stats.Defence++;
+                    wordEffect = (x) => x.Defence++;
                     break;
                 case Wort.DogFood:
                     actualWord = "Dog Food";
@@ -75,7 +85,7 @@ namespace KaomojiFighters.Mobs
                     typeOfWord = wordType.Nomen;
                     allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
                     cost = 5;
-                    wordEffect = () => stats.HP += 3;
+                    wordEffect = (x) => x.HP += 3;
                     break;
                 case Wort.I:
                     actualWord = "I";
@@ -84,7 +94,7 @@ namespace KaomojiFighters.Mobs
                     typeOfWord = wordType.Nomen;
                     allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion };
                     cost = 2;
-                    wordEffect = () => stats.Defence += 1;
+                    wordEffect = (x) => x.Defence += 1;
                     break;
                 case Wort.You:
                     actualWord = "You";
@@ -93,7 +103,7 @@ namespace KaomojiFighters.Mobs
                     typeOfWord = wordType.Nomen;
                     allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion, wordType.Verb };
                     cost = 2;
-                    wordEffect = () => stats.AttackValue += 1;
+                    wordEffect = (x) => x.AttackValue += 1;
                     break;
                 case Wort.Legos:
                     actualWord = "Legos";
@@ -102,7 +112,7 @@ namespace KaomojiFighters.Mobs
                     typeOfWord = wordType.Nomen;
                     allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion, wordType.Verb };
                     cost = 2;
-                    wordEffect = () => stats.AttackValue += 10;
+                    wordEffect = (x) => x.AttackValue += 10;
                     break;
                 case Wort.StepOn:
                     actualWord = "step on";
@@ -111,7 +121,7 @@ namespace KaomojiFighters.Mobs
                     typeOfWord = wordType.Verb;
                     allowedPreviouseWords = new List<wordType> { wordType.Konjunktion, wordType.Nomen };
                     cost = 2;
-                    wordEffect = () => stats.Speed += 0;
+                    wordEffect = (x) => x.Speed += 0;
                     break;
                 case Wort.Hope:
                     actualWord = "hope";
@@ -120,7 +130,7 @@ namespace KaomojiFighters.Mobs
                     typeOfWord = wordType.Verb;
                     allowedPreviouseWords = new List<wordType> { wordType.Konjunktion, wordType.Nomen };
                     cost = 2;
-                    wordEffect = () => stats.HP += 3;
+                    wordEffect = (x) => x.HP += 3;
                     break;
                 case Wort.Fucked:
                     actualWord = "f*cked";
@@ -129,27 +139,29 @@ namespace KaomojiFighters.Mobs
                     typeOfWord = wordType.Verb;
                     allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Konjunktion };
                     cost = 5;
-                    wordEffect = () => stats.AttackValue += 5;
+                    wordEffect = (x) => x.AttackValue += 5;
                     break;
                 default:
                     break;
             }
         }
 
-        public void ExecuteEffect() => wordEffect();
+        public void ExecuteEffect(Stats stats) => wordEffect(stats);
 
-        public virtual bool IsUsable(wordType previouseWord)
-        {
-            foreach (var allowedWord in allowedPreviouseWords)
-            {
-                if (allowedWord == previouseWord)
-                {
-                    return true;
-                }
-            }
-            stats.HP -= 3;
-            return false;
-        }
+        //public virtual bool IsUsable(wordType previouseWord)
+        //{
+        //    foreach (var allowedWord in allowedPreviouseWords)
+        //    {
+        //        if (allowedWord == previouseWord)
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    stats.HP -= 3;
+        //    return false;
+        //}
+
+        public static List<word> GetWordList() => Enum.GetValues(typeof(Wort)).OfType<Wort>().Select((x) => new word(x)).ToList();
+
     }
 }
-   

@@ -21,7 +21,7 @@ namespace KaomojiFighters.Scenes
             var map = CreateEntity("Map").AddComponent(new TiledMapRenderer(actualTiledMap));
             map.RenderLayer = 3;
             map.Transform.SetScale(WorldScale);
-            var player = CreateEntity("Koamoji01", priorPlayerPosition != Vector2.Zero ? priorPlayerPosition : new Vector2(actualLocationofStart.X, actualLocationofStart.Y) * WorldScale).AddComponent(new WASDMovement()).AddComponent(new Player());
+            var player = CreateEntity("Koamoji01", priorPlayerPosition != Vector2.Zero ? priorPlayerPosition : new Vector2(actualLocationofStart.X, actualLocationofStart.Y) * WorldScale).AddComponent(new OwOWorldPlayer());
             var webCame = FindEntity("camera");
             webCame.AddComponent(new FollowCamera(player.Entity, FollowCamera.CameraStyle.CameraWindow)
             { MapLockEnabled = false, FollowLerp = 0.5F, Camera = webCame.GetComponent<Camera>(), Deadzone = new RectangleF((1920f - 490f) / 2, (1080f - 390) / 2, 490f, 390f) });

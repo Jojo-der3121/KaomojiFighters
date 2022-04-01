@@ -9,18 +9,25 @@ using System.Threading.Tasks;
 
 namespace KaomojiFighters
 {
-    class JsonConverter
+    class SafeFileLoader
     {
-        public static Stats Deserialize(string filePath)
+        public static Stats LoadStats()
         {
-            var content = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<Stats>(content);
+
+            if(! File.Exists("PlayerStats.json")) return new Stats() { Speed = 8, wordList = word.GetWordList() };
+            var content = File.ReadAllText("PlayerStats.json");
+            var deserializedStats =JsonConvert.DeserializeObject<Stats>(content);
+            foreach(var word in deserializedStats.wordList)
+            {
+                word.GetRightWordProperties();
+            }
+            return deserializedStats;
         }
 
-        public static void Serialize(object obj, string filePath)
+        public static void SaveStats(Stats stats)
         {
-            var jsonString = JsonConvert.SerializeObject(obj);
-            File.WriteAllText(filePath, jsonString);
+            var jsonString = JsonConvert.SerializeObject(stats);
+            File.WriteAllText("PlayerStats.json", jsonString);
         }
     }
 }

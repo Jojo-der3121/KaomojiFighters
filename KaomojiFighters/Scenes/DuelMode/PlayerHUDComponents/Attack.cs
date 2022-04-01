@@ -11,8 +11,18 @@ using System.Collections.Generic;
 
 namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 {
-    abstract class Attack : RenderableComponent, IUpdatable
+    
+    class EnemyTextAttack : RenderableComponent, IUpdatable
     {
+
+        public List<word> Deck = new List<word>();
+        [Inspectable]
+        public List<word> Hand = new List<word>();
+        public List<word> GY = new List<word>();
+        public List<int> IndexOfAllreadyUsedCards = new List<int>();
+        private List<word> sentenceWords;
+        private AttackMenu attackMenu;
+        private word attackSentenceEnd;
         protected Scene scene;
         public BoxCollider collider;
         public Entity attackTarget;
@@ -25,13 +35,14 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         private MobHitCalculation MyAutsch;
         protected Vector2 OriginalPosition;
         protected Texture2D Bubble;
-       
+
 
         public void enableAttack() => attackState = AttackState.approaching;
 
 
         public override RectangleF Bounds => new RectangleF(0, 0, 1920, 1080);
         public override bool IsVisibleFromCamera(Camera camera) => true;
+
 
 
         public override void OnAddedToEntity()
@@ -47,44 +58,26 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             MyAutsch = Entity.GetComponent<MobHitCalculation>();
             OriginalPosition = Entity.Position;
             Bubble = Entity.Scene.Content.LoadTexture("SpeachBubble");
-        }
-
-        protected float GetAttackX() => -Lammarsch * MyAutsch.HitBox.Width / 2;
-
-        public void Update() => attack();
-
-        protected abstract void attack();
-
-        protected float EnemyXPosition() => attackTarget.Position.X + Lammarsch * (+EnemySprite.Width / 2 + EntitySprite.Width / 2 + 10);
-
-    }
-
-    class EnemyTextAttack : Attack
-    {
-
-        public List<word> Deck = new List<word>();
-        [Inspectable]
-        public List<word> Hand = new List<word>();
-        public List<word> GY = new List<word>();
-        public List<int> IndexOfAllreadyUsedCards = new List<int>();
-        private List<word> sentenceWords;
-        private AttackMenu attackMenu;
-        private word attackSentenceEnd;
-        public override void OnAddedToEntity()
-        {
-            base.OnAddedToEntity();
             Deck = new List<word>();
             Deck.AddRange(Entity.GetComponent<Mob>().stat.wordList);
             sentenceWords = new List<word>();
             attackMenu = new AttackMenu();
         }
-        protected override void attack()
+        protected float GetAttackX() => -Lammarsch * MyAutsch.HitBox.Width / 2;
+
+        public void Update() => attack();
+
+        protected float EnemyXPosition() => attackTarget.Position.X + Lammarsch * (+EnemySprite.Width / 2 + EntitySprite.Width / 2 + 10);
+
+        protected  void attack()
         {
             if (Deck.Count == 0)
             {
                 Deck.AddRange(GY);
                 GY.Clear();
             }
+
+            // draw
             if (attackState == AttackState.approaching)
             {
                 if (Deck.Count >= 5 && oldAttackState != AttackState.approaching)
@@ -112,11 +105,12 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                     sentenceWords.Add(nextValidWord);
                 }
             }
+            // mainPhase1
             if (attackState == AttackState.attacking && oldAttackState != AttackState.attacking)
             {
                 foreach (var element in sentenceWords)
                 {
-                    element.ExecuteEffect();
+                    element.ExecuteEffect(stat);
                 }
 
                 if (sentenceWords.Count == 0 && attackSentenceEnd == null)
@@ -130,10 +124,10 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                     TelegramService.SendPrivate(new Telegram(Entity.Name, Entity.Name, "its not your turn", "tach3tach3tach3"));
                 }
 
-                if (sentenceWords.Count > 0 && sentenceWords[sentenceWords.Count - 1].typeOfWord == wordType.Verb)
+                if (sentenceWords.Count > 0 && sentenceWords[sentenceWords.Count - 1].typeOfWord != wordType.Nomen)
                 {
                     sentenceWords.Add(attackSentenceEnd);
-                    attackSentenceEnd?.ExecuteEffect();
+                    attackSentenceEnd?.ExecuteEffect(stat);
                     stat.energy -= attackSentenceEnd.cost;
                 }
                 attackSentenceEnd = null;
@@ -147,12 +141,14 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 }
 
             }
+            // BattlePhase
             if (attackState == AttackState.returning && oldAttackState != AttackState.returning)
             {
             
                 TelegramService.SendPrivate(new Telegram(Entity.Name, attackTarget.Name, "auf die Fresse", "tach3tach3tach3"));
                 Core.Schedule(2f, (x) => attackState = AttackState.waiting);
             }
+            //EndPhase
             if (attackState == AttackState.waiting && oldAttackState != AttackState.waiting)
             {
                 GY.AddRange(Hand);
@@ -169,11 +165,10 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         {
             if (attackState == AttackState.returning)
             {
-                batcher.Draw(Bubble, new Rectangle((int)Screen.Center.X + 25, 292, attackMenu.GetWordXLocation(sentenceWords.Count, sentenceWords) + 50, 50));
-                for (int i = 0; i < sentenceWords.Count; i++)
-                {
-                    batcher.DrawString(Graphics.Instance.BitmapFont, sentenceWords[i].actualWord, new Vector2(Screen.Center.X + 50 + attackMenu.GetWordXLocation(i, sentenceWords), 300), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
-                }
+                var str = attackMenu.GetString(sentenceWords);
+                batcher.Draw(Bubble, new Rectangle((int)Screen.Center.X + 140, 290,(int) Graphics.Instance.BitmapFont.MeasureString(str ).X *3+ 20, 50)) ;
+                batcher.DrawString(Graphics.Instance.BitmapFont, str, new Vector2(Screen.Center.X + 150, 300), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
+
             }
         }
 

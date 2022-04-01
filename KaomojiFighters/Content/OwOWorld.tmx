@@ -405,7 +405,7 @@
   <object id="13" type="Square" x="450" y="2" width="154" height="59"/>
   <object id="14" type="Square" x="2" y="221.333" width="151" height="33.6667"/>
   <object id="15" type="Square" x="126" y="1" width="191" height="31"/>
-  <object id="16" x="451" y="291" width="91" height="89"/>
+  <object id="16" x="451" y="291" width="95" height="89"/>
   <object id="17" x="2" y="320.667" width="188" height="191.333"/>
   <object id="18" x="606" y="2" width="163" height="28"/>
   <object id="19" x="737" y="32" width="30" height="94"/>
@@ -429,8 +429,8 @@
   <object id="32" type="Polygon" x="155" y="255">
    <polygon points="0,0 36,-33.3333 0.8,-32.5581"/>
   </object>
-  <object id="33" type="Polygon" x="291" y="193.272">
-   <polygon points="0,0 30.3333,33.7272 30.3333,-1.60605"/>
+  <object id="33" type="Polygon" x="289.667" y="192.454">
+   <polygon points="0,0 30.3333,30.5454 30.3333,-1.45454"/>
   </object>
   <object id="35" type="Polygon" x="383" y="221">
    <polygon points="0,0 31,30.6667 31,0.747966"/>
@@ -448,7 +448,7 @@
   <object id="45" type="Polygon" x="351.42" y="381.333">
    <polygon points="0,0 33.913,0 -0.753623,35.3333"/>
   </object>
-  <object id="46" type="Polygon" x="449.333" y="383.439">
+  <object id="46" type="Polygon" x="449.333" y="382.772">
    <polygon points="0,0 31.1795,-0.772727 32,33.2273"/>
   </object>
  </objectgroup>

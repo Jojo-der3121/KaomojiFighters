@@ -74,7 +74,8 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
 
         protected override void Render(Batcher batcher, Camera camera)
         {   // draws attack selection
-            batcher.Draw(TextButton, new RectangleF(Screen.Center.X - TextButton.Width / 2, Screen.Center.Y, TextButton.Width- 50 >= GetWordXLocation(attackSentence.Count, attackSentence) ? TextButton.Width : GetWordXLocation(attackSentence.Count, attackSentence)+50,   TextButton.Height));
+            var str = GetString(attackSentence);
+            batcher.DrawRect( new RectangleF(Screen.Center.X - TextButton.Width / 2, Screen.Center.Y, Math.Max(300 , Graphics.Instance.BitmapFont.MeasureString(str).X * 3)+20, TextButton.Height), new Color(104,201,52));
             batcher.Draw(AttackOptionsMenu, new RectangleF(Screen.Center.X - 125, Screen.Center.Y + TextButton.Height + 10, 250, 150));
             batcher.DrawRect(new Rectangle((int)Screen.Center.X - 118, selectionY, 236, 25), Color.DarkOliveGreen);
 
@@ -83,13 +84,13 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             {
                 batcher.Draw(AttackOptionsMenu, new RectangleF(Screen.Center.X + 135, Screen.Center.Y + TextButton.Height + 10, 250, 150));
                 batcher.DrawString(Graphics.Instance.BitmapFont, hud.Hand[(int)selectedElement / 25].description, new Vector2(Screen.Center.X + 150, Screen.Center.Y + TextButton.Height + 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
-                
-                for (var i = 0; i < Math.Abs( hud.Hand[(int)selectedElement / 25].cost); i++)
+
+                for (var i = 0; i < Math.Abs(hud.Hand[(int)selectedElement / 25].cost); i++)
                 {
-                    batcher.Draw(hud.EnergyStar, new Rectangle((int)Screen.Center.X + 150 + i * 25, (int)Screen.Center.Y + TextButton.Height + 35, 25, 25), hud.Hand[(int)selectedElement / 25].cost > 0 ?  Color.Red: Color.CornflowerBlue);
+                    batcher.Draw(hud.EnergyStar, new Rectangle((int)Screen.Center.X + 150 + i * 25, (int)Screen.Center.Y + TextButton.Height + 35, 25, 25), hud.Hand[(int)selectedElement / 25].cost > 0 ? Color.Red : Color.CornflowerBlue);
                 }
             }
-            
+
 
             // draws alll non selected words
             for (int i = 0; i < hud.Hand.Count; i++)
@@ -100,18 +101,12 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
                 }
             }
             // draws the attacksentece
-            for (int i = 0; i < attackSentence.Count; i++)
-            {
-                batcher.DrawString(Graphics.Instance.BitmapFont, attackSentence[i].actualWord, new Vector2(Screen.Center.X - TextButton.Width / 2 + 10 + GetWordXLocation(i, attackSentence), Screen.Center.Y + 10), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
-            }
+            batcher.DrawString(Graphics.Instance.BitmapFont, str, new Vector2(Screen.Center.X - TextButton.Width / 2 + 10, Screen.Center.Y + 10), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
             //draws the attack speechBubble
             if (draw)
             {
-                batcher.Draw(Bubble, new Rectangle((int)Screen.Center.X - 65 - GetWordXLocation(attackSentence.Count, attackSentence), 292, GetWordXLocation(attackSentence.Count, attackSentence)+30, 50));
-                for (int i = 0; i < attackSentence.Count; i++)
-                {
-                    batcher.DrawString(Graphics.Instance.BitmapFont, attackSentence[i].actualWord, new Vector2(Screen.Center.X - 50 - GetWordXLocation(attackSentence.Count, attackSentence) + GetWordXLocation(i, attackSentence), 300), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
-                }
+                batcher.Draw(Bubble, new Rectangle((int)Screen.Center.X - 265 , 292, (int) Graphics.Instance.BitmapFont.MeasureString(str).X *3 + 30, 50));
+                batcher.DrawString(Graphics.Instance.BitmapFont, str, new Vector2(Screen.Center.X - 250 , 300), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
             }
         }
 
@@ -142,12 +137,12 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
 
             if (executeAttack.IsPressed && attackSentence.Count >= 1)
             {
-                if (attackSentence[attackSentence.Count - 1].typeOfWord == wordType.Nomen )
+                if (attackSentence[attackSentence.Count - 1].typeOfWord == wordType.Nomen)
                 {
                     draw = true;
                     foreach (var element in attackSentence)
                     {
-                        element.ExecuteEffect();
+                        element.ExecuteEffect(stat);
                     }
 
                     TelegramService.SendPrivate(new Telegram(player.Entity.Name, "Kaomoji02", "auf die Fresse", "tach3tach3tach3")); //make later more generic
@@ -194,7 +189,7 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             // Exit
             if (ExitAttackMenu.IsPressed)
             {
-                foreach(var element in attackSentence)
+                foreach (var element in attackSentence)
                 {
                     stat.energy += element.cost;
                 }
@@ -232,23 +227,9 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             return false;
         }
 
-        public int GetWordXLocation(int e, List<word> sentence)
-        {
-            var length = 0;
-            for (var i = 0; i < e; i++)
-            {
-                if (sentence[i].typeOfWord == wordType.Nomen)
-                {
-                    length += sentence[i].actualWord.Length * 15;
-                }
-                else
-                {
-                    length += sentence[i].actualWord.Length * 12;
-                }
+       
 
-                length += (i + 1) * 15;
-            }
-            return length;
-        }
+        public string GetString( List<word> sentence) =>  String.Join(" ",sentence.Select((x) => x.actualWord).ToArray());
+        
     }
 }

@@ -7,12 +7,14 @@ using KaomojiFighters.Scenes.OwOWorld;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Nez;
+using Nez.Sprites;
 
 namespace KaomojiFighters.Mobs
 {
-    class WASDMovement : Component, IUpdatable, ITriggerListener
+    class OwOWorldPlayer : Component, IUpdatable, ITriggerListener
     {
         private VirtualJoystick joystick;
+        public Stats stat;
         public Mover mover;
         VirtualButton interact;
         bool inTrigger;
@@ -20,11 +22,12 @@ namespace KaomojiFighters.Mobs
 
         public override void OnAddedToEntity()
         {
+            stat = SafeFileLoader.LoadStats();
+            Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("Kaomoji01")));
             joystick = new VirtualJoystick(true, new VirtualJoystick.KeyboardKeys(VirtualInput.OverlapBehavior.CancelOut, Keys.A, Keys.D, Keys.W, Keys.S));
             mover = Entity.AddComponent(new Mover());
             interact = new VirtualButton().AddKeyboardKey(Keys.E);
             Entity.AddComponent(new BoxCollider());
-
         }
 
 
@@ -36,9 +39,10 @@ namespace KaomojiFighters.Mobs
                 switch (colliderTyp )
                 {
                     case OwOWOrldTriggerTypes.Shop:
+                        
                         inTrigger = false;
                         colliderTyp = OwOWOrldTriggerTypes.NaNi;
-                        Core.StartSceneTransition(new TextureWipeTransition(() => new ShopScene(Entity.LocalPosition), Entity.Scene.Content.LoadTexture("c")));
+                        Core.StartSceneTransition(new TextureWipeTransition(() => new ShopScene(), Entity.Scene.Content.LoadTexture("c")));
                         break;
                     //case OwOWOrldTriggerTypes.Dialog:
                     //    Core.StartSceneTransition(new TextureWipeTransition(() => new OverworldScene(), Entity.Scene.Content.LoadTexture("c")));
@@ -49,6 +53,8 @@ namespace KaomojiFighters.Mobs
 
         public void OnTriggerEnter(Collider other, Collider local)
         {
+            stat.OwOworldPosition = Entity.Position;
+            SafeFileLoader.SaveStats(stat);
             if (other is OwOWorldTrigger owor)
             {
                 switch (owor.owoWorldTriggerType)

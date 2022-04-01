@@ -23,6 +23,7 @@ namespace KaomojiFighters.Mobs
        public (Sprite Normal,Sprite Attack, Sprite Hurt) sprites;   
         public int Defence = 1;
         public string weakness;
+        public Vector2 OwOworldPosition;
         public List<word> wordList = new List<word>();
         public List<Item> itemList = new List<Item>();
 
