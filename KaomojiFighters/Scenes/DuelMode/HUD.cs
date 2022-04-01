@@ -13,7 +13,6 @@ namespace KaomojiFighters.Scenes.DuelMode
 {
     class HUD : RenderableComponent, IUpdatable, ITelegramReceiver
     {
-        private Stats playerStats;
         private Stats opponentStats;
         private float playerMaxHealth;
         private float opponentMaxHealth;
@@ -41,17 +40,18 @@ namespace KaomojiFighters.Scenes.DuelMode
         public override void OnAddedToEntity()
         {
             //gets stat values for HP BAR
-            playerStats = Entity.Scene.FindEntity("Kaomoji01").GetComponent<Stats>();
-            opponentStats = Entity.Scene.FindEntity("Kaomoji02").GetComponent<Stats>();
-            playerMaxHealth = playerStats.HP;
+            playerComponent = Entity.Scene.FindEntity("Kaomoji01").GetComponent<Player>();
+           
+            opponentStats = Entity.Scene.FindEntity("Kaomoji02").GetComponent<Mob>().stat;
+            playerMaxHealth = playerComponent.stat.HP;
             opponentMaxHealth = opponentStats.HP;
 
-            TelegramService.Register(this, playerStats.Entity.Name);// registers in Telegram Service with Playername
+            TelegramService.Register(this, playerComponent.Entity.Name);// registers in Telegram Service with Playername
 
             // Adds the executional components for the MenuselectionOptions
-            playerComponent = playerStats.Entity.GetComponent<Player>();
+            
             AttackMenuComponent = Entity.AddComponent(new AttackMenu() { player = playerComponent, hud = this });
-            ItemMenuComponent = Entity.AddComponent(new ItemMenu() { playerEntity = playerStats.Entity });
+            ItemMenuComponent = Entity.AddComponent(new ItemMenu() { playerEntity = playerComponent.Entity });
 
             // Loads Sprites
             VSSinge = new Sprite(Entity.Scene.Content.LoadTexture("VS"));
@@ -81,7 +81,7 @@ namespace KaomojiFighters.Scenes.DuelMode
 
             // loads assets and gets Data for aufzieh and ablage Stapl
             deckTexture = Entity.Scene.Content.LoadTexture("AttackOptions");
-            Deck.AddRange(playerComponent.WordList);
+            Deck.AddRange(playerComponent.stat.wordList);
         }
         public override RectangleF Bounds => new RectangleF(0, 0, 1920, 1080);
         public override bool IsVisibleFromCamera(Camera camera) => true;
@@ -92,7 +92,7 @@ namespace KaomojiFighters.Scenes.DuelMode
             // draws Healthbars
             batcher.DrawRect(new Rectangle((int)Screen.Center.X - 700 - 20, 146, 700, 55), Color.Red);
             batcher.DrawRect(new Rectangle((int)Screen.Center.X + 20, 146, 700, 55), Color.Red);
-            batcher.DrawRect(new Rectangle((int)Screen.Center.X - 700 - 20 + (int)(700 * (1 - playerStats.HP / playerMaxHealth)), 146, (int)(700 * playerStats.HP / playerMaxHealth) + 1, 55), Color.DarkGreen);
+            batcher.DrawRect(new Rectangle((int)Screen.Center.X - 700 - 20 + (int)(700 * (1 - playerComponent.stat.HP / playerMaxHealth)), 146, (int)(700 * playerComponent.stat.HP / playerMaxHealth) + 1, 55), Color.DarkGreen);
             batcher.DrawRect(new Rectangle((int)Screen.Center.X + 20, 146, (int)(700 * opponentStats.HP / opponentMaxHealth), 55), Color.DarkGreen);
             batcher.Draw(BatterieHPBar, new Vector2((int)Screen.Center.X - 700 - 20 - 25, 146 - 10), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             batcher.Draw(BatterieHPBar, new Vector2((int)Screen.Center.X + 700 + 45, 146 - 10 + 75), Color.White, 3.14f, Vector2.Zero, 1, SpriteEffects.None, 0);
@@ -111,7 +111,7 @@ namespace KaomojiFighters.Scenes.DuelMode
             }
 
             // drwas energy Bar
-            for ( var i = 1; i <= playerStats.energy; i++) 
+            for ( var i = 1; i <= playerComponent.stat.energy; i++) 
             {
                 batcher.Draw(EnergyStar, new Rectangle(85, 1080 - 290 - i*40,45,45), Color.CornflowerBlue);
                 batcher.DrawString(Graphics.Instance.BitmapFont,  i.ToString(), new Vector2(75, 1080 - 280 - i * 40), Color.CornflowerBlue, 0f, Vector2.Zero, 3f, SpriteEffects.None,0f);
@@ -122,18 +122,18 @@ namespace KaomojiFighters.Scenes.DuelMode
         {
             // allows the selection Button to move and choses an Option if Space is pressed
 
-            if (selectionDestination - 350 >= (int)Screen.Center.X - 350 - 150 && Left.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled && playerStats.HP > 0)
+            if (selectionDestination - 350 >= (int)Screen.Center.X - 350 - 150 && Left.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled && playerComponent.stat.HP > 0)
             {
                 selectionDestination -= 350;
             }
-            if (selectionDestination + 350 <= (int)Screen.Center.X + 350 - 150 && Right.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled && playerStats.HP > 0)
+            if (selectionDestination + 350 <= (int)Screen.Center.X + 350 - 150 && Right.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled && playerComponent.stat.HP > 0)
             {
                 selectionDestination += 350;
             }
             selectionButton.LocalOffset = Vector2.Lerp(selectionButton.LocalOffset, new Vector2(selectionDestination, selectionButton.LocalOffset.Y), 0.06f);
             bool ignoreAttackUpdate = false;
             bool ignoreItemUpdate = false;
-            if (Enter.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled && playerStats.HP > 0)
+            if (Enter.IsPressed && !AttackMenuComponent.Enabled && !ItemMenuComponent.Enabled && selectionButton.Enabled && playerComponent.stat.HP > 0)
             {
                 switch (selectionDestination)
                 {
@@ -170,7 +170,7 @@ namespace KaomojiFighters.Scenes.DuelMode
                         ignoreItemUpdate = true;
                         break;
                     case 1920 / 2 + 350 - 150:
-                        playerStats.HP = 0;
+                        playerComponent.stat.HP = 0;
                         break;
                 }
             }
@@ -182,7 +182,7 @@ namespace KaomojiFighters.Scenes.DuelMode
             {
                 ItemMenuComponent.Update();
             }
-            if (Deck.Count == 0 && GY.Count == playerComponent.WordList.Count)
+            if (Deck.Count == 0 && GY.Count == playerComponent.stat.wordList.Count)
             {
                 Deck.AddRange(GY);
                 GY.Clear();

@@ -8,13 +8,13 @@ namespace KaomojiFighters.Scenes.DuelMode
 {
     class SpeedoMeter : SceneComponent, ITelegramReceiver
     {
-        public List<Stats> EntityList;
-        private Stats TurnPlayer;
+        public List<Mob> EntityList;
+        private Mob TurnPlayer;
         public bool LastPlayerFinished = true;
 
         public SpeedoMeter()
         {
-            EntityList = new List<Stats>();
+            EntityList = new List<Mob>();
             TelegramService.Register(this,"SpeedoMeter");
         }
 
@@ -24,7 +24,7 @@ namespace KaomojiFighters.Scenes.DuelMode
             //checks if everyone is still alive and if not switches the scene to title screen Scene
             foreach (var battlingEntity in EntityList)
             {
-                if (battlingEntity.HP <= 0)
+                if (battlingEntity.stat.HP <= 0)
                 {
                     var deadEntity = battlingEntity.Entity.GetComponent<SpriteRenderer>();
                     deadEntity.Entity.Tween("Rotation", 30f, 1).SetLoops(LoopType.PingPong, 1).SetLoopCompletionHandler((x)=> Core.StartSceneTransition(new FadeTransition(() => new MenuScene()))).Start();
@@ -38,7 +38,7 @@ namespace KaomojiFighters.Scenes.DuelMode
             TurnPlayer = EntityList[0];
             for (var i = 1; i <= EntityList.Count - 1; i++)
             {
-                if (EntityList[i].Speed >= TurnPlayer.Speed)
+                if (EntityList[i].stat.Speed >= TurnPlayer.stat.Speed)
                 {
                     TurnPlayer = EntityList[i];
                 }
@@ -52,11 +52,11 @@ namespace KaomojiFighters.Scenes.DuelMode
             {
                 foreach (var element in EntityList)
                 {
-                    while (element.Speed <= 0)
+                    while (element.stat.Speed <= 0)
                     {
-                        element.Speed += 10;
+                        element.stat.Speed += 10;
                     }
-                    element.energy += 7; //achsel schmied
+                    element.stat.energy += 7; //achsel schmied
                 }
             }
 
@@ -67,7 +67,7 @@ namespace KaomojiFighters.Scenes.DuelMode
         {
             foreach (var element in EntityList)
             {
-                if (element.Speed >= 0) return false;
+                if (element.stat.Speed >= 0) return false;
             }
             return true;
         }
@@ -76,7 +76,7 @@ namespace KaomojiFighters.Scenes.DuelMode
         {
             if (message.Head == "I end my turn")
             {
-                TurnPlayer.Speed -= 10;
+                TurnPlayer.stat.Speed -= 10;
                 LastPlayerFinished = true;
             }
         }

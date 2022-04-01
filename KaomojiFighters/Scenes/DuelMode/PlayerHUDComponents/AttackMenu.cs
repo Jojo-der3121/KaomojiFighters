@@ -54,7 +54,7 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             brickButton = new VirtualButton().AddKeyboardKey(Keys.B);
 
             selectionY = (int)Screen.Center.Y + TextButton.Height + 15;
-            stat = player.GetComponent<Stats>();
+            stat = player.stat;
         }
 
         public override void OnEnabled()
@@ -74,7 +74,7 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
 
         protected override void Render(Batcher batcher, Camera camera)
         {   // draws attack selection
-            batcher.Draw(TextButton, new Vector2(Screen.Center.X - TextButton.Width / 2, Screen.Center.Y));
+            batcher.Draw(TextButton, new RectangleF(Screen.Center.X - TextButton.Width / 2, Screen.Center.Y, TextButton.Width- 50 >= GetWordXLocation(attackSentence.Count, attackSentence) ? TextButton.Width : GetWordXLocation(attackSentence.Count, attackSentence)+50,   TextButton.Height));
             batcher.Draw(AttackOptionsMenu, new RectangleF(Screen.Center.X - 125, Screen.Center.Y + TextButton.Height + 10, 250, 150));
             batcher.DrawRect(new Rectangle((int)Screen.Center.X - 118, selectionY, 236, 25), Color.DarkOliveGreen);
 
@@ -147,7 +147,7 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
                     draw = true;
                     foreach (var element in attackSentence)
                     {
-                        element.wordEffekt();
+                        element.ExecuteEffect();
                     }
 
                     TelegramService.SendPrivate(new Telegram(player.Entity.Name, "Kaomoji02", "auf die Fresse", "tach3tach3tach3")); //make later more generic

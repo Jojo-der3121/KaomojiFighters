@@ -7,81 +7,32 @@ using Nez.Textures;
 using KaomojiFighters.Scenes.DuelMode;
 using Microsoft.Xna.Framework;
 using KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents;
+using System.IO;
 
 namespace KaomojiFighters.Mobs
 {
-    class Player : Component, ITelegramReceiver
+    class Player : Mob, ITelegramReceiver
     {
+        protected override string opponentName => "Koamoji02" ;
 
-        private Stats stats;
-
-        private SpriteRenderer texture;
-
-        public List<Item> ItemList = new List<Item>();
-     
-        public List<word> WordList = new List<word>();
+        protected override Stats statsConfig => new Stats() { Speed = 8, sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurt"))) };
 
 
-        public override void OnAddedToEntity()
-        {
-
-            base.OnAddedToEntity();
-            TelegramService.Register(this, Entity.Name);
-            stats = Entity.AddComponent(new Stats() {  Speed = 8, sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurt"))) }); ;
-            texture = Entity.AddComponent(new SpriteRenderer(stats.sprites.Normal));
-            Entity.AddComponent(new BoxCollider(texture.Width, texture.Height));
-            if (Entity.Scene is Battle)
-            {
-                var enemy = Entity.Scene.FindEntity("Kaomoji02");
-                Entity.AddComponent(new MobHitCalculation() { opponentEntity = enemy });
-            }
-            Entity.AddComponent(new EasterEgg() { EasterEggString = new Keys[] { Keys.D, Keys.I, Keys.S, Keys.T, Keys.I, Keys.N, Keys.G, Keys.U, Keys.I, Keys.S, Keys.H, Keys.E, Keys.D } });
-            WordList.Add(Entity.AddComponent(new I() ));
-            WordList.Add(Entity.AddComponent( new ducked()));
-            WordList.Add(Entity.AddComponent(new YourMom() ));
-            WordList.Add(Entity.AddComponent(new And() ));
-            WordList.Add(Entity.AddComponent(new StepOn() ));
-            WordList.Add(Entity.AddComponent(new Hope() ));
-            WordList.Add(Entity.AddComponent(new You() ));
-            WordList.Add(Entity.AddComponent(new Legos() ));
-
-            WordList.Add(Entity.AddComponent(new DogFood() ));
-            WordList.Add(Entity.AddComponent( new ducked()));
-            WordList.Add(Entity.AddComponent(new YourMom() ));
-            WordList.Add(Entity.AddComponent(new And() ));
-            WordList.Add(Entity.AddComponent(new StepOn() ));
-            WordList.Add(Entity.AddComponent(new Hope() ));
-            WordList.Add(Entity.AddComponent(new AFishHead()));
-            WordList.Add(Entity.AddComponent(new Legos() ));
-            
-            
-           
-            ItemList.Add(Entity.AddComponent(new HealthPotion()));
-            ItemList.Add(Entity.AddComponent(new StrenghtPotion()));
-            ItemList.Add(Entity.AddComponent(new SpeedPotion()));
-            ItemList.Add(Entity.AddComponent(new HealthPotion()));
-            ItemList.Add(Entity.AddComponent(new StrenghtPotion()));
-            ItemList.Add(Entity.AddComponent(new SpeedPotion()));
-            ItemList.Add(Entity.AddComponent(new HealthPotion()));
-            ItemList.Add(Entity.AddComponent(new StrenghtPotion()));
-            ItemList.Add(Entity.AddComponent(new SpeedPotion()));
-
-
-
-
-        }
-
-        public void MessageReceived(Telegram message)
+        public override void MessageReceived(Telegram message)
         {
             if (message.Head == "Frohe Ostern")
             {
-                var oldSize = texture.Size.Y;
-                stats.sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01distinguished")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attackdistinguished")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurtdistinguished")));
-                texture.SetSprite(new Sprite(stats.sprites.Normal), SpriteRenderer.SizingMode.Resize);
-                texture.LocalOffset = new Vector2(texture.LocalOffset.X, texture.LocalOffset.Y - (texture.Size.Y - oldSize) / 2);
-                stats.AttackValue *= 50;
+                var oldSize = spriteRenderer.Size.Y;
+             stat.sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01distinguished")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attackdistinguished")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurtdistinguished")));
+                spriteRenderer.SetSprite(new Sprite(stat.sprites.Normal), SpriteRenderer.SizingMode.Resize);
+                spriteRenderer.LocalOffset = new Vector2(spriteRenderer.LocalOffset.X, spriteRenderer.LocalOffset.Y - (spriteRenderer.Size.Y - oldSize) / 2);
+                stat.AttackValue *= 50;
 
+                JsonConverter.Serialize(stat,Directory.GetCurrentDirectory()+ "\\PlayerStats.json");
             }
         }
+
+        public override void LoadShit() =>  Entity.AddComponent(new EasterEgg() { EasterEggString = new Keys[] { Keys.D, Keys.I, Keys.S, Keys.T, Keys.I, Keys.N, Keys.G, Keys.U, Keys.I, Keys.S, Keys.H, Keys.E, Keys.D } });
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using KaomojiFighters.Enums;
+using Newtonsoft.Json;
 using Nez;
 using System;
 using System.Collections.Generic;
@@ -9,30 +10,139 @@ using System.Threading.Tasks;
 namespace KaomojiFighters.Mobs
 {
 
-    abstract class word: Component
+    public enum Wort
     {
-        public string actualWord;
-        public string sensitivTopic;
-        public string description;
-        public wordType typeOfWord;
-        public List<wordType> allowedPreviouseWords;
-        public Stats stats;
-        public int cost;
+        YourMom, And, AFishHead, DogFood, I, You, Legos, StepOn, Hope, Fucked
+    }
 
-        public override void OnAddedToEntity()
+    public class word
+    {
+        [JsonIgnore]
+        public string actualWord;
+        [JsonIgnore]
+        public string sensitivTopic;
+        [JsonIgnore]
+        public string description;
+        [JsonIgnore]
+        public wordType typeOfWord;
+        [JsonIgnore]
+        public List<wordType> allowedPreviouseWords;
+        [JsonIgnore]
+        public Stats stats;
+        [JsonIgnore]
+        public int cost;
+        public Wort Word;
+        [JsonIgnore]
+        public Action wordEffect;
+
+        public word(Stats stats, Wort wort)
         {
-            base.OnAddedToEntity();
-            stats = Entity.GetComponent<Stats>();
-            CalibratePerameters();
+            this.stats = stats;
+            Word = wort;
+            switch (Word)
+            {
+                case Wort.YourMom:
+                    actualWord = "Your Mom";
+                    sensitivTopic = "Mom Jokes";
+                    description = "decreases ATK by 3";
+                    typeOfWord = wordType.Nomen;
+                    allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
+                    cost = 3;
+                    wordEffect = () => stats.AttackValue -= 3;
+                    break;
+                case Wort.And:
+                    actualWord = "and";
+                    sensitivTopic = "none";
+                    description = "increases DEF by 2";
+                    typeOfWord = wordType.Konjunktion;
+                    allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Verb };
+                    cost = -1;
+                    wordEffect = () => stats.Defence += 2;
+                    break;
+                case Wort.AFishHead:
+                    actualWord = "a Fish head";
+                    sensitivTopic = "appearance";
+                    description = "increases DEF by 1";
+                    typeOfWord = wordType.Nomen;
+                    allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
+                    cost = 5;
+                    wordEffect = () => stats.Defence++;
+                    break;
+                case Wort.DogFood:
+                    actualWord = "Dog Food";
+                    sensitivTopic = "none";
+                    description = "recovers 3 HP";
+                    typeOfWord = wordType.Nomen;
+                    allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
+                    cost = 5;
+                    wordEffect = () => stats.HP += 3;
+                    break;
+                case Wort.I:
+                    actualWord = "I";
+                    sensitivTopic = "none";
+                    description = "increases DEF by 1";
+                    typeOfWord = wordType.Nomen;
+                    allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion };
+                    cost = 2;
+                    wordEffect = () => stats.Defence += 1;
+                    break;
+                case Wort.You:
+                    actualWord = "You";
+                    sensitivTopic = "insecure";
+                    description = "increases ATK by 1";
+                    typeOfWord = wordType.Nomen;
+                    allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion, wordType.Verb };
+                    cost = 2;
+                    wordEffect = () => stats.AttackValue += 1;
+                    break;
+                case Wort.Legos:
+                    actualWord = "Legos";
+                    sensitivTopic = "ptsd";
+                    description = "increases ATK by 10";
+                    typeOfWord = wordType.Nomen;
+                    allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion, wordType.Verb };
+                    cost = 2;
+                    wordEffect = () => stats.AttackValue += 10;
+                    break;
+                case Wort.StepOn:
+                    actualWord = "step on";
+                    sensitivTopic = "clumsy";
+                    description = " used to do stuff ^^`";
+                    typeOfWord = wordType.Verb;
+                    allowedPreviouseWords = new List<wordType> { wordType.Konjunktion, wordType.Nomen };
+                    cost = 2;
+                    wordEffect = () => stats.Speed += 0;
+                    break;
+                case Wort.Hope:
+                    actualWord = "hope";
+                    sensitivTopic = "insecure";
+                    description = "restores 3 HP";
+                    typeOfWord = wordType.Verb;
+                    allowedPreviouseWords = new List<wordType> { wordType.Konjunktion, wordType.Nomen };
+                    cost = 2;
+                    wordEffect = () => stats.HP += 3;
+                    break;
+                case Wort.Fucked:
+                    actualWord = "f*cked";
+                    sensitivTopic = "honor";
+                    description = "increases ATK by 5";
+                    typeOfWord = wordType.Verb;
+                    allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Konjunktion };
+                    cost = 5;
+                    wordEffect = () => stats.AttackValue += 5;
+                    break;
+                default:
+                    break;
+            }
         }
 
-        public abstract void CalibratePerameters();
+        public void ExecuteEffect() => wordEffect();
 
         public virtual bool IsUsable(wordType previouseWord)
         {
-            foreach(var allowedWord in allowedPreviouseWords)
+            foreach (var allowedWord in allowedPreviouseWords)
             {
-                if(allowedWord == previouseWord)
+                if (allowedWord == previouseWord)
                 {
                     return true;
                 }
@@ -40,157 +150,6 @@ namespace KaomojiFighters.Mobs
             stats.HP -= 3;
             return false;
         }
-
-        public virtual void wordEffekt()
-        {
-            stats.energy -= cost;
-        }
-    }
-
-    class YourMom : word
-    {
-        public override void CalibratePerameters()
-        {
-            actualWord = "Your Mom";
-            sensitivTopic = "Mom Jokes";
-            description = "decreases ATK by 3";
-            typeOfWord = wordType.Nomen;
-            allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
-            cost = 3;
-        }
-
-        public override void wordEffekt() => stats.AttackValue -= 3;
-        
-    }
-
-    class And : word
-    {
-        public override void CalibratePerameters()
-        {
-            actualWord = "and";
-            sensitivTopic = "none";
-            description = "increases DEF by 2";
-            typeOfWord = wordType.Konjunktion;
-            allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Verb };
-            cost = -1;
-        }
-        public override void wordEffekt()
-        {
-            stats.Defence += 2; 
-        }
-    }
-
-    class AFishHead : word
-    {
-        public override void CalibratePerameters()
-        {
-            actualWord = "a Fish head";
-            sensitivTopic = "appearance";
-            description = "increases DEF by 1";
-            typeOfWord = wordType.Nomen;
-            allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
-            cost = 5;
-        }
-        public override void wordEffekt () =>   stats.Defence ++;
-    }
-
-    class DogFood : word
-    {
-        public override void CalibratePerameters()
-        {
-            actualWord = "Dog Food";
-            sensitivTopic = "none";
-            description = "recovers 3 HP";
-            typeOfWord = wordType.Nomen;
-            allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };
-            cost = 5;
-        }
-        public override void wordEffekt() => stats.HP+= 3;
-    }
-
-    class I : word
-    {
-        public override void CalibratePerameters()
-        {
-            actualWord = "I";
-            sensitivTopic = "none";
-            description = "increases DEF by 1";
-            typeOfWord = wordType.Nomen;
-            allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion };
-            cost = 2;
-        }
-
-        public override void wordEffekt() => stats.Defence+= 1;
-    }
-    class You : word
-    {
-        public override void CalibratePerameters()
-        {
-            actualWord = "You";
-            sensitivTopic = "insecure";
-            description = "increases ATK by 1";
-            typeOfWord = wordType.Nomen;
-            allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion, wordType.Verb };
-            cost = 2;
-        }
-
-        public override void wordEffekt() => stats.AttackValue += 1;
-    }
-    class Legos : word
-    {
-        public override void CalibratePerameters()
-        {
-            actualWord = "Legos";
-            sensitivTopic = "ptsd";
-            description = "increases ATK by 10";
-            typeOfWord = wordType.Nomen;
-            allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Konjunktion, wordType.Verb };
-            cost = 2;
-        }
-
-        public override void wordEffekt() => stats.AttackValue += 10;
-    }
-    class StepOn : word
-    {
-        public override void CalibratePerameters()
-        {
-            actualWord = "step on";
-            sensitivTopic = "clumsy";
-            description = " used to do stuff ^^`";
-            typeOfWord = wordType.Verb;
-            allowedPreviouseWords = new List<wordType> {  wordType.Konjunktion, wordType.Nomen };
-            cost = 2;
-        }
-
-        public override void wordEffekt() => stats.Speed += 0; // fix later (3)
-    }
-    class Hope : word
-    {
-        public override void CalibratePerameters()
-        {
-            actualWord = "hope";
-            sensitivTopic = "insecure";
-            description = "restores 3 HP";
-            typeOfWord = wordType.Verb;
-            allowedPreviouseWords = new List<wordType> { wordType.Konjunktion, wordType.Nomen };
-            cost = 2;
-        }
-
-        public override void wordEffekt() => stats.HP += 3;
-    }
-
-    class ducked : word
-    {
-        public override void CalibratePerameters()
-        {
-            actualWord = "f*cked";
-            sensitivTopic = "honor";
-            description = "increases ATK by 5";
-            typeOfWord = wordType.Verb;
-            allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Konjunktion };
-            cost = 5;
-        }
-
-        public override void wordEffekt() => stats.AttackValue += 5;
     }
 }
+   

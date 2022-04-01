@@ -12,15 +12,21 @@ using Nez.Textures;
 
 namespace KaomojiFighters.Mobs
 {
-    class Opponent : Component, ITelegramReceiver
+    class Opponent : Mob, ITelegramReceiver
     {
-        private Stats stats;
+        
         private Attack attack;
-        private Entity opponent;
-        public List<word> words;
-        private SpriteRenderer sprite;
+       
+    
 
-        public void MessageReceived(Telegram message)
+        protected override string opponentName => "Kaomoji01";
+
+        protected override Stats statsConfig => new Stats() { Speed = 7, weakness = "Mom Jokes", sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Hurt"))) };
+
+        public override void LoadShit() => (attack = Entity.AddComponent(new EnemyTextAttack() { attackTarget = opponent })).Enabled = false;
+        
+
+        public override void MessageReceived(Telegram message)
         {
            if( message.Head == "its your turn")
             {
@@ -31,30 +37,6 @@ namespace KaomojiFighters.Mobs
             {
                 attack.Enabled = false;
             }
-        }
-
-        public override void OnAddedToEntity()
-        {
-            base.OnAddedToEntity();
-            TelegramService.Register(this, Entity.Name);
-            opponent = Entity.Scene.FindEntity("Kaomoji01"); 
-            stats = Entity.AddComponent(new Stats() { Speed = 7,weakness = "Mom Jokes", sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Hurt"))) });
-            attack = Entity.AddComponent(new EnemyTextAttack() { attackTarget = opponent });
-            attack.Enabled = false;
-            sprite = Entity.AddComponent(new SpriteRenderer(stats.sprites.Normal));
-            sprite.RenderLayer = 2;
-            Entity.AddComponent(new MobHitCalculation() { opponentEntity = opponent});
-            words = new List<word>();
-            words.Add(Entity.AddComponent(new I()));
-            words.Add(Entity.AddComponent(new Hope()));
-            words.Add(Entity.AddComponent(new You()));
-            words.Add(Entity.AddComponent(new StepOn()));
-            words.Add(Entity.AddComponent(new Legos()));
-            words.Add(Entity.AddComponent(new DogFood()));
-            words.Add(Entity.AddComponent(new ducked()));
-            words.Add(Entity.AddComponent(new YourMom()));
-        }
-
-        
+        } 
     }
 }

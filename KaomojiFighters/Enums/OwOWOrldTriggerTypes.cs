@@ -11,6 +11,7 @@ namespace KaomojiFighters.Enums
         battle,
         Dialog,
         Shop,
-        Goal
+        Goal,
+        NaNi
     }
 }
