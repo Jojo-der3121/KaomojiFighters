@@ -17,7 +17,7 @@ namespace KaomojiFighters.Scenes.DuelMode
         private float playerMaxHealth;
         private float opponentMaxHealth;
         private Sprite VSSinge;
-        public SpriteRenderer selectionButton;
+        private SpriteRenderer selectionButton;
         private Sprite AttackButton;
         private Sprite ItemButton;
         private Sprite SaturdayButton;
@@ -31,7 +31,7 @@ namespace KaomojiFighters.Scenes.DuelMode
         private AttackMenu AttackMenuComponent;
         private Sprite BatterieHPBar;
         private Texture2D deckTexture;
-        public List<word> Deck = new List<word>();
+        private List<word> Deck = new List<word>();
         public List<word> Hand = new List<word>();
         public List<word> GY = new List<word>();
        

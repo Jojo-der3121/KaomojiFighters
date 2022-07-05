@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KaomojiFighters.Objects
 {
-    public abstract class Item 
+    public class Item 
     {
         public string ItemType { get; set; }
         public int cost;
@@ -42,6 +42,22 @@ namespace KaomojiFighters.Objects
             ItemType = "SpeedPotions";
             description = "recovers 9 Energy";
             cost = -9;
+        }
+    }
+
+    class DefencePotion : Item
+    {
+        public DefencePotion()
+        {
+            ItemType = "DefencePotions";
+            description = "increases Def by 3";
+            cost = 6;
+        }
+
+        public override void ItemEffect(Stats stats)
+        {
+            base.ItemEffect(stats);
+            stats.Defence += 3;
         }
     }
 

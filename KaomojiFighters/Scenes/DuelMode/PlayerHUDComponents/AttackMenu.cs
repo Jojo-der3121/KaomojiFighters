@@ -92,7 +92,7 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             }
 
 
-            // draws alll non selected words
+            // draws all non selected words
             for (int i = 0; i < hud.Hand.Count; i++)
             {
                 if (NotChosenAlready(i))
@@ -178,7 +178,7 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
                     draw = false;
                     attackSentence.Clear();
                     TelegramService.SendPrivate(new Telegram(player.Entity.Name, "SpeedoMeter", "I end my turn", "tach3tach3tach3"));
-                    TelegramService.SendPrivate(new Telegram(player.Entity.Name, player.Entity.Name, "its not your turn", "tach3tach3tach3"));// maybe bug ? :thinking:
+                    TelegramService.SendPrivate(new Telegram(player.Entity.Name, player.Entity.Name, "its not your turn", "tach3tach3tach3"));
                     Enabled = false;
                     hud.GY.AddRange(hud.Hand);
                     hud.Hand.Clear();

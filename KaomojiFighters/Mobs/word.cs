@@ -1,11 +1,7 @@
 ﻿using KaomojiFighters.Enums;
 using Newtonsoft.Json;
-using Nez;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
 
 namespace KaomojiFighters.Mobs
@@ -133,7 +129,7 @@ namespace KaomojiFighters.Mobs
                     wordEffect = (x) => x.HP += 3;
                     break;
                 case Wort.Fucked:
-                    actualWord = "f*cked";
+                    actualWord = "ducked";
                     sensitivTopic = "honor";
                     description = "increases ATK by 5";
                     typeOfWord = wordType.Verb;

@@ -15,3 +15,12 @@ Sensitiv Topic via Telegramm.
 Immune sign (grey: immune )+ sensitiv Topic sign (red: -sensitiv Topic)
 
 epic music playList. Themabattle ? => duke devlin + Friday night Funkin ?
+
+Defence == Shield
+Add Gold-System (Bitcoin)
+
+Kommentare des Shop Owners
+
+
+
+{"HP":42,"AttackValue":1,"Speed":8,"energy":7,"Defence":1,"weakness":null,"OwOworldPosition":"1173.82336, 369.8015","wordList":[{"Word":0},{"Word":1},{"Word":2},{"Word":3},{"Word":4},{"Word":5},{"Word":6},{"Word":7},{"Word":8},{"Word":9}],"itemList":[]}
