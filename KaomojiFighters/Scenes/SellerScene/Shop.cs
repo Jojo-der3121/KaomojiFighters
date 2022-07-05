@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KaomojiFighters.Mobs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Nez.BitmapFonts;
@@ -19,12 +20,14 @@ namespace KaomojiFighters.Scenes.SellerScene
         Texture2D ShopInner;
         Texture2D ShopOuter;
         Texture2D Seller;
+        Texture2D DogdeCoin;
         public SpriteRenderer selectionButton;
         private int selectionDestination;
         private VirtualButton Left;
         private VirtualButton Right;
         private VirtualButton Enter;
         private ShopHUD shopHUD;
+        public int Gold;
 
         public override void OnAddedToEntity()
         {
@@ -32,6 +35,7 @@ namespace KaomojiFighters.Scenes.SellerScene
             ShopInner = Entity.Scene.Content.LoadTexture("shopInside");
             ShopOuter = Entity.Scene.Content.LoadTexture("shopOutside");
             Seller = Entity.Scene.Content.LoadTexture("shopKoamoji");
+            DogdeCoin = Entity.Scene.Content.LoadTexture("R");
 
             // defines selection Button
             selectionButton = Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("SelectionKaoButton")));
@@ -46,10 +50,8 @@ namespace KaomojiFighters.Scenes.SellerScene
             Right = new VirtualButton().AddKeyboardKey(Keys.D);
             Enter = new VirtualButton().AddKeyboardKey(Keys.Space);
 
-            shopHUD = Entity.AddComponent(new ShopHUD());
+            shopHUD = Entity.AddComponent(new ShopHUD(this));
             shopHUD.Enabled = false;
-           
-
         }
         protected override void Render(Batcher batcher, Camera camera)
         {
@@ -66,6 +68,11 @@ namespace KaomojiFighters.Scenes.SellerScene
             batcher.DrawRect(Screen.Center.X -150 +330, 830f , 300f,220f, Color.Black);
             batcher.DrawRect(Screen.Center.X - 140 +330, 840f, 280f, 200f, new Color(104, 201, 52));
             batcher.DrawString(Graphics.Instance.BitmapFont, "Leave", new Vector2(Screen.Center.X - 75 +270, 880f), Color.Black, 0f, Vector2.Zero, 9f, SpriteEffects.None, 0f);
+
+            batcher.DrawRect(new RectangleF(1120, 0, 310, 80), Color.Black);
+            batcher.DrawRect(new RectangleF( 1130, 0, 290,70), Color.DarkGreen);
+            batcher.DrawString(Graphics.Instance.BitmapFont, Gold.ToString(), new Vector2(1200, 5f), Color.PaleGoldenrod, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
+            batcher.Draw(DogdeCoin,new RectangleF(1140, 5, 50,50 ));
         }
         public override RectangleF Bounds => new RectangleF(0, 0, 1920, 1080);
         public override bool IsVisibleFromCamera(Camera camera) => true;

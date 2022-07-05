@@ -19,6 +19,7 @@ namespace KaomojiFighters.Mobs
         public int AttackValue = 1;
         public int Speed;
         public int energy = 7;
+        public int Gold = 0;
         [Newtonsoft.Json.JsonIgnore]
        public (Sprite Normal,Sprite Attack, Sprite Hurt) sprites;   
         public int Defence = 1;

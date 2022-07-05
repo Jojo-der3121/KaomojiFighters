@@ -21,20 +21,21 @@ namespace KaomojiFighters.Mobs
 
         protected override string opponentName => "Kaomoji01";
 
-        protected override Stats statsConfig => new Stats() { Speed = 7, weakness = "Mom Jokes", sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Hurt"))), wordList = word.GetWordList() };
+        protected override Stats statsConfig => new Stats() { Gold= 15, Speed = 7, weakness = "Mom Jokes", sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Hurt"))), wordList = word.GetWordList() };
 
         public override void LoadShit() => (attack = Entity.AddComponent(new EnemyTextAttack() { attackTarget = opponent })).Enabled = false;
 
         public override void MessageReceived(Telegram message)
         {
-            if (message.Head == "its your turn")
+            switch (message.Head)
             {
-                attack.Enabled = true;
-                attack.enableAttack();
-            }
-            if (message.Head == "its not your turn")
-            {
-                attack.Enabled = false;
+                case "its your turn":
+                    attack.Enabled = true;
+                    attack.enableAttack();
+                    break;
+                case "its not your turn":
+                    attack.Enabled = false;
+                    break;
             }
         }
     }
