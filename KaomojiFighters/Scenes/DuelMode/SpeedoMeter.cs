@@ -26,14 +26,15 @@ namespace KaomojiFighters.Scenes.DuelMode
             {
                 if (battlingEntity.stat.HP <= 0)
                 {
+                    var stats = SafeFileLoader.LoadStats();
                     if (battlingEntity.GetComponent<Player>() == null)
                     {
-                        var stats = SafeFileLoader.LoadStats();
+                        
                         stats.Gold += battlingEntity.stat.Gold;
                         SafeFileLoader.SaveStats(stats);
                     }
                     var deadEntity = battlingEntity.Entity.GetComponent<SpriteRenderer>();
-                    deadEntity.Entity.Tween("Rotation", 30f, 1).SetLoops(LoopType.PingPong, 1).SetLoopCompletionHandler((x)=> Core.StartSceneTransition(new FadeTransition(() => new MenuScene()))).Start();
+                    deadEntity.Entity.Tween("Rotation", 30f, 1).SetLoops(LoopType.PingPong, 1).SetLoopCompletionHandler((x)=> Core.StartSceneTransition(new FadeTransition(() => new OverworldScene(stats.OwOworldPosition)))).Start();
                     this.Enabled = false;
                     return;
                 }

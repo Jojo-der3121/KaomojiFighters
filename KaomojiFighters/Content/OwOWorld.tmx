@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="110" height="119" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="47">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="110" height="119" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="48">
  <tileset firstgid="1" name="OwOWorldTileset" tilewidth="32" tileheight="32" tilecount="36" columns="6">
   <image source="OwOWorldTilesetUpdatedAgain.png" width="192" height="192"/>
   <tile id="3">
@@ -393,7 +393,16 @@
   </object>
   <object id="6" name="Goal" type="Goal" x="682.667" y="81.3333"/>
   <object id="39" name="TutorialNPC" type="Dialog" x="273" y="223"/>
-  <object id="40" name="Shop" type="Shop" x="392.667" y="393.667" width="46" height="35"/>
+  <object id="40" name="Shop" type="Shop" x="392.667" y="393.667" width="46" height="35">
+   <properties>
+    <property name="IsLocationsSafer" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="47" type="LocationSafer" x="175.833" y="37.5" width="96.6667" height="74.1667">
+   <properties>
+    <property name="IsLocationSafer" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="3" name="WallCollisions" offsetx="-1.33333" offsety="-0.666667">
   <object id="7" type="Square" x="1" y="130" width="189" height="92"/>

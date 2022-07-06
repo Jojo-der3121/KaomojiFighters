@@ -29,8 +29,8 @@ namespace KaomojiFighters.Scenes.SellerScene
         private Texture2D DefencePotion;
         private Texture2D SpeedPotion;
         private Texture2D Bubble;
-        private int[] buyPriceArray = new int[] {10, 5, 2, 13};
-        private int[] sellPriceArray = new int[] {8, 3, 1, 9};
+        private int[] buyPriceArray = new int[] { 10, 5, 2, 13 };
+        private int[] sellPriceArray = new int[] { 8, 3, 1, 9 };
         private int[] selectedProduct = new int[] { 0, 0, 0, 0 };
         private int[] availableItems = new int[] { 0, 0, 0, 0 };
         private Stats stats;
@@ -106,7 +106,7 @@ namespace KaomojiFighters.Scenes.SellerScene
 
         public void Update()
         {
-            if (first.IsPressed && buy && GetFullPrice(0) <= stats.Gold|| first.IsPressed && !buy && availableItems[0] >= selectedProduct[0] + 1) selectedProduct[0]++;
+            if (first.IsPressed && buy && GetFullPrice(0) <= stats.Gold || first.IsPressed && !buy && availableItems[0] >= selectedProduct[0] + 1) selectedProduct[0]++;
             if (second.IsPressed && buy && GetFullPrice(1) <= stats.Gold || second.IsPressed && !buy && availableItems[1] >= selectedProduct[1] + 1) selectedProduct[1]++;
             if (third.IsPressed && buy && GetFullPrice(2) <= stats.Gold || third.IsPressed && !buy && availableItems[2] >= selectedProduct[2] + 1) selectedProduct[2]++;
             if (fourth.IsPressed && buy && GetFullPrice(3) <= stats.Gold || fourth.IsPressed && !buy && availableItems[3] >= selectedProduct[3] + 1) selectedProduct[3]++;
@@ -134,6 +134,9 @@ namespace KaomojiFighters.Scenes.SellerScene
                                           sellPriceArray[2] * selectedProduct[2] + sellPriceArray[3] * selectedProduct[3];
                         }
                     }
+                    selectedProduct = new int[] { 0, 0, 0, 0 };
+                    availableItems = new int[] { 0, 0, 0, 0 };
+                    Enabled = false;
                 }
                 SafeFileLoader.SaveStats(stats);
                 shop.Gold = stats.Gold;
@@ -156,21 +159,28 @@ namespace KaomojiFighters.Scenes.SellerScene
             batcher.Draw(HealthPotion, new RectangleF(buy ? 1620 - 50 : 230, 50 + 30, 75, 100));
             if (selectedProduct[0] > 0) batcher.DrawString(Graphics.Instance.BitmapFont, selectedProduct[0] + "x", new Vector2(buy ? 1620 - 100 : 180, 50 + 75), Color.Black, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
             if (!buy) batcher.DrawString(Graphics.Instance.BitmapFont, availableItems[0] + "x", new Vector2(180 + 125, 50 + 75 + 30), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
+            batcher.DrawString(Graphics.Instance.BitmapFont, buy ? buyPriceArray[0].ToString() : sellPriceArray[0].ToString(), new Vector2(buy ? 1620 + 60 : 340, 50 + 75), Color.PaleGoldenrod, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
+
             batcher.DrawRect(buy ? 1620 - 140 : 140, 30 + 220, 300f, 200f, Color.Black);
             batcher.DrawRect(buy ? 1620 - 130 : 150, 40 + 220, 280f, 180f, new Color(104, 201, 52));
             batcher.Draw(AttackPotion, new RectangleF(buy ? 1620 - 50 : 230, 50 + 30 + 220, 75, 100));
             if (selectedProduct[1] > 0) batcher.DrawString(Graphics.Instance.BitmapFont, selectedProduct[1] + "x", new Vector2(buy ? 1620 - 100 : 180, 50 + 75 + 220), Color.Black, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
             if (!buy) batcher.DrawString(Graphics.Instance.BitmapFont, availableItems[1] + "x", new Vector2(180 + 125, 50 + 75 + 30 + 220), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
+            batcher.DrawString(Graphics.Instance.BitmapFont, buy ? buyPriceArray[1].ToString() : sellPriceArray[1].ToString(), new Vector2(buy ? 1620 + 60 : 340, 50 + 75 +220), Color.PaleGoldenrod, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
+
             batcher.DrawRect(buy ? 1620 - 140 : 140, 30 + 220 * 2, 300f, 200f, Color.Black);
             batcher.DrawRect(buy ? 1620 - 130 : 150, 40 + 220 * 2, 280f, 180f, new Color(104, 201, 52));
             batcher.Draw(DefencePotion, new RectangleF(buy ? 1620 - 50 : 230, 50 + 30 + 220 * 2, 75, 100));
             if (selectedProduct[2] > 0) batcher.DrawString(Graphics.Instance.BitmapFont, selectedProduct[2] + "x", new Vector2(buy ? 1620 - 100 : 180, 50 + 75 + 220 * 2), Color.Black, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
             if (!buy) batcher.DrawString(Graphics.Instance.BitmapFont, availableItems[2] + "x", new Vector2(180 + 125, 50 + 75 + 30 + 220 * 2), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
+            batcher.DrawString(Graphics.Instance.BitmapFont, buy ? buyPriceArray[2].ToString() : sellPriceArray[2].ToString(), new Vector2(buy ? 1620 + 60 : 340, 50 + 75 + 220*2), Color.PaleGoldenrod, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
+
             batcher.DrawRect(buy ? 1620 - 140 : 140, 30 + 220 * 3, 300f, 200f, Color.Black);
             batcher.DrawRect(buy ? 1620 - 130 : 150, 40 + 220 * 3, 280f, 180f, new Color(104, 201, 52));
             batcher.Draw(SpeedPotion, new RectangleF(buy ? 1620 - 50 : 230, 50 + 30 + 220 * 3, 75, 100));
             if (selectedProduct[3] > 0) batcher.DrawString(Graphics.Instance.BitmapFont, selectedProduct[3] + "x", new Vector2(buy ? 1620 - 100 : 180, 50 + 75 + 220 * 3), Color.Black, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
             if (!buy) batcher.DrawString(Graphics.Instance.BitmapFont, availableItems[3] + "x", new Vector2(180 + 125, 50 + 75 + 30 + 220 * 3), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
+            batcher.DrawString(Graphics.Instance.BitmapFont, buy ? buyPriceArray[3].ToString() : sellPriceArray[3].ToString(), new Vector2(buy ? 1620 + 60 : 340, 50 + 75 + 220*3), Color.PaleGoldenrod, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
 
             // batcher.Draw(Bubble, new RectangleF(buy?  40 : 1920 / 2 + 450, 30f, 1920/2 - 500, 1080 - 160));
         }

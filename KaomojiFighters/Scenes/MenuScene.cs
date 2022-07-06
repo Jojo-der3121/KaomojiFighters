@@ -21,7 +21,7 @@ namespace KaomojiFighters.Scenes
             base.Update();
             if (Start.IsPressed)
             {
-                Core.StartSceneTransition(new TextureWipeTransition(() => new ShopScene(), Content.LoadTexture("c"))); // OverworldScene
+                Core.StartSceneTransition(new TextureWipeTransition(() => new OverworldScene(), Content.LoadTexture("c"))); // OverworldScene
             }
         }
     }
