@@ -42,6 +42,9 @@ namespace KaomojiFighters.Scenes
                     case "Dialog":
                         map.AddComponent(new SpriteRenderer(Content.LoadTexture("Kaomoji02")) { Size = new Vector2(310, 92) / WorldScale }).SetLocalOffset(new Vector2(element.X + element.Width / 2, element.Y + element.Height / 2) * WorldScale);
                         break;
+                    case "LocationSafer":
+                        map.AddComponent(new OwOWorldTrigger((int)element.Width, (int)element.Height) { owoWorldTriggerType = OwOWOrldTriggerTypes.LocationSafer }).SetLocalOffset(new Vector2(element.X, element.Y));
+                        break;
                     default:
                         break;
                 }

@@ -46,7 +46,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             // get Entities
             hud = Entity.GetComponent<HUD>();
             player = playerEntity.GetComponent<Player>();
-            stats = player.stat;
+            stats = SafeFileLoader.LoadStats();
 
             // ItemDisplay Config
             ItemMenuDisplay = Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("ItemMenu")));
@@ -71,14 +71,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             {
                 Textures.Add(Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture(stats.itemList[i].ItemType))));
                 Textures[i].Size = new Vector2(27, 45);
-                if (i < 6)
-                {
-                    Textures[i].LocalOffset = new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i + 1) - Entity.Transform.Position.X, Screen.Center.Y - 30 - Entity.Transform.Position.Y + 75);
-                }
-                else
-                {
-                    Textures[i].LocalOffset = new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i - 5) - Entity.Transform.Position.X, Screen.Center.Y + 20 - Entity.Transform.Position.Y + 75);
-                }
+                Textures[i].LocalOffset = i < 6 ? new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i + 1) - Entity.Transform.Position.X, Screen.Center.Y - 30 - Entity.Transform.Position.Y + 75) : new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i - 5) - Entity.Transform.Position.X, Screen.Center.Y + 20 - Entity.Transform.Position.Y + 75);
                 Textures[i].RenderLayer = 0;
                 Textures[i].LayerDepth = 0;
                 Textures[i].Enabled = false;
@@ -105,7 +98,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X, SelectionButton.LocalOffset.Y - 50);
             }
-            if (SelectionButton.LocalOffset.Y + 50  <= Screen.Center.Y + 28 - Entity.Transform.Position.Y + 75 && Down.IsPressed)
+            if (SelectionButton.LocalOffset.Y + 50 <= Screen.Center.Y + 28 - Entity.Transform.Position.Y + 75 && Down.IsPressed)
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X, SelectionButton.LocalOffset.Y + 50);
             }
@@ -114,13 +107,13 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             if (Enter.IsPressed)
             {
                 var itemIndex = GetSelectedItemIndex();
-
-                stats.itemList[itemIndex].ItemEffect(stats);
-                stats.itemList.RemoveAt(itemIndex);
-                Textures[itemIndex].Enabled = false;
-                Textures.RemoveAt(itemIndex);
-
-
+                if (stats.energy - stats.itemList[itemIndex].cost >= 0)
+                {
+                    stats.itemList[itemIndex].ItemEffect(stats);
+                    stats.itemList.RemoveAt(itemIndex);
+                    Textures[itemIndex].Enabled = false;
+                    Textures.RemoveAt(itemIndex);
+                }
             }
 
             // Exit
@@ -142,12 +135,12 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         {
             if (GetSelectedItemIndex() != -1)
             {
-                batcher.Draw(descriptionBox, new RectangleF((int)Screen.Center.X + 350 - 150 + 20, Screen.Center.Y +40, 250, 150));
-                batcher.DrawString(Graphics.Instance.BitmapFont, stats.itemList[GetSelectedItemIndex()].description, new Vector2((int)Screen.Center.X + 350 - 150 + 35, Screen.Center.Y +30 + 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+                batcher.Draw(descriptionBox, new RectangleF((int)Screen.Center.X + 350 - 150 + 20, Screen.Center.Y + 40, 250, 150));
+                batcher.DrawString(Graphics.Instance.BitmapFont, stats.itemList[GetSelectedItemIndex()].description, new Vector2((int)Screen.Center.X + 350 - 150 + 35, Screen.Center.Y + 30 + 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
 
                 for (var i = 0; i < Math.Abs(stats.itemList[GetSelectedItemIndex()].cost); i++)
                 {
-                    batcher.Draw(hud.EnergyStar, new Rectangle((int)Screen.Center.X + 350 - 150 + 35 + i * 25, (int)Screen.Center.Y +30 + 35, 25, 25), stats.itemList[GetSelectedItemIndex()].cost > 0 ? Color.Red : Color.CornflowerBlue);
+                    batcher.Draw(hud.EnergyStar, new Rectangle((int)Screen.Center.X + 350 - 150 + 35 + i * 25, (int)Screen.Center.Y + 30 + 35, 25, 25), stats.itemList[GetSelectedItemIndex()].cost > 0 ? Color.Red : Color.CornflowerBlue);
                 }
             }
         }
@@ -155,10 +148,9 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         {
             for (var i = 0; i < Textures.Count; i++)
             {
-                if (SelectionButton.LocalOffset.X == Textures[i].LocalOffset.X && SelectionButton.LocalOffset.Y - 8 == Textures[i].LocalOffset.Y && stats.energy - stats.itemList[i].cost >= 0)
+                if (SelectionButton.LocalOffset.X == Textures[i].LocalOffset.X && SelectionButton.LocalOffset.Y - 8 == Textures[i].LocalOffset.Y)
                 {
                     return i;
-
                 }
             }
             return -1;

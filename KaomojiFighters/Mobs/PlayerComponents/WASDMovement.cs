@@ -44,16 +44,12 @@ namespace KaomojiFighters.Mobs
                         colliderTyp = OwOWOrldTriggerTypes.NaNi;
                         Core.StartSceneTransition(new TextureWipeTransition(() => new ShopScene(), Entity.Scene.Content.LoadTexture("c")));
                         break;
-                    //case OwOWOrldTriggerTypes.Dialog:
-                    //    Core.StartSceneTransition(new TextureWipeTransition(() => new OverworldScene(), Entity.Scene.Content.LoadTexture("c")));
-                    //    break;
                 }
             }
         }
 
         public void OnTriggerEnter(Collider other, Collider local)
         {
-            stat.OwOworldPosition = Entity.Position;
             SafeFileLoader.SaveStats(stat);
             if (other is OwOWorldTrigger owor)
             {
@@ -66,6 +62,8 @@ namespace KaomojiFighters.Mobs
                         Core.StartSceneTransition(new TextureWipeTransition(() => new MenuScene(), Core.Content.LoadTexture("a")));
                         break;
                     case OwOWOrldTriggerTypes.Shop:
+                        stat.OwOworldPosition = Entity.Position;
+                        SafeFileLoader.SaveStats(stat);
                         inTrigger = true;
                         colliderTyp= OwOWOrldTriggerTypes.Shop;
                         break;
@@ -73,8 +71,14 @@ namespace KaomojiFighters.Mobs
                         inTrigger = true;
                         colliderTyp = OwOWOrldTriggerTypes.Dialog;
                         break;
-                }
+                    case OwOWOrldTriggerTypes.LocationSafer:
+                        stat.OwOworldPosition = Entity.Position;
+                        SafeFileLoader.SaveStats(stat);
+                        inTrigger = true;
+                        colliderTyp = OwOWOrldTriggerTypes.LocationSafer;
+                        break;
 
+                }
             }
         }
 

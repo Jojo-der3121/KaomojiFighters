@@ -90,7 +90,7 @@ namespace KaomojiFighters.Scenes.SellerScene
                     return new DefencePotion();
 
                 case 3:
-                    return new DefencePotion();
+                    return new SpeedPotion();
             }
             return null;
         }
@@ -117,11 +117,7 @@ namespace KaomojiFighters.Scenes.SellerScene
                     var itemTyp = GetItemTyp(i);
                     for (var e = selectedProduct[i]; e > 0; e--)
                     {
-                        if (buy)
-                        {
-                            stats.itemList.Add(itemTyp);
-                            stats.Gold -= GetFullPrice(4);
-                        }
+                        if (buy)stats.itemList.Add(itemTyp);
                         else
                         {
                             for (var v = 0; v < stats.itemList.Count; v++)
@@ -130,16 +126,17 @@ namespace KaomojiFighters.Scenes.SellerScene
                                 stats.itemList.RemoveAt(v);
                                 break;
                             }
-                            stats.Gold += sellPriceArray[0] * selectedProduct[0] + sellPriceArray[1] * selectedProduct[1] +
-                                          sellPriceArray[2] * selectedProduct[2] + sellPriceArray[3] * selectedProduct[3];
                         }
                     }
-                    selectedProduct = new int[] { 0, 0, 0, 0 };
-                    availableItems = new int[] { 0, 0, 0, 0 };
-                    Enabled = false;
                 }
+                if(buy) stats.Gold -= GetFullPrice(4);
+                else stats.Gold += sellPriceArray[0] * selectedProduct[0] + sellPriceArray[1] * selectedProduct[1] +
+                              sellPriceArray[2] * selectedProduct[2] + sellPriceArray[3] * selectedProduct[3];
                 SafeFileLoader.SaveStats(stats);
                 shop.Gold = stats.Gold;
+                selectedProduct = new int[] { 0, 0, 0, 0 };
+                availableItems = new int[] { 0, 0, 0, 0 };
+                Enabled = false;
             }
             if (ExitShop.IsPressed)
             {

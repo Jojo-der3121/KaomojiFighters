@@ -26,10 +26,11 @@ namespace KaomojiFighters.Scenes.DuelMode
             {
                 if (battlingEntity.stat.HP <= 0)
                 {
+                    var player = Scene.FindEntity("Kaomoji01");
                     var stats = SafeFileLoader.LoadStats();
-                    if (battlingEntity.GetComponent<Player>() == null)
+                    if (battlingEntity.Entity != player)
                     {
-                        
+                        stats.itemList = player.GetComponent<Player>().stat.itemList;
                         stats.Gold += battlingEntity.stat.Gold;
                         SafeFileLoader.SaveStats(stats);
                     }

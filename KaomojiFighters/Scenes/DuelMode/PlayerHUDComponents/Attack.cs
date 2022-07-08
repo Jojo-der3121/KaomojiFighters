@@ -34,7 +34,6 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         protected int Lammarsch;
         private MobHitCalculation MyAutsch;
         protected Vector2 OriginalPosition;
-        protected Texture2D Bubble;
 
 
         public void enableAttack() => attackState = AttackState.approaching;
@@ -57,7 +56,6 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             Lammarsch = Math.Sign(Entity.Position.X - attackTarget.Position.X);
             MyAutsch = Entity.GetComponent<MobHitCalculation>();
             OriginalPosition = Entity.Position;
-            Bubble = Entity.Scene.Content.LoadTexture("SpeachBubble");
             Deck = new List<word>();
             Deck.AddRange(Entity.GetComponent<Mob>().stat.wordList);
             sentenceWords = new List<word>();
@@ -166,9 +164,9 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             if (attackState == AttackState.returning)
             {
                 var str = attackMenu.GetString(sentenceWords);
-                batcher.Draw(Bubble, new Rectangle((int)Screen.Center.X + 140, 290,(int) Graphics.Instance.BitmapFont.MeasureString(str ).X *3+ 20, 50)) ;
-                batcher.DrawString(Graphics.Instance.BitmapFont, str, new Vector2(Screen.Center.X + 150, 300), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
-
+                var bubble = new SpeechBubble(new Vector2((int) Screen.Center.X + 140, 300), str,
+                    new Vector2((int) Graphics.Instance.BitmapFont.MeasureString(str).X * 3 + 60, 100), false, 3);
+                bubble.DrawTextField(batcher);
             }
         }
 

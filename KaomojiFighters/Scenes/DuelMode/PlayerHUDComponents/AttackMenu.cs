@@ -33,13 +33,11 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
         private float selectedElement;
         private List<word> attackSentence;
         private Stats stat;
-        private Texture2D Bubble;
         private bool draw;
 
         public override void OnAddedToEntity()
         {
             base.OnAddedToEntity();
-            Bubble = Entity.Scene.Content.LoadTexture("SpeachBubble");
             TextButton = Entity.Scene.Content.LoadTexture("TextButton");
             AttackOptionsMenu = Entity.Scene.Content.LoadTexture("AttackOptions");
             attackSentence = new List<word>();
@@ -105,8 +103,8 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             //draws the attack speechBubble
             if (draw)
             {
-                batcher.Draw(Bubble, new Rectangle((int)Screen.Center.X - 265 , 292, (int) Graphics.Instance.BitmapFont.MeasureString(str).X *3 + 30, 50));
-                batcher.DrawString(Graphics.Instance.BitmapFont, str, new Vector2(Screen.Center.X - 250 , 300), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
+                var bubble = new SpeechBubble(new Vector2(700, 300),str, new Vector2((int)Graphics.Instance.BitmapFont.MeasureString(str).X * 3 + 60, (int)Graphics.Instance.BitmapFont.MeasureString(str).Y + 100), false, 3);
+                bubble.DrawTextField(batcher);
             }
         }
 

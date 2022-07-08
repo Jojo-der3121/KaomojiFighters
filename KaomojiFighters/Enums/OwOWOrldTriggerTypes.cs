@@ -12,6 +12,7 @@ namespace KaomojiFighters.Enums
         Dialog,
         Shop,
         Goal,
+        LocationSafer,
         NaNi
     }
 }

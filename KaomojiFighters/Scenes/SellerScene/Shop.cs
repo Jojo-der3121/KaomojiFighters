@@ -26,6 +26,9 @@ namespace KaomojiFighters.Scenes.SellerScene
         private VirtualButton Left;
         private VirtualButton Right;
         private VirtualButton Enter;
+        private SpeechBubble BuY = new SpeechBubble(new Vector2(Screen.Center.X, 940),"BuY", new Vector2(300,220),true, 7);
+        private SpeechBubble Sell = new SpeechBubble(new Vector2(Screen.Center.X - 330, 940),"Sell", new Vector2(300,220),true,7);
+        private SpeechBubble Leave = new SpeechBubble(new Vector2(Screen.Center.X + 330, 940), "Leave", new Vector2(300, 220), true,7);
         private ShopHUD shopHUD;
         public int Gold;
 
@@ -58,17 +61,9 @@ namespace KaomojiFighters.Scenes.SellerScene
             batcher.Draw(ShopInner, new RectangleF(Screen.Center.X - ShopInner.Width/2, 0, 1920 / 3, 1080));
             batcher.Draw(Seller, new RectangleF(Screen.Center.X - Seller.Width/4, Screen.Center.Y , 400, 125));
             batcher.Draw(ShopOuter, new RectangleF(Screen.Center.X - ShopOuter.Width/2, 0, (1920 / 3)*(7/6), 1080*(7/6)));
-            
-            batcher.DrawRect(Screen.Center.X -150, 830f , 300f,220f, Color.Black);
-            batcher.DrawRect(Screen.Center.X - 140, 840f, 280f, 200f, new Color(104, 201, 52));
-            batcher.DrawString(Graphics.Instance.BitmapFont, "BuY", new Vector2(Screen.Center.X- 75 , 880f), Color.Black, 0f, Vector2.Zero, 10f, SpriteEffects.None, 0f);
-            batcher.DrawRect(Screen.Center.X -150 -330, 830f , 300f,220f, Color.Black);
-            batcher.DrawRect(Screen.Center.X - 140 -330, 840f, 280f, 200f, new Color(104, 201, 52));
-            batcher.DrawString(Graphics.Instance.BitmapFont, "Sell", new Vector2(Screen.Center.X - 75 -330, 880f), Color.Black, 0f, Vector2.Zero, 10f, SpriteEffects.None, 0f);
-            batcher.DrawRect(Screen.Center.X -150 +330, 830f , 300f,220f, Color.Black);
-            batcher.DrawRect(Screen.Center.X - 140 +330, 840f, 280f, 200f, new Color(104, 201, 52));
-            batcher.DrawString(Graphics.Instance.BitmapFont, "Leave", new Vector2(Screen.Center.X - 75 +270, 880f), Color.Black, 0f, Vector2.Zero, 9f, SpriteEffects.None, 0f);
-
+            BuY.DrawTextField(batcher);
+            Sell.DrawTextField(batcher);
+            Leave.DrawTextField(batcher);
             batcher.DrawRect(new RectangleF(1120, 0, 310, 80), Color.Black);
             batcher.DrawRect(new RectangleF( 1130, 0, 290,70), Color.DarkGreen);
             batcher.DrawString(Graphics.Instance.BitmapFont, Gold.ToString(), new Vector2(1200, 5f), Color.PaleGoldenrod, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
