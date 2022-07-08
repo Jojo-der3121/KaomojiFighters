@@ -1,16 +1,10 @@
 ﻿using KaomojiFighters.Mobs;
-using Nez;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KaomojiFighters.Objects
 {
     public class Item 
     {
-        public string ItemType { get; set; }
+        public string ItemType { get;  set; }
         public int cost;
         public string description;
         

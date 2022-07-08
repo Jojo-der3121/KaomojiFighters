@@ -1,11 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Nez;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KaomojiFighters.Mobs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Nez.BitmapFonts;
@@ -21,14 +15,14 @@ namespace KaomojiFighters.Scenes.SellerScene
         Texture2D ShopOuter;
         Texture2D Seller;
         Texture2D DogdeCoin;
-        public SpriteRenderer selectionButton;
+        private SpriteRenderer selectionButton;
         private int selectionDestination;
         private VirtualButton Left;
         private VirtualButton Right;
         private VirtualButton Enter;
-        private SpeechBubble BuY = new SpeechBubble(new Vector2(Screen.Center.X, 940),"BuY", new Vector2(300,220),true, 7);
-        private SpeechBubble Sell = new SpeechBubble(new Vector2(Screen.Center.X - 330, 940),"Sell", new Vector2(300,220),true,7);
-        private SpeechBubble Leave = new SpeechBubble(new Vector2(Screen.Center.X + 330, 940), "Leave", new Vector2(300, 220), true,7);
+        private readonly SpeechBubble BuY = new SpeechBubble(new Vector2(Screen.Center.X, 940),"BuY", new Vector2(300,220),true, 7);
+        private readonly SpeechBubble Sell = new SpeechBubble(new Vector2(Screen.Center.X - 330, 940),"Sell", new Vector2(300,220),true,7);
+        private readonly SpeechBubble Leave = new SpeechBubble(new Vector2(Screen.Center.X + 330, 940), "Leave", new Vector2(300, 220), true,7);
         private ShopHUD shopHUD;
         public int Gold;
 
@@ -84,26 +78,24 @@ namespace KaomojiFighters.Scenes.SellerScene
             }
             selectionButton.LocalOffset = Vector2.Lerp(selectionButton.LocalOffset, new Vector2(selectionDestination, selectionButton.LocalOffset.Y), 0.06f);
 
-            bool ignoreShopHUDUpdate = false;
-            bool ignoreSellHUDUpdate = false;
-            if (Enter.IsPressed)
+            var ignoreShopHUDUpdate = false;
+            var ignoreSellHUDUpdate = false;
+            if (!Enter.IsPressed) return;
+            switch (selectionDestination)
             {
-                switch (selectionDestination)
-                {
-                    case -330:
-                        shopHUD.Enabled = true;
-                        shopHUD.buy = false;
-                        break;
-                    case 0:
-                        shopHUD.Enabled = true;
-                        shopHUD.buy = true;
-                        ignoreShopHUDUpdate = true;
-                        break;
-                    case 330:
-                        Core.StartSceneTransition(new TextureWipeTransition(() => new OverworldScene(SafeFileLoader.LoadStats().OwOworldPosition), Entity.Scene.Content.LoadTexture("c")));
-                        break;
+                case -330:
+                    shopHUD.Enabled = true;
+                    shopHUD.buy = false;
+                    break;
+                case 0:
+                    shopHUD.Enabled = true;
+                    shopHUD.buy = true;
+                    ignoreShopHUDUpdate = true;
+                    break;
+                case 330:
+                    Core.StartSceneTransition(new TextureWipeTransition(() => new OverworldScene(SafeFileLoader.LoadStats().OwOworldPosition), Entity.Scene.Content.LoadTexture("c")));
+                    break;
 
-                }
             }
         }
     }

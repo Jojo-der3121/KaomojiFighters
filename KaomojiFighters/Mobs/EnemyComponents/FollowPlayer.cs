@@ -1,40 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Text;
-using KaomojiFighters.Mobs;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
 using Nez;
-using Nez.Textures;
-using Nez.Sprites;
 
 namespace KaomojiFighters.Mobs
 {
-    class FollowPlayer : Component, IUpdatable 
+    class FollowPlayer : Component, IUpdatable
     {
 
         public float LerpIndex;
-        private int buffer = 0;
+        private int buffer ;
 
         public void Update()
         {
-           Entity.Position = Vector2.Lerp(Entity.Position, Screen.Center, LerpIndex);
-                if (buffer == 0)
-                {
-                    buffer = 123;
-                }
-
-            
-            if (buffer != 0)
+            Entity.Position = Vector2.Lerp(Entity.Position, Screen.Center, LerpIndex);
+            if (buffer == 0)
             {
-                buffer--;
-                if (buffer == 0)
-                {
-                    Entity.Position = new Vector2(1400, 700);
-                }
+                buffer = 123;
+            }
+
+
+            if (buffer == 0) return;
+            buffer--;
+            if (buffer == 0)
+            {
+                Entity.Position = new Vector2(1400, 700);
             }
         }
     }

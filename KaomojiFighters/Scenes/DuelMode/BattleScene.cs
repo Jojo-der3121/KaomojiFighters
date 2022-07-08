@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using KaomojiFighters.Mobs;
+﻿using KaomojiFighters.Mobs;
 using Nez;
-using Nez.Sprites;
 using KaomojiFighters.Scenes.DuelMode;
 
 using Microsoft.Xna.Framework;

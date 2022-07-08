@@ -3,21 +3,15 @@ using Nez;
 using Nez.Sprites;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using KaomojiFighters.Scenes.DuelMode;
 using Nez.Textures;
-using KaomojiFighters.Objects;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 {
     class ItemMenu : RenderableComponent
     {
-        public Entity playerEntity;
-        private Player player;
         public SpriteRenderer ItemMenuDisplay;
         public List<SpriteRenderer> Textures;
         private HUD hud;
@@ -45,7 +39,6 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
             // get Entities
             hud = Entity.GetComponent<HUD>();
-            player = playerEntity.GetComponent<Player>();
             stats = SafeFileLoader.LoadStats();
 
             // ItemDisplay Config
@@ -117,17 +110,15 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             }
 
             // Exit
-            if (ExitItemMenu.IsPressed)
+            if (!ExitItemMenu.IsPressed) return;
+            ItemMenuDisplay.Enabled = false;
+            SelectionButton.Enabled = false;
+            foreach (var element in Textures)
             {
-                ItemMenuDisplay.Enabled = false;
-                SelectionButton.Enabled = false;
-                foreach (var element in Textures)
-                {
-                    element.Enabled = false;
-                }
-                hud.Enabled = true;
-                Enabled = false;
+                element.Enabled = false;
             }
+            hud.Enabled = true;
+            Enabled = false;
 
         }
 

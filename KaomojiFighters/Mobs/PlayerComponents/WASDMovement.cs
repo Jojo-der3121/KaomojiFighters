@@ -14,8 +14,8 @@ namespace KaomojiFighters.Mobs
     class OwOWorldPlayer : Component, IUpdatable, ITriggerListener
     {
         private VirtualJoystick joystick;
-        public Stats stat;
-        public Mover mover;
+        private Stats stat;
+        private Mover mover;
         VirtualButton interact;
         bool inTrigger;
         private OwOWOrldTriggerTypes colliderTyp;
@@ -51,34 +51,32 @@ namespace KaomojiFighters.Mobs
         public void OnTriggerEnter(Collider other, Collider local)
         {
             SafeFileLoader.SaveStats(stat);
-            if (other is OwOWorldTrigger owor)
+            if (!(other is OwOWorldTrigger owor)) return;
+            switch (owor.owoWorldTriggerType)
             {
-                switch (owor.owoWorldTriggerType)
-                {
-                    case OwOWOrldTriggerTypes.battle:
-                        Core.StartSceneTransition(new TextureWipeTransition(() => new Battle(), Core.Content.LoadTexture("nez/textures/textureWipeTransition/pokemon")));
-                        break;
-                    case OwOWOrldTriggerTypes.Goal:
-                        Core.StartSceneTransition(new TextureWipeTransition(() => new MenuScene(), Core.Content.LoadTexture("a")));
-                        break;
-                    case OwOWOrldTriggerTypes.Shop:
-                        stat.OwOworldPosition = Entity.Position;
-                        SafeFileLoader.SaveStats(stat);
-                        inTrigger = true;
-                        colliderTyp= OwOWOrldTriggerTypes.Shop;
-                        break;
-                        case OwOWOrldTriggerTypes.Dialog:
-                        inTrigger = true;
-                        colliderTyp = OwOWOrldTriggerTypes.Dialog;
-                        break;
-                    case OwOWOrldTriggerTypes.LocationSafer:
-                        stat.OwOworldPosition = Entity.Position;
-                        SafeFileLoader.SaveStats(stat);
-                        inTrigger = true;
-                        colliderTyp = OwOWOrldTriggerTypes.LocationSafer;
-                        break;
+                case OwOWOrldTriggerTypes.battle:
+                    Core.StartSceneTransition(new TextureWipeTransition(() => new Battle(), Core.Content.LoadTexture("nez/textures/textureWipeTransition/pokemon")));
+                    break;
+                case OwOWOrldTriggerTypes.Goal:
+                    Core.StartSceneTransition(new TextureWipeTransition(() => new MenuScene(), Core.Content.LoadTexture("a")));
+                    break;
+                case OwOWOrldTriggerTypes.Shop:
+                    stat.OwOworldPosition = Entity.Position;
+                    SafeFileLoader.SaveStats(stat);
+                    inTrigger = true;
+                    colliderTyp= OwOWOrldTriggerTypes.Shop;
+                    break;
+                case OwOWOrldTriggerTypes.Dialog:
+                    inTrigger = true;
+                    colliderTyp = OwOWOrldTriggerTypes.Dialog;
+                    break;
+                case OwOWOrldTriggerTypes.LocationSafer:
+                    stat.OwOworldPosition = Entity.Position;
+                    SafeFileLoader.SaveStats(stat);
+                    inTrigger = true;
+                    colliderTyp = OwOWOrldTriggerTypes.LocationSafer;
+                    break;
 
-                }
             }
         }
 

@@ -1,24 +1,19 @@
 ﻿using KaomojiFighters.Enums;
 using KaomojiFighters.Mobs;
-using KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Nez;
-using Nez.Sprites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
 {
     class AttackMenu : RenderableComponent
     {
-
-        public List<TextComponent> attackList = new List<TextComponent>();
-        private List<int> chosenAttackIndex = new List<int>();
+        private List<TextComponent> attackList = new List<TextComponent>();
+        private readonly List<int> chosenAttackIndex = new List<int>();
         public HUD hud;
         public Player player;
         private Texture2D TextButton;
@@ -121,16 +116,17 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
                 selectedElement = selectionY - (Screen.Center.Y + TextButton.Height + 15);
             }
 
-            // choose selected Attack
-            if (Enter.IsPressed && IsAllowedWord(hud.Hand[(int)selectedElement / 25].allowedPreviouseWords, attackSentence) && NotChosenAlready((int)selectedElement / 25) && stat.energy - hud.Hand[(int)selectedElement / 25].cost >= 0)
+            switch (Enter.IsPressed)
             {
-                attackSentence.Add(hud.Hand[(int)selectedElement / 25]);
-                chosenAttackIndex.Add((int)selectedElement / 25);
-                stat.energy -= hud.Hand[(int)selectedElement / 25].cost;
-            }
-            else if (Enter.IsPressed && !IsAllowedWord(hud.Hand[(int)selectedElement / 25].allowedPreviouseWords, attackSentence))
-            {
-                stat.HP -= 3;
+                // choose selected Attack
+                case true when IsAllowedWord(hud.Hand[(int)selectedElement / 25].allowedPreviouseWords, attackSentence) && NotChosenAlready((int)selectedElement / 25) && stat.energy - hud.Hand[(int)selectedElement / 25].cost >= 0:
+                    attackSentence.Add(hud.Hand[(int)selectedElement / 25]);
+                    chosenAttackIndex.Add((int)selectedElement / 25);
+                    stat.energy -= hud.Hand[(int)selectedElement / 25].cost;
+                    break;
+                case true when !IsAllowedWord(hud.Hand[(int)selectedElement / 25].allowedPreviouseWords, attackSentence):
+                    stat.HP -= 3;
+                    break;
             }
 
             if (executeAttack.IsPressed && attackSentence.Count >= 1)
@@ -185,7 +181,7 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             }
 
             // Exit
-            if (ExitAttackMenu.IsPressed)
+            if (!ExitAttackMenu.IsPressed) return;
             {
                 foreach (var element in attackSentence)
                 {
@@ -209,7 +205,7 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
             return true;
         }
 
-        public bool IsAllowedWord(List<wordType> allowedWords, List<word> sentenceWords)
+        private bool IsAllowedWord(List<wordType> allowedWords, List<word> sentenceWords)
         {
             foreach (var element in allowedWords)
             {

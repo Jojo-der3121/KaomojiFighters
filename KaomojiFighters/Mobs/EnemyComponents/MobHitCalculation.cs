@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents;
 using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
-using Nez.Textures;
 using Nez.Tweens;
 
 namespace KaomojiFighters.Mobs
 {
     class MobHitCalculation : Component, ITelegramReceiver, IUpdatable
     {
-        public Stats Stats;
+        private Stats Stats;
         public Entity opponentEntity;
         public BoxCollider HitBox;
         private SpriteRenderer sprite;
@@ -36,13 +29,11 @@ namespace KaomojiFighters.Mobs
 
         public void MessageReceived(Telegram message)
         {
-            if (message.Head == "auf die Fresse")
+            if (message.Head != "auf die Fresse") return;
+            var damage = opponentEntity.GetComponent<Mob>().stat.AttackValue - Stats.Defence;
+            if (damage > 0)
             {
-                var damage = opponentEntity.GetComponent<Mob>().stat.AttackValue - Stats.Defence;
-                if (damage > 0)
-                {
-                    Stats.HP -= damage;
-                }
+                Stats.HP -= damage;
             }
         }
 

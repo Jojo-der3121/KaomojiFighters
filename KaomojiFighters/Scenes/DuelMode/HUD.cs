@@ -30,10 +30,9 @@ namespace KaomojiFighters.Scenes.DuelMode
         private ItemMenu ItemMenuComponent;
         private AttackMenu AttackMenuComponent;
         private Sprite BatterieHPBar;
-        private Texture2D deckTexture;
-        private List<word> Deck = new List<word>();
-        public List<word> Hand = new List<word>();
-        public List<word> GY = new List<word>();
+        private readonly List<word> Deck = new List<word>();
+        public readonly List<word> Hand = new List<word>();
+        public readonly List<word> GY = new List<word>();
         private const int selectionDestinationOffset = 350;
        
 
@@ -52,7 +51,7 @@ namespace KaomojiFighters.Scenes.DuelMode
             // Adds the executional components for the MenuselectionOptions
             
             AttackMenuComponent = Entity.AddComponent(new AttackMenu() { player = playerComponent, hud = this });
-            ItemMenuComponent = Entity.AddComponent(new ItemMenu() { playerEntity = playerComponent.Entity });
+            ItemMenuComponent = Entity.AddComponent(new ItemMenu());
 
             // Loads Sprites
             VSSinge = new Sprite(Entity.Scene.Content.LoadTexture("VS"));
@@ -83,7 +82,6 @@ namespace KaomojiFighters.Scenes.DuelMode
             ItemMenuComponent.Enabled = false;
 
             // loads assets and gets Data for aufzieh and ablage Stapl
-            deckTexture = Entity.Scene.Content.LoadTexture("AttackOptions");
             Deck.AddRange(playerComponent.stat.wordList);
         }
         public override RectangleF Bounds => new RectangleF(0, 0, 1920, 1080);
@@ -113,7 +111,7 @@ namespace KaomojiFighters.Scenes.DuelMode
                 saturdayButton.DrawTextField(batcher);
             }
 
-            // drwas energy Bar
+            // draws energy Bar
             for ( var i = 1; i <= playerComponent.stat.energy; i++) 
             {
                 batcher.Draw(EnergyStar, new Rectangle(85, 1080 - 290 - i*40,45,45), Color.CornflowerBlue);
@@ -185,11 +183,10 @@ namespace KaomojiFighters.Scenes.DuelMode
             {
                 ItemMenuComponent.Update();
             }
-            if (Deck.Count == 0 && GY.Count == playerComponent.stat.wordList.Count)
-            {
-                Deck.AddRange(GY);
-                GY.Clear();
-            }
+
+            if (Deck.Count != 0 || GY.Count != playerComponent.stat.wordList.Count) return;
+            Deck.AddRange(GY);
+            GY.Clear();
 
 
         }

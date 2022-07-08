@@ -1,19 +1,14 @@
 ﻿using KaomojiFighters.Scenes.DuelMode;
 using Nez;
 using Nez.Sprites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KaomojiFighters.Mobs
 {
     abstract class Mob : Component , ITelegramReceiver
     {
         public Stats stat;
-        public SpriteRenderer spriteRenderer;
-        public Entity opponent;
+        protected SpriteRenderer spriteRenderer;
+        protected Entity opponent;
 
         protected abstract string opponentName { get; }
         protected abstract Stats statsConfig { get; }
@@ -35,7 +30,7 @@ namespace KaomojiFighters.Mobs
             LoadShit();
         }
 
-        public abstract void LoadShit();
+        protected abstract void LoadShit();
 
         
 

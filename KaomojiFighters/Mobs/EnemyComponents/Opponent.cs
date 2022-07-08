@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents;
-using Microsoft.Xna.Framework;
+﻿using KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents;
 using Nez;
-using Nez.Sprites;
 using Nez.Textures;
 
 namespace KaomojiFighters.Mobs
@@ -23,7 +15,7 @@ namespace KaomojiFighters.Mobs
 
         protected override Stats statsConfig => new Stats() { Gold= 15, Speed = 7, weakness = "Mom Jokes", sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Hurt"))), wordList = word.GetWordList() };
 
-        public override void LoadShit() => (attack = Entity.AddComponent(new EnemyTextAttack() { attackTarget = opponent })).Enabled = false;
+        protected override void LoadShit() => (attack = Entity.AddComponent(new EnemyTextAttack() { attackTarget = opponent })).Enabled = false;
 
         public override void MessageReceived(Telegram message)
         {

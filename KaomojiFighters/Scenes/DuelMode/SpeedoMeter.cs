@@ -10,7 +10,7 @@ namespace KaomojiFighters.Scenes.DuelMode
     {
         public List<Mob> EntityList;
         private Mob TurnPlayer;
-        public bool LastPlayerFinished = true;
+        private bool LastPlayerFinished = true;
 
         public SpeedoMeter()
         {

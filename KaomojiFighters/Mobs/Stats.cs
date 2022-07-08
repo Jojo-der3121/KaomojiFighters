@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KaomojiFighters.Enums;
+﻿using System.Collections.Generic;
 using KaomojiFighters.Objects;
-using KaomojiFighters.Scenes.DuelMode;
 using Microsoft.Xna.Framework;
-using Nez;
 using Nez.Textures;
 
 namespace KaomojiFighters.Mobs

@@ -1,11 +1,8 @@
 ﻿using KaomojiFighters.Enums;
-using KaomojiFighters.Scenes.DuelMode;
 using KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using Nez.Sprites;
-using Nez.Textures;
 using System;
 using System.Collections.Generic;
 
@@ -23,7 +20,6 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         private List<word> sentenceWords;
         private AttackMenu attackMenu;
         private word attackSentenceEnd;
-        protected Scene scene;
         public BoxCollider collider;
         public Entity attackTarget;
         public SpriteRenderer EnemySprite;
@@ -33,7 +29,6 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         protected AttackState attackState;
         protected int Lammarsch;
         private MobHitCalculation MyAutsch;
-        protected Vector2 OriginalPosition;
 
 
         public void enableAttack() => attackState = AttackState.approaching;
@@ -47,7 +42,6 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         public override void OnAddedToEntity()
         {
             base.OnAddedToEntity();
-            scene = new Scene();
             EntitySprite = Entity.GetComponent<SpriteRenderer>();
             stat = Entity.GetComponent<Mob>().stat;
             collider = Entity.AddComponent(new BoxCollider(75, 75));
@@ -55,7 +49,6 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             EnemySprite = attackTarget.GetComponent<SpriteRenderer>();
             Lammarsch = Math.Sign(Entity.Position.X - attackTarget.Position.X);
             MyAutsch = Entity.GetComponent<MobHitCalculation>();
-            OriginalPosition = Entity.Position;
             Deck = new List<word>();
             Deck.AddRange(Entity.GetComponent<Mob>().stat.wordList);
             sentenceWords = new List<word>();

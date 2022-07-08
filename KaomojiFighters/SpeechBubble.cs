@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
@@ -12,13 +9,13 @@ namespace KaomojiFighters
 {
     class SpeechBubble
     {
-        private Vector2 _size;
-        private Vector2 _location;
-        private List<string> Speech = new List<string>();
-        private Color _boxColor;
-        private Color _textColor;
-        private float _fontSize = 5f;
-        private bool _isHudComponent;
+        private readonly Vector2 _size;
+        private readonly Vector2 _location;
+        private readonly List<string> _speech = new List<string>();
+        private readonly Color _boxColor;
+        private readonly Color _textColor;
+        private readonly float _fontSize = 5f;
+        private readonly bool _isHudComponent;
 
         public SpeechBubble(Vector2 location, string text, Vector2 size, bool isHUDComponent, float scale)
         {
@@ -53,18 +50,18 @@ namespace KaomojiFighters
         private void GetSpeech(string text)
         {
             
-            if (Graphics.Instance.BitmapFont.MeasureString(text).X*_fontSize <= _size.X -60) Speech.Add(text);
+            if (Graphics.Instance.BitmapFont.MeasureString(text).X*_fontSize <= _size.X -60) _speech.Add(text);
             else
             {
-                Speech.Add(text.Substring(0, text.Length / (int)Math.Round(Graphics.Instance.BitmapFont.MeasureString(text).X * _fontSize / (_size.X - 60))));
+                _speech.Add(text.Substring(0, text.Length / (int)Math.Round(Graphics.Instance.BitmapFont.MeasureString(text).X * _fontSize / (_size.X - 60))));
                 text = text.Remove(0, text.Length / (int)Math.Round(Graphics.Instance.BitmapFont.MeasureString(text).X * _fontSize / (_size.X - 60)));
                 while (Graphics.Instance.BitmapFont.MeasureString(text).X *_fontSize > _size.X -60)
                 {
-                    Speech.Add( text.Substring(0, text.Length / (int)Math.Round(Graphics.Instance.BitmapFont.MeasureString(text).X * _fontSize / (_size.X - 60))));
+                    _speech.Add( text.Substring(0, text.Length / (int)Math.Round(Graphics.Instance.BitmapFont.MeasureString(text).X * _fontSize / (_size.X - 60))));
                     text = text.Remove(0,
                         text.Length / (int)Math.Round(Graphics.Instance.BitmapFont.MeasureString(text).X * _fontSize / (_size.X - 60)));
                 }
-                if(text != "") Speech.Add( text);
+                if(text != "") _speech.Add( text);
             }
         }
 
@@ -73,14 +70,14 @@ namespace KaomojiFighters
         public void DrawTextField(Batcher batcher)
         {
             var yLocation = (_size.Y - 60 + Graphics.Instance.BitmapFont.MeasureString("Ag").Y) / 2 + Graphics.Instance.BitmapFont.MeasureString("Ag").Y *
-                (Speech.Count - 1)* _fontSize;
+                (_speech.Count - 1)* _fontSize;
             if (!_isHudComponent) batcher.DrawRect(_location.X - _size.X / 2, _location.Y - _size.Y / 2, _size.X, yLocation+60  < _size.Y? _size.Y : yLocation+60 , _boxColor);
             batcher.DrawRect(_location.X -( _size.X-20) / 2, _location.Y - (_size.Y - 20) / 2, (_size.X - 20),  yLocation + 60 < _size.Y ? (_size.Y - 20) : yLocation + 40, _textColor); 
             batcher.DrawRect(_location.X -( _size.X-40) / 2, _location.Y - (_size.Y - 40) / 2, (_size.X - 40), yLocation + 60 < _size.Y ? (_size.Y - 40) : yLocation + 20, _boxColor); 
-            for (var str = 0; str < Speech.Count; str++)
+            for (var str = 0; str < _speech.Count; str++)
             {
-                batcher.DrawString(Graphics.Instance.BitmapFont, Speech[str], new Vector2(_location.X - (_size.X - 60)/2,
-                    _location.Y - (_size.Y - 60 + Graphics.Instance.BitmapFont.MeasureString(Speech[str]).Y) / 2 + Graphics.Instance.BitmapFont.MeasureString(Speech[str]).Y * str * _fontSize), _textColor, 0f, Vector2.Zero, _fontSize, SpriteEffects.None, 0f);
+                batcher.DrawString(Graphics.Instance.BitmapFont, _speech[str], new Vector2(_location.X - (_size.X - 60)/2,
+                    _location.Y - (_size.Y - 60 + Graphics.Instance.BitmapFont.MeasureString(_speech[str]).Y) / 2 + Graphics.Instance.BitmapFont.MeasureString(_speech[str]).Y * str * _fontSize), _textColor, 0f, Vector2.Zero, _fontSize, SpriteEffects.None, 0f);
             }
         }
     }

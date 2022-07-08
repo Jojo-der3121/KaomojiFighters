@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KaomojiFighters.Mobs;
-using KaomojiFighters.Scenes.SellerScene;
-using Microsoft.Xna.Framework;
+﻿using KaomojiFighters.Scenes.SellerScene;
 using Nez;
 
 namespace KaomojiFighters.Scenes
