@@ -14,16 +14,18 @@ namespace KaomojiFighters.Mobs
     class OwOWorldPlayer : Component, IUpdatable, ITriggerListener
     {
         private VirtualJoystick joystick;
-        private Stats stat;
-        private Mover mover;
+        public Stats stat;
+        public Mover mover;
         VirtualButton interact;
         bool inTrigger;
         private OwOWOrldTriggerTypes colliderTyp;
+        private Vector2 NPCposition;
+        public SpriteRenderer renderer;
 
         public override void OnAddedToEntity()
         {
             stat = SafeFileLoader.LoadStats();
-            Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("Kaomoji01")));
+             renderer = Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("Kaomoji01")));
             joystick = new VirtualJoystick(true, new VirtualJoystick.KeyboardKeys(VirtualInput.OverlapBehavior.CancelOut, Keys.A, Keys.D, Keys.W, Keys.S));
             mover = Entity.AddComponent(new Mover());
             interact = new VirtualButton().AddKeyboardKey(Keys.E);
@@ -43,6 +45,13 @@ namespace KaomojiFighters.Mobs
                         inTrigger = false;
                         colliderTyp = OwOWOrldTriggerTypes.NaNi;
                         Core.StartSceneTransition(new TextureWipeTransition(() => new ShopScene(), Entity.Scene.Content.LoadTexture("c")));
+                        break;
+                    case OwOWOrldTriggerTypes.Dialog:
+                        inTrigger = false;
+                        colliderTyp = OwOWOrldTriggerTypes.NaNi;
+                        var OwOworld =(OverworldScene) Entity.Scene;
+                        OwOworld.dialogNPCs[NPCposition].Enabled = true;
+                        NPCposition = Vector2.Zero;
                         break;
                 }
             }
@@ -69,6 +78,7 @@ namespace KaomojiFighters.Mobs
                 case OwOWOrldTriggerTypes.Dialog:
                     inTrigger = true;
                     colliderTyp = OwOWOrldTriggerTypes.Dialog;
+                    NPCposition = other.AbsolutePosition;
                     break;
                 case OwOWOrldTriggerTypes.LocationSafer:
                     stat.OwOworldPosition = Entity.Position;

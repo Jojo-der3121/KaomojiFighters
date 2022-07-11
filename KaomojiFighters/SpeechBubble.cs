@@ -47,7 +47,7 @@ namespace KaomojiFighters
             GetSpeech(text);
         }
 
-        private void GetSpeech(string text)
+        public void GetSpeech(string text)
         {
             
             if (Graphics.Instance.BitmapFont.MeasureString(text).X*_fontSize <= _size.X -60) _speech.Add(text);

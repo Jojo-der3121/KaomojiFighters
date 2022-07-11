@@ -392,7 +392,7 @@
    </properties>
   </object>
   <object id="6" name="Goal" type="Goal" x="682.667" y="81.3333"/>
-  <object id="39" name="TutorialNPC" type="Dialog" x="273" y="223"/>
+  <object id="39" name="TutorialNPC" type="Dialog" x="249.667" y="213.833" width="39.1667" height="26.6667"/>
   <object id="40" name="Shop" type="Shop" x="392.667" y="393.667" width="46" height="35">
    <properties>
     <property name="IsLocationsSafer" type="bool" value="true"/>
