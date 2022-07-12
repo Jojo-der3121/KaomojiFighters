@@ -18,5 +18,5 @@ epic music playList. Themabattle ? => duke devlin + Friday night Funkin ?
 
 Defence == Shield
 
-FIX Item Bug & SpeedItem effekt
+ & SpeedItem effekt
 speudo scrollen wenn hand > 5 (einfach andere bereiche zeichnen)

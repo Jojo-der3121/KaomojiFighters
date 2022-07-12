@@ -89,7 +89,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             ItemMenuDisplay.Enabled = true;
             for (var i= 0; i< 12; i++)
             {
-                Textures[i+6*scrollIndex].Enabled = true;
+                if(i+6*scrollIndex< Textures.Count-1)Textures[i+6*scrollIndex].Enabled = true;
             }
         }
 
@@ -116,8 +116,8 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 for (var i =0; i < Textures.Count; i++)
                 {
                     Textures[i].SetLocalOffset(new Vector2(Textures[i].LocalOffset.X, Textures[i].LocalOffset.Y + 50));
-                    if (i < 6) Textures[i + 6 * scrollIndex].Enabled = true;
-                    if(i>=12 && i<18) Textures[i + 6 * scrollIndex].Enabled = false;
+                    if (i < 6 && i + 6 * scrollIndex < Textures.Count - 1) Textures[i + 6 * scrollIndex].Enabled = true;
+                    if(i>=12 && i<18 && i + 6 * scrollIndex < Textures.Count - 1) Textures[i + 6 * scrollIndex].Enabled = false;
                 }
             }
             if (SelectionButton.LocalOffset.Y + 50 <= Screen.Center.Y + 28 - Entity.Transform.Position.Y + 75 && Down.IsPressed)
@@ -128,9 +128,10 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             {
                 for (var i = 0; i < Textures.Count; i++)
                 {
+
                     Textures[i].SetLocalOffset(new Vector2(Textures[i].LocalOffset.X, Textures[i].LocalOffset.Y - 50));
-                    if (i < 6) Textures[i + 6 * scrollIndex].Enabled = false;
-                    if (i >= 6 && i < 18) Textures[i + 6 * scrollIndex].Enabled = true;
+                    if (i < 6 && i + 6 * scrollIndex < Textures.Count - 1) Textures[i + 6 * scrollIndex].Enabled = false;
+                    if (i >= 6 && i < 18 && i + 6 * scrollIndex < Textures.Count - 1) Textures[i + 6 * scrollIndex].Enabled = true;
                 }
                 scrollIndex++;
             }
@@ -139,7 +140,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             if (Enter.IsPressed)
             {
                 var itemIndex = GetSelectedItemIndex();
-                if (stats.energy - stats.itemList[itemIndex].cost >= 0)
+                if (itemIndex >= 0 && stats.energy - stats.itemList[itemIndex].cost >= 0)
                 {
                     stats.itemList[itemIndex].ItemEffect(stats);
                     stats.itemList.RemoveAt(itemIndex);
