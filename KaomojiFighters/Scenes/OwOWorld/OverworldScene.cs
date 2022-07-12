@@ -16,8 +16,9 @@ namespace KaomojiFighters.Scenes
 
         public OverworldScene(Vector2 priorPlayerPosition = default) : base()
         {
-
             base.Initialize();
+            AddRenderer(new RenderLayerExcludeRenderer(0, 4));
+            AddRenderer(new ScreenSpaceRenderer(0, 4));
             var actualTiledMap = Content.LoadTiledMap("OwOWorld");
             var actualLocationofStart = actualTiledMap.ObjectGroups["Objektebene 1"].Objects["Start"];
             var map = CreateEntity("Map").AddComponent(new TiledMapRenderer(actualTiledMap));
@@ -25,8 +26,9 @@ namespace KaomojiFighters.Scenes
             map.Transform.SetScale(WorldScale);
             var player = CreateEntity("Koamoji01", priorPlayerPosition != Vector2.Zero ? priorPlayerPosition : new Vector2(actualLocationofStart.X, actualLocationofStart.Y) * WorldScale).AddComponent(new OwOWorldPlayer());
             var webCame = FindEntity("camera");
-            webCame.AddComponent(new FollowCamera(player.Entity, FollowCamera.CameraStyle.CameraWindow)
-            { MapLockEnabled = false, FollowLerp = 0.5F, Camera = webCame.GetComponent<Camera>(), Deadzone = new RectangleF((1920f - 490f) / 2, (1080f - 390) / 2, 490f, 390f) });
+            var followCame = webCame.AddComponent(new FollowCamera(player.Entity, FollowCamera.CameraStyle.CameraWindow)
+            { MapLockEnabled = true, FollowLerp = 0.5F, Camera = webCame.GetComponent<Camera>(), Deadzone = new RectangleF((1920f - 490f) / 2, (1080f - 390) / 2, 490f, 390f) });
+            followCame.MapSize = new Vector2(map.Width * WorldScale, map.Height * WorldScale);
             foreach (var element in actualTiledMap.ObjectGroups["Objektebene 1"].Objects)
             {
                 switch (element.Type)
@@ -43,7 +45,7 @@ namespace KaomojiFighters.Scenes
                         break;
                     case "Dialog":
                         map.AddComponent(new OwOWorldTrigger((int)element.Width, (int)element.Height) { owoWorldTriggerType = OwOWOrldTriggerTypes.Dialog }).SetLocalOffset(new Vector2(element.X, element.Y));
-                        dialogNPCs.Add( new Vector2(element.X,element.Y) ,map.AddComponent(new DialogComponent(11, player, new List<Dialog> { new Dialog("Hallo, mein Ricardo ist nicht immer hungrig und lustig wenn es kalt und warm ist, aber Kartoffeln lieben ihn trotzdem.", 1, 1), new Dialog("Bob der Ross ist sehr traurig wenn die Teekanne Hildegard sagt it ist friego dans Australien pero defenstration.", 2, 1), new Dialog("Im Wald der Elfen und der Finsternis fehlt das finstere Etwas, weshalb er immer hell ist!", 3, 1) }, element, WorldScale)));
+                        dialogNPCs.Add( new Vector2(element.X,element.Y) ,map.AddComponent(new DialogComponent(11, player, new List<Dialog> { new Dialog("Hallo, mein Ricardo ist nicht immer hungrig und lustig wenn es kalt und warm ist, aber Kartoffeln lieben ihn trotzdem.", 1, 1), new Dialog("Bob der Ross ist sehr traurig wenn die Teekanne Hildegard sagt it ist friego dans Australien pero defenstration.", 1, 2), new Dialog("Im Wald der Elfen und der Finsternis fehlt das finstere Etwas, weshalb er immer hell ist!", 3, 1) }, element, WorldScale)));
                         dialogNPCs[new Vector2(element.X, element.Y)].Enabled = false;
                         break;
                     case "LocationSafer":

@@ -8,14 +8,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Nez;
 using Nez.Sprites;
+using Nez.Textures;
 
 namespace KaomojiFighters.Mobs
 {
     class OwOWorldPlayer : Component, IUpdatable, ITriggerListener
     {
-        private VirtualJoystick joystick;
+        public VirtualJoystick joystick;
         public Stats stat;
-        public Mover mover;
+        private Mover mover;
         VirtualButton interact;
         bool inTrigger;
         private OwOWOrldTriggerTypes colliderTyp;
@@ -25,7 +26,10 @@ namespace KaomojiFighters.Mobs
         public override void OnAddedToEntity()
         {
             stat = SafeFileLoader.LoadStats();
-             renderer = Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("Kaomoji01")));
+            stat.sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01")),
+                new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attack")),
+                new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurt")));
+            renderer = Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("Kaomoji01")));
             joystick = new VirtualJoystick(true, new VirtualJoystick.KeyboardKeys(VirtualInput.OverlapBehavior.CancelOut, Keys.A, Keys.D, Keys.W, Keys.S));
             mover = Entity.AddComponent(new Mover());
             interact = new VirtualButton().AddKeyboardKey(Keys.E);

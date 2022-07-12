@@ -79,7 +79,6 @@ namespace KaomojiFighters.Scenes.SellerScene
             selectionButton.LocalOffset = Vector2.Lerp(selectionButton.LocalOffset, new Vector2(selectionDestination, selectionButton.LocalOffset.Y), 0.06f);
 
             var ignoreShopHUDUpdate = false;
-            var ignoreSellHUDUpdate = false;
             if (!Enter.IsPressed) return;
             switch (selectionDestination)
             {
