@@ -1,15 +1,11 @@
 add Sound 
 
   add Option to destroy words for benefits. (alchemy? => individual Items)
-  Brick Option
-
 
 music inspiration ?
 
 TO-DO:
 der Gegner muss ein richtiges Satzende beachten.
-
-stonks sound
 
 Sensitiv Topic via Telegramm.
 Immune sign (grey: immune )+ sensitiv Topic sign (red: -sensitiv Topic)
@@ -18,5 +14,5 @@ epic music playList. Themabattle ? => duke devlin + Friday night Funkin ?
 
 Defence == Shield
 
- & SpeedItem effekt
-speudo scrollen wenn hand > 5 (einfach andere bereiche zeichnen)
+
+fix the drawing of the items (position ändern sich nicht, count jedoch schon)

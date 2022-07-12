@@ -32,7 +32,6 @@ namespace KaomojiFighters.Scenes.DuelMode
                     if (battlingEntity.Entity != player)
                     {
                         var r = new System.Random();
-                        stats.itemList = player.GetComponent<Player>().stat.itemList;
                         stats.Gold += battlingEntity.stat.Gold;
                         stats.wordList.Add(battlingEntity.stat.wordList[r.Next(battlingEntity.stat.wordList.Count-1)]);
                         SafeFileLoader.SaveStats(stats);

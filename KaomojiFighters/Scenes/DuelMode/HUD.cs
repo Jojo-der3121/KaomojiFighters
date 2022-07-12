@@ -51,7 +51,7 @@ namespace KaomojiFighters.Scenes.DuelMode
             // Adds the executional components for the MenuselectionOptions
             
             AttackMenuComponent = Entity.AddComponent(new AttackMenu() { player = playerComponent, hud = this });
-            ItemMenuComponent = Entity.AddComponent(new ItemMenu());
+            ItemMenuComponent = Entity.AddComponent(new ItemMenu() { player = playerComponent });
 
             // Loads Sprites
             VSSinge = new Sprite(Entity.Scene.Content.LoadTexture("VS"));

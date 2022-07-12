@@ -12,17 +12,18 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 {
     class ItemMenu : RenderableComponent
     {
-        public SpriteRenderer ItemMenuDisplay;
-        public List<SpriteRenderer> Textures;
+        private SpriteRenderer ItemMenuDisplay;
+        private List<SpriteRenderer> Textures;
         private HUD hud;
+        public Player player;
         private VirtualButton Left;
         private VirtualButton Right;
         private VirtualButton Up;
         private VirtualButton Down;
         private VirtualButton Enter;
         private VirtualButton ExitItemMenu;
-        public SpriteRenderer SelectionButton;
-        private Stats stats;
+        private SpriteRenderer SelectionButton;
+      
         private Sprite descriptionBox;
         private int scrollIndex;
 
@@ -40,7 +41,6 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
             // get Entities
             hud = Entity.GetComponent<HUD>();
-            stats = SafeFileLoader.LoadStats();
 
             // ItemDisplay Config
             ItemMenuDisplay = Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("ItemMenu")));
@@ -61,9 +61,9 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
             // adds ItemList to list of Spriterenderers
             Textures = new List<SpriteRenderer>();
-            for (var i = 0; i < stats.itemList.Count; i++)
+            for (var i = 0; i < player.stat.itemList.Count; i++)
             {
-                Textures.Add(Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture(stats.itemList[i].ItemType))));
+                Textures.Add(Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture(player.stat.itemList[i].ItemType))));
                 Textures[i].Size = new Vector2(27, 45);
                 Textures[i].LocalOffset = GetLocationOfItem(i);
                     Textures[i].RenderLayer = 0;
@@ -124,7 +124,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X, SelectionButton.LocalOffset.Y + 50);
             }
-            else if (stats.itemList.Count > 12 + 6 * scrollIndex && Down.IsPressed)
+            else if (player.stat.itemList.Count > 12 + 6 * scrollIndex && Down.IsPressed)
             {
                 for (var i = 0; i < Textures.Count; i++)
                 {
@@ -140,12 +140,15 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             if (Enter.IsPressed)
             {
                 var itemIndex = GetSelectedItemIndex();
-                if (itemIndex >= 0 && stats.energy - stats.itemList[itemIndex].cost >= 0)
+                if (itemIndex >= 0 && player.stat.energy - player.stat.itemList[itemIndex].cost >= 0)
                 {
-                    stats.itemList[itemIndex].ItemEffect(stats);
-                    stats.itemList.RemoveAt(itemIndex);
+                    player.stat.itemList[itemIndex].ItemEffect(player.stat);
+                    player.stat.itemList.RemoveAt(itemIndex);
                     Textures[itemIndex].Enabled = false;
                     Textures.RemoveAt(itemIndex);
+                    var stats = SafeFileLoader.LoadStats();
+                    stats.itemList = player.stat.itemList;
+                    SafeFileLoader.SaveStats(stats);
                 }
             }
 
@@ -168,11 +171,11 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             if (GetSelectedItemIndex() != -1)
             {
                 batcher.Draw(descriptionBox, new RectangleF((int)Screen.Center.X + 350 - 150 + 20, Screen.Center.Y + 40, 250, 150));
-                batcher.DrawString(Graphics.Instance.BitmapFont, stats.itemList[GetSelectedItemIndex()].description, new Vector2((int)Screen.Center.X + 350 - 150 + 35, Screen.Center.Y + 30 + 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+                batcher.DrawString(Graphics.Instance.BitmapFont, player.stat.itemList[GetSelectedItemIndex()].description, new Vector2((int)Screen.Center.X + 350 - 150 + 35, Screen.Center.Y + 30 + 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
 
-                for (var i = 0; i < Math.Abs(stats.itemList[GetSelectedItemIndex()].cost); i++)
+                for (var i = 0; i < Math.Abs(player.stat.itemList[GetSelectedItemIndex()].cost); i++)
                 {
-                    batcher.Draw(hud.EnergyStar, new Rectangle((int)Screen.Center.X + 350 - 150 + 35 + i * 25, (int)Screen.Center.Y + 30 + 35, 25, 25), stats.itemList[GetSelectedItemIndex()].cost > 0 ? Color.Red : Color.CornflowerBlue);
+                    batcher.Draw(hud.EnergyStar, new Rectangle((int)Screen.Center.X + 350 - 150 + 35 + i * 25, (int)Screen.Center.Y + 30 + 35, 25, 25), player.stat.itemList[GetSelectedItemIndex()].cost > 0 ? Color.Red : Color.CornflowerBlue);
                 }
             }
         }
