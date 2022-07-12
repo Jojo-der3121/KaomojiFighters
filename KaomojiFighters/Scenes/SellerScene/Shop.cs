@@ -20,9 +20,9 @@ namespace KaomojiFighters.Scenes.SellerScene
         private VirtualButton Left;
         private VirtualButton Right;
         private VirtualButton Enter;
-        private readonly SpeechBubble BuY = new SpeechBubble(new Vector2(Screen.Center.X, 940),"BuY", new Vector2(300,220),true, 7);
-        private readonly SpeechBubble Sell = new SpeechBubble(new Vector2(Screen.Center.X - 330, 940),"Sell", new Vector2(300,220),true,7);
-        private readonly SpeechBubble Leave = new SpeechBubble(new Vector2(Screen.Center.X + 330, 940), "Leave", new Vector2(300, 220), true,7);
+        private readonly SpeechBubble BuY = new SpeechBubble(new Vector2(Screen.Center.X, 940), "BuY", new Vector2(300, 220), true, 7);
+        private readonly SpeechBubble Sell = new SpeechBubble(new Vector2(Screen.Center.X - 330, 940), "Sell", new Vector2(300, 220), true, 7);
+        private readonly SpeechBubble Leave = new SpeechBubble(new Vector2(Screen.Center.X + 330, 940), "Leave", new Vector2(300, 220), true, 7);
         private ShopHUD shopHUD;
         public int Gold;
 
@@ -39,7 +39,7 @@ namespace KaomojiFighters.Scenes.SellerScene
             selectionButton.Size = new Vector2(330f, 315f);
             selectionButton.RenderLayer = -1;
             selectionButton.LayerDepth = 0;
-            selectionButton.Transform.Position = new Vector2(Screen.Center.X , 970f);
+            selectionButton.Transform.Position = new Vector2(Screen.Center.X, 970f);
             selectionDestination = 0;
             selectionButton.Color = Color.White;
 
@@ -52,23 +52,23 @@ namespace KaomojiFighters.Scenes.SellerScene
         }
         protected override void Render(Batcher batcher, Camera camera)
         {
-            batcher.Draw(ShopInner, new RectangleF(Screen.Center.X - ShopInner.Width/2, 0, 1920 / 3, 1080));
-            batcher.Draw(Seller, new RectangleF(Screen.Center.X - Seller.Width/4, Screen.Center.Y , 400, 125));
-            batcher.Draw(ShopOuter, new RectangleF(Screen.Center.X - ShopOuter.Width/2, 0, (1920 / 3)*(7/6), 1080*(7/6)));
+            batcher.Draw(ShopInner, new RectangleF(Screen.Center.X - ShopInner.Width / 2, 0, 1920 / 3, 1080));
+            batcher.Draw(Seller, new RectangleF(Screen.Center.X - Seller.Width / 4, Screen.Center.Y, 400, 125));
+            batcher.Draw(ShopOuter, new RectangleF(Screen.Center.X - ShopOuter.Width / 2, 0, (1920 / 3) * (7 / 6), 1080 * (7 / 6)));
             BuY.DrawTextField(batcher);
             Sell.DrawTextField(batcher);
             Leave.DrawTextField(batcher);
             batcher.DrawRect(new RectangleF(1120, 0, 310, 80), Color.Black);
-            batcher.DrawRect(new RectangleF( 1130, 0, 290,70), Color.DarkGreen);
+            batcher.DrawRect(new RectangleF(1130, 0, 290, 70), Color.DarkGreen);
             batcher.DrawString(Graphics.Instance.BitmapFont, Gold.ToString(), new Vector2(1200, 5f), Color.PaleGoldenrod, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
-            batcher.Draw(DogdeCoin,new RectangleF(1140, 5, 50,50 ));
+            batcher.Draw(DogdeCoin, new RectangleF(1140, 5, 50, 50));
         }
         public override RectangleF Bounds => new RectangleF(0, 0, 1920, 1080);
         public override bool IsVisibleFromCamera(Camera camera) => true;
 
         public void Update()
         {
-            if (selectionDestination - 330 >= -330 && Left.IsPressed && !shopHUD.Enabled &&  selectionButton.Enabled)
+            if (selectionDestination - 330 >= -330 && Left.IsPressed && !shopHUD.Enabled && selectionButton.Enabled)
             {
                 selectionDestination -= 330;
             }
@@ -78,18 +78,17 @@ namespace KaomojiFighters.Scenes.SellerScene
             }
             selectionButton.LocalOffset = Vector2.Lerp(selectionButton.LocalOffset, new Vector2(selectionDestination, selectionButton.LocalOffset.Y), 0.06f);
 
-            var ignoreShopHUDUpdate = false;
             if (!Enter.IsPressed) return;
             switch (selectionDestination)
             {
                 case -330:
-                    shopHUD.Enabled = true;
                     shopHUD.buy = false;
+                    shopHUD.Enabled = true;
+
                     break;
                 case 0:
-                    shopHUD.Enabled = true;
                     shopHUD.buy = true;
-                    ignoreShopHUDUpdate = true;
+                    shopHUD.Enabled = true;
                     break;
                 case 330:
                     Core.StartSceneTransition(new TextureWipeTransition(() => new OverworldScene(SafeFileLoader.LoadStats().OwOworldPosition), Entity.Scene.Content.LoadTexture("c")));

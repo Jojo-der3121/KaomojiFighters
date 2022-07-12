@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using KaomojiFighters.Mobs;
 using Nez;
 using Nez.Sprites;
@@ -30,8 +31,10 @@ namespace KaomojiFighters.Scenes.DuelMode
                     var stats = SafeFileLoader.LoadStats();
                     if (battlingEntity.Entity != player)
                     {
+                        var r = new System.Random();
                         stats.itemList = player.GetComponent<Player>().stat.itemList;
                         stats.Gold += battlingEntity.stat.Gold;
+                        stats.wordList.Add(battlingEntity.stat.wordList[r.Next(battlingEntity.stat.wordList.Count-1)]);
                         SafeFileLoader.SaveStats(stats);
                     }
                     var deadEntity = battlingEntity.Entity.GetComponent<SpriteRenderer>();

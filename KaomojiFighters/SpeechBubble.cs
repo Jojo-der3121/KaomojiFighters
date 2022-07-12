@@ -47,24 +47,6 @@ namespace KaomojiFighters
             GetSpeech(text);
         }
 
-        //public void GetSpeech(string text)
-        //{
-        //    _speech.Clear();
-        //    if (Graphics.Instance.BitmapFont.MeasureString(text).X*_fontSize <= _size.X -60) _speech.Add(text);
-        //    else
-        //    {
-        //        _speech.Add(text.Substring(0, text.Length / (int)Math.Round(Graphics.Instance.BitmapFont.MeasureString(text).X * _fontSize / (_size.X - 60))));
-        //        text = text.Remove(0, text.Length / (int)Math.Round(Graphics.Instance.BitmapFont.MeasureString(text).X * _fontSize / (_size.X - 60)));
-        //        while (Graphics.Instance.BitmapFont.MeasureString(text).X *_fontSize > _size.X -60)
-        //        {
-        //            _speech.Add( text.Substring(0, text.Length / (int)Math.Round(Graphics.Instance.BitmapFont.MeasureString(text).X * _fontSize / (_size.X - 60))));
-        //            text = text.Remove(0,
-        //                text.Length / (int)Math.Round(Graphics.Instance.BitmapFont.MeasureString(text).X * _fontSize / (_size.X - 60)));
-        //        }
-        //        if(text != "") _speech.Add( text);
-        //    }
-        //}
-
         public void GetSpeech(string text)
         {
             _speech.Clear();
@@ -79,32 +61,31 @@ namespace KaomojiFighters
                     if (Graphics.Instance.BitmapFont.MeasureString(speech).X * _fontSize +
                         Graphics.Instance.BitmapFont.MeasureString(cacheString).X * _fontSize <= _size.X - 60)
                     {
-                        speech += cacheString+ " ";
+                        speech += cacheString + " ";
                     }
-                    
-                    if(Graphics.Instance.BitmapFont.MeasureString(speech).X * _fontSize +
-                        Graphics.Instance.BitmapFont.MeasureString(cacheString).X * _fontSize > _size.X - 60 || i == substrings.Length -1)
+                    else
                     {
                         _speech.Add(speech);
                         speech = "";
+                        i --;
                     }
                 }
+                if( speech != "" && speech != " ") _speech.Add(speech);
             }
         }
-
 
         // if is HUD Component => it'll be 20 pixels smaller -> good for selectors.
 
         public void DrawTextField(Batcher batcher)
         {
-            var yLocation = (_size.Y - 60 + Graphics.Instance.BitmapFont.MeasureString("Ag").Y) / 2 + Graphics.Instance.BitmapFont.MeasureString("Ag").Y *
-                (_speech.Count - 1)* _fontSize;
-            if (!_isHudComponent) batcher.DrawRect(_location.X - _size.X / 2, _location.Y - _size.Y / 2, _size.X, yLocation+60  < _size.Y? _size.Y : yLocation+60 , _boxColor);
-            batcher.DrawRect(_location.X -( _size.X-20) / 2, _location.Y - (_size.Y - 20) / 2, (_size.X - 20),  yLocation + 60 < _size.Y ? (_size.Y - 20) : yLocation + 40, _textColor); 
-            batcher.DrawRect(_location.X -( _size.X-40) / 2, _location.Y - (_size.Y - 40) / 2, (_size.X - 40), yLocation + 60 < _size.Y ? (_size.Y - 40) : yLocation + 20, _boxColor);
+            var yLocation = (_size.Y - 60 + Graphics.Instance.BitmapFont.MeasureString("A").Y) / 2 + Graphics.Instance.BitmapFont.MeasureString("Ag").Y *
+                (_speech.Count - 1) * _fontSize;
+            if (!_isHudComponent) batcher.DrawRect(_location.X - _size.X / 2, _location.Y - _size.Y / 2, _size.X, yLocation + 60 < _size.Y ? _size.Y : yLocation + 60, _boxColor);
+            batcher.DrawRect(_location.X - (_size.X - 20) / 2, _location.Y - (_size.Y - 20) / 2, (_size.X - 20), yLocation + 60 < _size.Y ? (_size.Y - 20) : yLocation + 40, _textColor);
+            batcher.DrawRect(_location.X - (_size.X - 40) / 2, _location.Y - (_size.Y - 40) / 2, (_size.X - 40), yLocation + 60 < _size.Y ? (_size.Y - 40) : yLocation + 20, _boxColor);
             for (var str = 0; str < _speech.Count; str++)
             {
-                batcher.DrawString(Graphics.Instance.BitmapFont, _speech[str], new Vector2(_location.X - (_size.X - 60)/2,
+                batcher.DrawString(Graphics.Instance.BitmapFont, _speech[str], new Vector2(_location.X - (_size.X - 60) / 2,
                     _location.Y - (_size.Y - 60 + Graphics.Instance.BitmapFont.MeasureString(_speech[str]).Y) / 2 + Graphics.Instance.BitmapFont.MeasureString(_speech[str]).Y * str * _fontSize), _textColor, 0f, Vector2.Zero, _fontSize, SpriteEffects.None, 0f);
             }
         }

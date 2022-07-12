@@ -1,12 +1,12 @@
 add Sound 
 
-  after every battle the player gets a random word from the inventory of the opponent (only cards the player doesnt already have)
+  add Option to destroy words for benefits. (alchemy? => individual Items)
+  Brick Option
 
 //  speudo scrollen wenn hand > 5 (einfach andere bereiche zeichnen)
 music inspiration ?
 
 TO-DO:
-fix die plazierung des Item Description Menüs.
 der Gegner muss ein richtiges Satzende beachten.
 
 stonks sound

@@ -28,6 +28,9 @@ namespace KaomojiFighters.Scenes.SellerScene
         private Stats stats;
         public bool buy;
         private Shop shop;
+        private SpeechBubble bubble;
+        private string[] buyAnswers = new[] { "Porsche Cayman S!! wollen sie ihn auch ? Geben sie mir ihr ganzes Geld und schon gestern wird er deiner sein.", "Um Geld zu gewinnen muss man Geld ausgeben, die weisen Wort des Gottes des Geldes. Eines Tages wird er sich meiner erbarmen.","Jede spende dafuer mich zum Millionaer zu machen ist eine Investiton in ihre Zukunft. Haendler for President!!", "KOMM IN DIE GRUPPE! ich weiss zwar nicht warum ich das sagen soll jedoch hatte es mir mein Finanzberater geraten, Porsche du wirst mein sein !!", "Duerfte ich sie in meine neue Crypto Waehrung interessieren ?" };
+        private string[] sellAnswers = new[] {"Ich bitte dich ich habe Frau und Kinder ..", "sobald ich President bin werde ich mich fuer diese Sabotage Rechen! Mark my Words Vengeance will be Mine!", " NICHT MEINE DOGDECOIN!? i'll allways remember their memories. Von dem Moment an wo ich sie ge- ,\"verdient\" habe, bis zu den 10 Jahren wo ich sie aufbewahrt habe und ihr Wert zu 1/10 des vorherigen wurde. You don't have any alcohol on you?", "Darf ich sie in Steam Gutscheinkarten bezhlen?"};
 
         public ShopHUD(Shop originShop)
         {
@@ -51,11 +54,13 @@ namespace KaomojiFighters.Scenes.SellerScene
             Bubble = Entity.Scene.Content.LoadTexture("SpeachBubble");
             stats = SafeFileLoader.LoadStats();
             shop.Gold = stats.Gold;
-        }
+         }
 
         public override void OnEnabled()
         {
             base.OnEnabled();
+            var r = new System.Random();
+            bubble = new SpeechBubble(new Vector2(buy ? Screen.Size.X / 7 : Screen.Size.X / 7 * 6, Screen.Center.Y), buy ?  buyAnswers[r.Next(buyAnswers.Length-1)] : sellAnswers[r.Next(sellAnswers.Length - 1)], new Vector2(400, 960), false, 4);
             stats = SafeFileLoader.LoadStats();
             if (buy) return;
             for (var i = 0; i < selectedProduct.Length; i++)
@@ -171,7 +176,7 @@ namespace KaomojiFighters.Scenes.SellerScene
             if (!buy) batcher.DrawString(Graphics.Instance.BitmapFont, availableItems[3] + "x", new Vector2(180 + 125, 50 + 75 + 30 + 220 * 3), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
             batcher.DrawString(Graphics.Instance.BitmapFont, buy ? buyPriceArray[3].ToString() : sellPriceArray[3].ToString(), new Vector2(buy ? 1620 + 60 : 340, 50 + 75 + 220*3), Color.PaleGoldenrod, 0f, Vector2.Zero, 5f, SpriteEffects.None, 0f);
 
-            // batcher.Draw(Bubble, new RectangleF(buy?  40 : 1920 / 2 + 450, 30f, 1920/2 - 500, 1080 - 160));
+            bubble.DrawTextField(batcher);
         }
     }
 }
