@@ -3,7 +3,7 @@ add Sound
   add Option to destroy words for benefits. (alchemy? => individual Items)
   Brick Option
 
-//  speudo scrollen wenn hand > 5 (einfach andere bereiche zeichnen)
+
 music inspiration ?
 
 TO-DO:
@@ -18,6 +18,5 @@ epic music playList. Themabattle ? => duke devlin + Friday night Funkin ?
 
 Defence == Shield
 
-Kommentare des Shop Owners
-
 FIX Item Bug & SpeedItem effekt
+speudo scrollen wenn hand > 5 (einfach andere bereiche zeichnen)

@@ -24,6 +24,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         public SpriteRenderer SelectionButton;
         private Stats stats;
         private Sprite descriptionBox;
+        private int scrollIndex;
 
 
         public override void OnAddedToEntity()
@@ -64,14 +65,32 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             {
                 Textures.Add(Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture(stats.itemList[i].ItemType))));
                 Textures[i].Size = new Vector2(27, 45);
-                Textures[i].LocalOffset = i < 6 ? new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i + 1) - Entity.Transform.Position.X, Screen.Center.Y - 30 - Entity.Transform.Position.Y + 75) : new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i - 5) - Entity.Transform.Position.X, Screen.Center.Y + 20 - Entity.Transform.Position.Y + 75);
-                Textures[i].RenderLayer = 0;
+                Textures[i].LocalOffset = GetLocationOfItem(i);
+                    Textures[i].RenderLayer = 0;
                 Textures[i].LayerDepth = 0;
                 Textures[i].Enabled = false;
             }
 
 
 
+        }
+
+        private Vector2 GetLocationOfItem(int i)
+        {
+            return  new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i%6 + 1) - Entity.Transform.Position.X,
+                    (float)((decimal)Screen.Center.Y - 30 + Math.Floor((decimal)i/6)*50 - (decimal)Entity.Transform.Position.Y + 75));
+
+        }
+
+        public override void OnEnabled()
+        {
+            base.OnEnabled();
+            SelectionButton.Enabled = true;
+            ItemMenuDisplay.Enabled = true;
+            for (var i= 0; i< 12; i++)
+            {
+                Textures[i+6*scrollIndex].Enabled = true;
+            }
         }
 
         public void Update()
@@ -91,9 +110,29 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X, SelectionButton.LocalOffset.Y - 50);
             }
+            else if (scrollIndex > 0 && Up.IsPressed)
+            {
+                scrollIndex--;
+                for (var i =0; i < Textures.Count; i++)
+                {
+                    Textures[i].SetLocalOffset(new Vector2(Textures[i].LocalOffset.X, Textures[i].LocalOffset.Y + 50));
+                    if (i < 6) Textures[i + 6 * scrollIndex].Enabled = true;
+                    if(i>=12 && i<18) Textures[i + 6 * scrollIndex].Enabled = false;
+                }
+            }
             if (SelectionButton.LocalOffset.Y + 50 <= Screen.Center.Y + 28 - Entity.Transform.Position.Y + 75 && Down.IsPressed)
             {
                 SelectionButton.LocalOffset = new Vector2(SelectionButton.LocalOffset.X, SelectionButton.LocalOffset.Y + 50);
+            }
+            else if (stats.itemList.Count > 12 + 6 * scrollIndex && Down.IsPressed)
+            {
+                for (var i = 0; i < Textures.Count; i++)
+                {
+                    Textures[i].SetLocalOffset(new Vector2(Textures[i].LocalOffset.X, Textures[i].LocalOffset.Y - 50));
+                    if (i < 6) Textures[i + 6 * scrollIndex].Enabled = false;
+                    if (i >= 6 && i < 18) Textures[i + 6 * scrollIndex].Enabled = true;
+                }
+                scrollIndex++;
             }
 
             // choose selected item
@@ -111,6 +150,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
 
             // Exit
             if (!ExitItemMenu.IsPressed) return;
+            scrollIndex = 0;
             ItemMenuDisplay.Enabled = false;
             SelectionButton.Enabled = false;
             foreach (var element in Textures)

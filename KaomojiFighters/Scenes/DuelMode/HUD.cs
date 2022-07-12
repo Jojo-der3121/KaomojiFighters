@@ -162,12 +162,6 @@ namespace KaomojiFighters.Scenes.DuelMode
                         break;
                     case 460+ selectionDestinationOffset:
                         ItemMenuComponent.Enabled = true;
-                        ItemMenuComponent.SelectionButton.Enabled = true;
-                        ItemMenuComponent.ItemMenuDisplay.Enabled = true;
-                        foreach (var element in ItemMenuComponent.Textures)
-                        {
-                            element.Enabled = true;
-                        }
                         ignoreItemUpdate = true;
                         break;
                     case 460+ selectionDestinationOffset*2:
