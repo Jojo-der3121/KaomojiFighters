@@ -1,13 +1,17 @@
-add Sound 
 
-  add Option to destroy words for benefits. (alchemy? => individual Items)
 
-music inspiration ?
+DO-BEVOR-DEMO
+++  add Option to destroy words for benefits. (alchemy? => individual Items)
+++ tutorial
+++ add sounds
+++ Emotional Damage (-sensitiv Topic via Telegramm) + Immune 
+++ add background music
+++ test level
+++ Overworld Menu (Scene Component)
 
-TO-DO:
+BUGGS:
 der Gegner muss ein richtiges Satzende beachten.
 
-Sensitiv Topic via Telegramm.
-Immune sign (grey: immune )+ sensitiv Topic sign (red: -sensitiv Topic)
+Notizen
 
 epic music playList. Themabattle ? => duke devlin + Friday night Funkin ?

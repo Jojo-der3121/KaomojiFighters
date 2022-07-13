@@ -137,8 +137,6 @@ namespace KaomojiFighters.Mobs
                     cost = 5;
                     wordEffect = (x) => x.AttackValue += 5;
                     break;
-                default:
-                    break;
             }
         }
 

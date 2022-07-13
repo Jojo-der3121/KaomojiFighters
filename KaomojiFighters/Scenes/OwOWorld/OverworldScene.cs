@@ -51,6 +51,10 @@ namespace KaomojiFighters.Scenes
                     case "LocationSafer":
                         map.AddComponent(new OwOWorldTrigger((int)element.Width, (int)element.Height) { owoWorldTriggerType = OwOWOrldTriggerTypes.LocationSafer }).SetLocalOffset(new Vector2(element.X, element.Y));
                         break;
+                    case "Alchemy":
+                        map.AddComponent(new OwOWorldTrigger((int)element.Width, (int)element.Height) { owoWorldTriggerType = OwOWOrldTriggerTypes.Alchemy }).SetLocalOffset(new Vector2(element.X, element.Y));
+                        map.AddComponent(new SpriteRenderer(Content.LoadTexture("AlchemyShroom"))).SetLocalOffset(new Vector2(element.X + element.Width / 2, element.Y + element.Height) * WorldScale).SetRenderLayer(-10);
+                        break;
                 }
             }
             foreach (var element in actualTiledMap.ObjectGroups["WallCollisions"].Objects)

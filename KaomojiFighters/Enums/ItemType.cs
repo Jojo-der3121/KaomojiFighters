@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace KaomojiFighters.Enums
 {
-    public enum OwOWOrldTriggerTypes
+    public enum ItemType
     {
-        battle,
-        Dialog,
-        Shop,
-        Alchemy,
-        Goal,
-        LocationSafer,
-        NaNi
+        HealthPotion,
+        AttackPotion,
+        DefencePotions,
+        SpeedPotion,
+        AlchemycalPotion
     }
 }

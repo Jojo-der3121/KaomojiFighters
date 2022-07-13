@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using KaomojiFighters.Objects;
+using Microsoft.Xna.Framework.Input;
 using Nez;
 using Nez.Sprites;
 using Nez.Textures;
@@ -16,6 +17,7 @@ namespace KaomojiFighters.Mobs
             {
                 var safeFile = SafeFileLoader.LoadStats();
                 safeFile.sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Hurt")));
+                safeFile.itemList = Item.GetItemList(safeFile.itemList);
                 return safeFile;
             }
         }

@@ -48,7 +48,12 @@ namespace KaomojiFighters.Mobs
                         
                         inTrigger = false;
                         colliderTyp = OwOWOrldTriggerTypes.NaNi;
-                        Core.StartSceneTransition(new TextureWipeTransition(() => new ShopScene(), Entity.Scene.Content.LoadTexture("c")));
+                        Core.StartSceneTransition(new TextureWipeTransition(() => new ShopScene(false), Entity.Scene.Content.LoadTexture("c")));
+                        break;
+                    case OwOWOrldTriggerTypes.Alchemy:
+                        inTrigger = false;
+                        colliderTyp = OwOWOrldTriggerTypes.NaNi;
+                        Core.StartSceneTransition(new TextureWipeTransition(() => new ShopScene(true), Entity.Scene.Content.LoadTexture("c")));
                         break;
                     case OwOWOrldTriggerTypes.Dialog:
                         inTrigger = false;
@@ -78,6 +83,12 @@ namespace KaomojiFighters.Mobs
                     SafeFileLoader.SaveStats(stat);
                     inTrigger = true;
                     colliderTyp= OwOWOrldTriggerTypes.Shop;
+                    break;
+                case OwOWOrldTriggerTypes.Alchemy:
+                    stat.OwOworldPosition = Entity.Position;
+                    SafeFileLoader.SaveStats(stat);
+                    inTrigger = true;
+                    colliderTyp= OwOWOrldTriggerTypes.Alchemy;
                     break;
                 case OwOWOrldTriggerTypes.Dialog:
                     inTrigger = true;

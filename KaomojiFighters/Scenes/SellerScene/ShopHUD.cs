@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using KaomojiFighters.Enums;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Nez;
 using KaomojiFighters.Mobs;
@@ -20,7 +21,6 @@ namespace KaomojiFighters.Scenes.SellerScene
         private Texture2D AttackPotion;
         private Texture2D DefencePotion;
         private Texture2D SpeedPotion;
-        private Texture2D Bubble;
         private int[] buyPriceArray = new int[] { 10, 5, 2, 13 };
         private int[] sellPriceArray = new int[] { 8, 3, 1, 9 };
         private int[] selectedProduct = new int[] { 0, 0, 0, 0 };
@@ -51,7 +51,6 @@ namespace KaomojiFighters.Scenes.SellerScene
             AttackPotion = Entity.Scene.Content.LoadTexture("StrenghtPotions");
             DefencePotion = Entity.Scene.Content.LoadTexture("DefencePotions");
             SpeedPotion = Entity.Scene.Content.LoadTexture("SpeedPotions");
-            Bubble = Entity.Scene.Content.LoadTexture("SpeachBubble");
             stats = SafeFileLoader.LoadStats();
             shop.Gold = stats.Gold;
          }
@@ -68,7 +67,7 @@ namespace KaomojiFighters.Scenes.SellerScene
                 var searchedItemType = GetItemTyp(i);
                 foreach (var item in stats.itemList)
                 {
-                    if (item.ItemType == searchedItemType.ItemType) availableItems[i]++;
+                    if (item._itemType == searchedItemType._itemType) availableItems[i]++;
                 }
             }
         }
@@ -78,16 +77,13 @@ namespace KaomojiFighters.Scenes.SellerScene
             switch (i)
             {
                 case 0:
-                    return new HealthPotion();
-
+                    return new Item(ItemType.HealthPotion, Wort.StepOn);
                 case 1:
-                    return new StrenghtPotion();
-
+                    return new Item(ItemType.AttackPotion, Wort.StepOn);
                 case 2:
-                    return new DefencePotion();
-
+                    return new Item(ItemType.DefencePotions, Wort.StepOn);
                 case 3:
-                    return new SpeedPotion();
+                    return new Item(ItemType.SpeedPotion, Wort.StepOn);
             }
             return null;
         }
@@ -119,7 +115,7 @@ namespace KaomojiFighters.Scenes.SellerScene
                         {
                             for (var v = 0; v < stats.itemList.Count; v++)
                             {
-                                if (stats.itemList[v].ItemType != itemTyp.ItemType) continue;
+                                if (stats.itemList[v]._itemType != itemTyp._itemType) continue;
                                 stats.itemList.RemoveAt(v);
                                 break;
                             }

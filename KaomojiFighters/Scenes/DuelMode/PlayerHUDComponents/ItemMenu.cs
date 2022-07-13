@@ -63,7 +63,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             Textures = new List<SpriteRenderer>();
             for (var i = 0; i < player.stat.itemList.Count; i++)
             {
-                Textures.Add(Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture(player.stat.itemList[i].ItemType))));
+                Textures.Add(Entity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture(player.stat.itemList[i].GetType()))));
                 Textures[i].Size = new Vector2(27, 45);
                 Textures[i].LocalOffset = GetLocationOfItem(i);
                     Textures[i].RenderLayer = 0;
@@ -145,7 +145,8 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 var itemIndex = GetSelectedItemIndex();
                 if (itemIndex >= 0 && player.stat.energy - player.stat.itemList[itemIndex].cost >= 0)
                 {
-                    player.stat.itemList[itemIndex].ItemEffect(player.stat);
+                    player.stat.itemList[itemIndex].itemEffect(player.stat);
+                    player.stat.energy -= player.stat.itemList[itemIndex].cost;
                     player.stat.itemList.RemoveAt(itemIndex);
                     Textures[itemIndex].Enabled = false;
                     Textures.RemoveAt(itemIndex);
