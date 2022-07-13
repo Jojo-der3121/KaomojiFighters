@@ -78,7 +78,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
         private Vector2 GetLocationOfItem(int i)
         {
             return  new Vector2(Screen.Center.X - ItemMenuDisplay.Width / 2 + 40 * (i%6 + 1) - Entity.Transform.Position.X,
-                    (float)((decimal)Screen.Center.Y - 30 + Math.Floor((decimal)i/6)*50 - (decimal)Entity.Transform.Position.Y + 75));
+                    (float)((decimal)Screen.Center.Y - 30 + Math.Floor((decimal)i/6)*50 - (decimal)Entity.Transform.Position.Y + 75) - scrollIndex*50 );
 
         }
 
@@ -87,10 +87,13 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             base.OnEnabled();
             SelectionButton.Enabled = true;
             ItemMenuDisplay.Enabled = true;
-            for (var i= 0; i< 12; i++)
+            for (var i= 0; i< Textures.Count; i++)
             {
-                if(i+6*scrollIndex< Textures.Count-1)Textures[i+6*scrollIndex].Enabled = true;
+                if(i+6*scrollIndex< Textures.Count-1 && i < 12)Textures[i+6*scrollIndex].Enabled = true;
+                Textures[i].LocalOffset = GetLocationOfItem(i);
             }
+
+            
         }
 
         public void Update()
@@ -149,6 +152,11 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                     var stats = SafeFileLoader.LoadStats();
                     stats.itemList = player.stat.itemList;
                     SafeFileLoader.SaveStats(stats);
+                    for (var i = 0; i < Textures.Count; i++)
+                    {
+                        Textures[i].LocalOffset = GetLocationOfItem(i);
+                        if (i == scrollIndex * 6 + 11) Textures[i].Enabled = true;
+                    }
                 }
             }
 

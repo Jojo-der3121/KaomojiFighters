@@ -11,8 +11,3 @@ Sensitiv Topic via Telegramm.
 Immune sign (grey: immune )+ sensitiv Topic sign (red: -sensitiv Topic)
 
 epic music playList. Themabattle ? => duke devlin + Friday night Funkin ?
-
-Defence == Shield
-
-
-fix the drawing of the items (position ändern sich nicht, count jedoch schon)
