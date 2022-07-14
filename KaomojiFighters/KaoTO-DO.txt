@@ -1,8 +1,7 @@
 
 
 DO-BEVOR-DEMO
-++  add Option to destroy words for benefits. (alchemy? => individual Items)
-++ tutorial
+++ Press E to interact and fix Shop selection to be more like alchemy
 ++ add sounds
 ++ Emotional Damage (-sensitiv Topic via Telegramm) + Immune 
 ++ add background music

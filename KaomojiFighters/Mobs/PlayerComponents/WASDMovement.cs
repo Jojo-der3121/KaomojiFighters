@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using KaomojiFighters.Enums;
+using KaomojiFighters.Mobs.PlayerComponents;
 using KaomojiFighters.Scenes;
 using KaomojiFighters.Scenes.OwOWorld;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Nez;
 using Nez.Sprites;
@@ -18,7 +20,7 @@ namespace KaomojiFighters.Mobs
         public Stats stat;
         private Mover mover;
         VirtualButton interact;
-        bool inTrigger;
+        public bool inTrigger;
         private OwOWOrldTriggerTypes colliderTyp;
         private Vector2 NPCposition;
         public SpriteRenderer renderer;
@@ -34,6 +36,7 @@ namespace KaomojiFighters.Mobs
             mover = Entity.AddComponent(new Mover());
             interact = new VirtualButton().AddKeyboardKey(Keys.E);
             Entity.AddComponent(new BoxCollider());
+            Entity.AddComponent(new NoticComponent(this));
         }
 
 
@@ -98,7 +101,6 @@ namespace KaomojiFighters.Mobs
                 case OwOWOrldTriggerTypes.LocationSafer:
                     stat.OwOworldPosition = Entity.Position;
                     SafeFileLoader.SaveStats(stat);
-                    inTrigger = true;
                     colliderTyp = OwOWOrldTriggerTypes.LocationSafer;
                     break;
 
@@ -112,5 +114,7 @@ namespace KaomojiFighters.Mobs
             inTrigger = false;
             colliderTyp = OwOWOrldTriggerTypes.NaNi;
         }
+
+        
     }
 }

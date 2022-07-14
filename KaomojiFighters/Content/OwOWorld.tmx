@@ -458,8 +458,8 @@
   </object>
   <object id="41" x="484" y="387.5" width="60" height="27.6667"/>
   <object id="43" x="320.5" y="382.167" width="29.1667" height="31.5"/>
-  <object id="44" x="320.833" y="472.333" width="61" height="38"/>
-  <object id="53" x="449.167" y="471.5" width="61" height="38"/>
+  <object id="44" x="320.833" y="462.333" width="59.3333" height="48"/>
+  <object id="53" x="449.167" y="461.5" width="61" height="48"/>
   <object id="45" type="Polygon" x="352.253" y="379.666">
    <polygon points="0,0 33.913,0 -0.753623,35.3333"/>
   </object>
