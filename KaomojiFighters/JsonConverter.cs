@@ -16,6 +16,10 @@ namespace KaomojiFighters
             foreach(var word in deserializedStats.wordList)
             {
                 word.GetRightWordProperties();
+            } 
+            foreach (var item in deserializedStats.itemList)
+            {
+                item.GetRightItemProperties();
             }
             return deserializedStats;
         }

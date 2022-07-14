@@ -94,17 +94,17 @@ namespace KaomojiFighters.Scenes.SellerScene
 
         public void Update()
         {
-            if (selectionDestination - 330 >= -330 && Left.IsPressed && (_isAlchemy?  !alchemyHUD.Enabled : !shopHUD.Enabled)  && selectionButton.Enabled)
+            if (selectionDestination - 330 >= -330 && Left.IsPressed && (_isAlchemy?  !alchemyHUD.Enabled && !aGenerateHUD.Enabled : !shopHUD.Enabled)  && selectionButton.Enabled)
             {
                 selectionDestination -= 330;
             }
-            if (selectionDestination + 330 <= 330 && Right.IsPressed && (_isAlchemy ? !alchemyHUD.Enabled : !shopHUD.Enabled) && selectionButton.Enabled)
+            if (selectionDestination + 330 <= 330 && Right.IsPressed && (_isAlchemy ? !alchemyHUD.Enabled && !aGenerateHUD.Enabled : !shopHUD.Enabled) && selectionButton.Enabled)
             {
                 selectionDestination += 330;
             }
             selectionButton.LocalOffset = Vector2.Lerp(selectionButton.LocalOffset, new Vector2(selectionDestination, selectionButton.LocalOffset.Y), 0.06f);
 
-            if (!Enter.IsPressed) return;
+            if (!Enter.IsReleased) return;
             switch (selectionDestination)
             {
                 case -330:
