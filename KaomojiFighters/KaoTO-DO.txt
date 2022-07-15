@@ -1,7 +1,6 @@
 
 
 DO-BEVOR-DEMO
-++ fix Shop selection to be more like alchemy
 ++ add sounds
 ++ Emotional Damage (-sensitiv Topic via Telegramm) + Immune 
 ++ add background music
@@ -10,6 +9,7 @@ DO-BEVOR-DEMO
 
 BUGGS:
 der Gegner muss ein richtiges Satzende beachten.
+die menge der items im shop wird nicht richtig geladen.
 
 Notizen
 
