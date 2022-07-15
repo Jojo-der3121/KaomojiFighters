@@ -17,6 +17,7 @@ namespace KaomojiFighters.Scenes.OwOWorld
         private OwOWorldPlayer _player;
         private int dialogIndex;
         private VirtualButton proceed;
+        private VirtualButton quit;
         private SpeechBubble bubble;
         private int WhichNPC;
         private RectangleF NPCArea;
@@ -36,6 +37,7 @@ namespace KaomojiFighters.Scenes.OwOWorld
             base.OnAddedToEntity();
             SetRenderLayer(4);
             proceed = new VirtualButton().AddKeyboardKey(Keys.Space);
+            quit = new VirtualButton().AddKeyboardKey(Keys.Back);
             bubble = new SpeechBubble(new Vector2(Screen.Center.X, 1080 / 5 * 4), _dialog[dialogIndex].txt,
                 new Vector2(1920, 1020 / 5 * 2), false, 5);
             sprites = GetSprites(WhichNPC);
@@ -81,6 +83,11 @@ namespace KaomojiFighters.Scenes.OwOWorld
             {
                 dialogIndex++;
                 bubble.GetSpeech(_dialog[dialogIndex].txt);
+            }
+            if (quit.IsPressed)
+            {
+                dialogIndex = 0;
+                Enabled = false;
             }
         }
 
