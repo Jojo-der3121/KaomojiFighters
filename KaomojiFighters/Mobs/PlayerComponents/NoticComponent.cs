@@ -22,7 +22,7 @@ namespace KaomojiFighters.Mobs.PlayerComponents
         {
             if (player.inTrigger)
             {
-                batcher.DrawString(Graphics.Instance.BitmapFont, "press E to interact", new Vector2( 100, 900), Color.White, 0f, Vector2.Zero, 10, SpriteEffects.None, 0f);
+                batcher.DrawString(Graphics.Instance.BitmapFont, "press E to interact", new Vector2( 100, 900), Color.LightGray, 0f, Vector2.Zero, 7, SpriteEffects.None, 0f);
             }
         }
         public override RectangleF Bounds => new RectangleF(0, 0, 1920, 1080);

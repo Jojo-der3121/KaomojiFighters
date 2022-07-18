@@ -54,7 +54,7 @@ namespace KaomojiFighters.Scenes.SellerScene
             SpeedPotion = Entity.Scene.Content.LoadTexture("SpeedPotions");
             stats = SafeFileLoader.LoadStats();
             shop.Gold = stats.Gold;
-         }
+        }
 
         public override void OnEnabled()
         {

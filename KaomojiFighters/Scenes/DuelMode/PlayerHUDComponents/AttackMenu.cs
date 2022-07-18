@@ -116,17 +116,26 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
                 selectedElement = selectionY - (Screen.Center.Y + TextButton.Height + 15);
             }
 
-            switch (Enter.IsPressed)
+            if (hud.Hand.Count-1 >= selectedElement / 25)
             {
-                // choose selected Attack
-                case true when IsAllowedWord(hud.Hand[(int)selectedElement / 25].allowedPreviouseWords, attackSentence) && NotChosenAlready((int)selectedElement / 25) && stat.energy - hud.Hand[(int)selectedElement / 25].cost >= 0:
-                    attackSentence.Add(hud.Hand[(int)selectedElement / 25]);
-                    chosenAttackIndex.Add((int)selectedElement / 25);
-                    stat.energy -= hud.Hand[(int)selectedElement / 25].cost;
-                    break;
-                case true when !IsAllowedWord(hud.Hand[(int)selectedElement / 25].allowedPreviouseWords, attackSentence):
+                if (Enter.IsPressed &&
+                    (IsAllowedWord(hud.Hand[(int) selectedElement / 25].allowedPreviouseWords, attackSentence) &&
+                     NotChosenAlready((int) selectedElement / 25) &&
+                     stat.energy - hud.Hand[(int) selectedElement / 25].cost >= 0))
+                {
+                    attackSentence.Add(hud.Hand[(int) selectedElement / 25]);
+                    chosenAttackIndex.Add((int) selectedElement / 25);
+                    stat.energy -= hud.Hand[(int) selectedElement / 25].cost;
+                }
+                else if (Enter.IsPressed && !IsAllowedWord(hud.Hand[(int) selectedElement / 25].allowedPreviouseWords,
+                    attackSentence))
+                {
                     stat.HP -= 3;
-                    break;
+                }
+            }
+            else if (Enter.IsPressed)
+            {
+                stat.HP -= 3;
             }
 
             if (executeAttack.IsPressed && attackSentence.Count >= 1)
@@ -134,12 +143,14 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
                 if (attackSentence[attackSentence.Count - 1].typeOfWord == wordType.Nomen)
                 {
                     draw = true;
+                    var cacheString = "";
                     foreach (var element in attackSentence)
                     {
+                        cacheString += element.sensitivTopic + " ";
                         element.ExecuteEffect(stat);
                     }
 
-                    TelegramService.SendPrivate(new Telegram(player.Entity.Name, "Kaomoji02", "auf die Fresse", "tach3tach3tach3")); //make later more generic
+                    TelegramService.SendPrivate(new Telegram(player.Entity.Name, "Kaomoji02", "auf die Fresse", cacheString)); //make later more generic
                     Core.Schedule(1.3f, (x) =>
                     {
                         draw = false;
@@ -212,8 +223,8 @@ namespace KaomojiFighters.Scenes.DuelMode.PlayerHUDComponents
                 if (sentenceWords.Count == 0 && wordType.nothing == element)
                 {
                     return true;
-                }
-                else if (sentenceWords.Count > 0 && element == sentenceWords[sentenceWords.Count - 1].typeOfWord)
+                } 
+                if (sentenceWords.Count > 0 && element == sentenceWords[sentenceWords.Count - 1].typeOfWord)
                 {
                     return true;
                 }

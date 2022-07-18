@@ -47,15 +47,16 @@ namespace KaomojiFighters.Scenes.AlchemyScene
             Exit = new VirtualButton().AddKeyboardKey(Keys.Back);
             Purchase = new VirtualButton().AddKeyboardKey(Keys.Enter);
             stats = SafeFileLoader.LoadStats();
-            selectionButton = Entity.Scene.Content.LoadTexture("SelectionKaoButton");
+            selectionButton = Entity.Scene.Content.LoadTexture("AlchemyCircle");
             selectionButtonPosition = new Vector2(Screen.Size.X / 5 - Screen.Center.X / 5 - 160, Screen.Size.Y / 3 - 110);
+            SetRenderLayer(-1);
         }
 
         public override void OnEnabled()
         {
             base.OnEnabled();
             stats = SafeFileLoader.LoadStats();
-            selectionButtonPosition = new Vector2(Screen.Size.X / 5 - Screen.Center.X / 5  - 160, Screen.Size.Y / 3 - 110);
+            selectionButtonPosition = new Vector2(Screen.Size.X / 5 - Screen.Center.X / 5  - 160, Screen.Size.Y / 3 - 130);
         }
 
         public void Update()
@@ -79,18 +80,19 @@ namespace KaomojiFighters.Scenes.AlchemyScene
                 SafeFileLoader.SaveStats(stats);
                 Enabled = false;
             }
+
         }
 
         protected override void Render(Batcher batcher, Camera camera)
         {
+            selectionButtonPosition = Vector2.Lerp(selectionButtonPosition, new Vector2(Screen.Size.X / 5 - Screen.Center.X / 5 + selection.X * Screen.Size.X / 5 - 160,
+                selection.Y > 0 ? Screen.Size.Y / 3 * 2 - 130 : Screen.Size.Y / 3 - 130), 0.06f);
+            batcher.Draw(selectionButton, new RectangleF(selectionButtonPosition, new Vector2(320, 270)));
             for (int i = 0; i < speechBubbles.Length; i++)
             {
                 speechBubbles[i].GetSpeech(wordArray[i].actualWord+" "+purchaseList[i] + "x");
                 speechBubbles[i].DrawTextField(batcher);
             }
-            selectionButtonPosition = Vector2.Lerp(selectionButtonPosition, new Vector2(Screen.Size.X / 5 - Screen.Center.X / 5 + selection.X * Screen.Size.X / 5 - 160,
-                selection.Y > 0 ? Screen.Size.Y / 3 * 2 - 110 : Screen.Size.Y / 3 - 110),0.06f);
-            batcher.Draw(selectionButton,new RectangleF(selectionButtonPosition,new Vector2(320, 270)));
         }
         public override RectangleF Bounds => new RectangleF(0, 0, 1920, 1080);
         public override bool IsVisibleFromCamera(Camera camera) => true;

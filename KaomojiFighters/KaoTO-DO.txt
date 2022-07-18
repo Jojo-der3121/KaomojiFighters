@@ -1,16 +1,10 @@
-
-
 DO-BEVOR-DEMO
-++ add sounds
-++ Emotional Damage (-sensitiv Topic via Telegramm) + Immune 
-++ add background music
-++ test level
 ++ Overworld Menu (Scene Component)
+++ add SFX & BGM
+++ test level
 
 BUGGS:
 der Gegner muss ein richtiges Satzende beachten.
-die menge der items im shop wird nicht richtig geladen.
 
 Notizen
-
 epic music playList. Themabattle ? => duke devlin + Friday night Funkin ?

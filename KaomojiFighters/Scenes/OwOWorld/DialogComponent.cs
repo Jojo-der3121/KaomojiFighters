@@ -51,11 +51,13 @@ namespace KaomojiFighters.Scenes.OwOWorld
             OwOWorldSprite.Enabled = false;
             _player.renderer.Enabled = false;
             _player.Enabled = false;
+            bubble.GetSpeech(_dialog[dialogIndex].txt);
         }
 
         public override void OnDisabled()
         {
             base.OnDisabled();
+            dialogIndex = 0;
             if (OwOWorldSprite == null || _player == null) return;
             OwOWorldSprite.Enabled = true;
             _player.Enabled = true;
@@ -86,7 +88,6 @@ namespace KaomojiFighters.Scenes.OwOWorld
             }
             if (quit.IsPressed)
             {
-                dialogIndex = 0;
                 Enabled = false;
             }
         }
@@ -97,11 +98,9 @@ namespace KaomojiFighters.Scenes.OwOWorld
             batcher.Draw(sprites[_dialog[dialogIndex].emotion - 1], new RectangleF(1920 / 5 * 4 - 300, Screen.Center.Y - 100, 600, 200));
             batcher.Draw(GetPlayerSprite(), new RectangleF(1920 / 5 - 300, Screen.Center.Y - 100, 600, 200));
             bubble.DrawTextField(batcher);
-
         }
         public override RectangleF Bounds => new RectangleF(0, 0, 1920, 1080);
         public override bool IsVisibleFromCamera(Camera camera) => true;
-
 
         private Sprite GetPlayerSprite()
         {
@@ -114,7 +113,6 @@ namespace KaomojiFighters.Scenes.OwOWorld
                 case 3:
                     return _player.stat.sprites.Attack;
             }
-
             return new Sprite(Entity.Scene.Content.LoadTexture("R"));
         }
     }

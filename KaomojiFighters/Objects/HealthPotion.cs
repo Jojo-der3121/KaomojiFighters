@@ -55,6 +55,7 @@ namespace KaomojiFighters.Objects
                 case ItemType.SpeedPotion:
                     description = "recovers 9 Energy";
                     cost = -9;
+                    itemEffect = (x) => x.energy += 0;
                     break;
                 case ItemType.AlchemycalPotion:
                     var cacheWord = new word(BaseWort);

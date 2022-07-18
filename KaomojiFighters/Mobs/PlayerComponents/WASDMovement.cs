@@ -20,10 +20,13 @@ namespace KaomojiFighters.Mobs
         public Stats stat;
         private Mover mover;
         VirtualButton interact;
+        private VirtualButton Exit;
+        private VirtualButton Menu;
         public bool inTrigger;
         private OwOWOrldTriggerTypes colliderTyp;
         private Vector2 NPCposition;
         public SpriteRenderer renderer;
+        private MenuSceneComponent menuComp;
 
         public override void OnAddedToEntity()
         {
@@ -35,8 +38,12 @@ namespace KaomojiFighters.Mobs
             joystick = new VirtualJoystick(true, new VirtualJoystick.KeyboardKeys(VirtualInput.OverlapBehavior.CancelOut, Keys.A, Keys.D, Keys.W, Keys.S));
             mover = Entity.AddComponent(new Mover());
             interact = new VirtualButton().AddKeyboardKey(Keys.E);
+            Menu = new VirtualButton().AddKeyboardKey(Keys.M);
+            Exit = new VirtualButton().AddKeyboardKey(Keys.Back);
             Entity.AddComponent(new BoxCollider());
             Entity.AddComponent(new NoticComponent(this));
+            menuComp = Entity.AddComponent(new MenuSceneComponent(this));
+            menuComp.Enabled = false;
         }
 
 
@@ -66,6 +73,12 @@ namespace KaomojiFighters.Mobs
                         NPCposition = Vector2.Zero;
                         break;
                 }
+            }
+            if(Exit.IsPressed && !menuComp.Enabled) Core.StartSceneTransition(new TextureWipeTransition(() => new MenuScene(), Core.Content.LoadTexture("a")));
+            if (Menu.IsPressed)
+            {
+                menuComp.Enabled = true;
+                Enabled = false;
             }
         }
 

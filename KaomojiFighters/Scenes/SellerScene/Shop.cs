@@ -72,12 +72,22 @@ namespace KaomojiFighters.Scenes.SellerScene
                 shopHUD.Enabled = false;
             }
 
+            var inn = Entity.AddComponent(new SpriteRenderer(ShopInner));
+            inn.LocalOffset = Screen.Center - Entity.Position;
+            inn.Size = new Vector2(1920 / 3, 1080);
+            inn.RenderLayer = 1;
+            var outer = Entity.AddComponent(new SpriteRenderer(ShopOuter));
+            outer.LocalOffset = Screen.Center - Entity.Position;
+            outer.Size = new Vector2(1920 / 3, 1080);
+            outer.RenderLayer = 1;
+
         }
         protected override void Render(Batcher batcher, Camera camera)
         {
-            batcher.Draw(ShopInner, new RectangleF(Screen.Center.X - ShopInner.Width / 2, 0, 1920 / 3, 1080));
+            //batcher.Draw(ShopInner, new RectangleF(Screen.Center.X - ShopInner.Width / 2, 0, 1920 / 3, 1080));
             batcher.Draw(Seller, new RectangleF(Screen.Center.X - Seller.Width / 4, Screen.Center.Y, 400, 125));
-            batcher.Draw(ShopOuter, new RectangleF(Screen.Center.X - ShopOuter.Width / 2, 0, (1920 / 3) * (7 / 6), 1080 * (7 / 6)));
+            //batcher.Draw(ShopOuter, new RectangleF(Screen.Center.X - ShopOuter.Width / 2, 0, (1920 / 3) * (7 / 6), 1080 * (7 / 6)));
+            SetRenderLayer(-1);
             BuY.DrawTextField(batcher);
             Sell.DrawTextField(batcher);
             Leave.DrawTextField(batcher);

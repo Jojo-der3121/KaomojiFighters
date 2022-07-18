@@ -92,8 +92,6 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
                 if(i+6*scrollIndex< Textures.Count-1 && i < 12)Textures[i+6*scrollIndex].Enabled = true;
                 Textures[i].LocalOffset = GetLocationOfItem(i);
             }
-
-            
         }
 
         public void Update()

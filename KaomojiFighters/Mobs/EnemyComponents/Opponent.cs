@@ -13,7 +13,7 @@ namespace KaomojiFighters.Mobs
 
         protected override string opponentName => "Kaomoji01";
 
-        protected override Stats statsConfig => new Stats() { Gold= 15, Speed = 7, weakness = "Mom Jokes", sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Hurt"))), wordList = word.GetWordList() };
+        protected override Stats statsConfig => new Stats() { Gold= 15, Speed = 7,immunity = "insecure", weakness = "MomJokes", sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Attack")), new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Hurt"))), wordList = word.GetWordList() };
 
         protected override void LoadShit() => (attack = Entity.AddComponent(new EnemyTextAttack() { attackTarget = opponent })).Enabled = false;
 

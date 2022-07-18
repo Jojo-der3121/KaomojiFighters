@@ -135,8 +135,12 @@ namespace KaomojiFighters.Mobs.PlayerComponents.PlayerHUDComponents
             // BattlePhase
             if (attackState == AttackState.returning && oldAttackState != AttackState.returning)
             {
-            
-                TelegramService.SendPrivate(new Telegram(Entity.Name, attackTarget.Name, "auf die Fresse", "tach3tach3tach3"));
+                var cacheString = "";
+                foreach (var word in sentenceWords)
+                {
+                    cacheString += word.sensitivTopic + " ";
+                }
+                TelegramService.SendPrivate(new Telegram(Entity.Name, attackTarget.Name, "auf die Fresse", cacheString));
                 Core.Schedule(2f, (x) => attackState = AttackState.waiting);
             }
             //EndPhase

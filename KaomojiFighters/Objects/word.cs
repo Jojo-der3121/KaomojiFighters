@@ -49,7 +49,7 @@ namespace KaomojiFighters.Mobs
             {
                 case Wort.YourMom:
                     actualWord = "Your Mom";
-                    sensitivTopic = "Mom Jokes";
+                    sensitivTopic = "MomJokes";
                     description = "decreases ATK by 3";
                     typeOfWord = wordType.Nomen;
                     allowedPreviouseWords = new List<wordType> { wordType.nothing, wordType.Verb, wordType.Konjunktion };

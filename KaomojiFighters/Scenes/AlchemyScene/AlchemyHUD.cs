@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KaomojiFighters.Enums;
 using KaomojiFighters.Mobs;
 using KaomojiFighters.Objects;
@@ -10,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Nez;
+using Nez.Sprites;
 
 namespace KaomojiFighters.Scenes.AlchemyScene
 {
@@ -21,10 +18,12 @@ namespace KaomojiFighters.Scenes.AlchemyScene
         private VirtualButton down;
         private Texture2D AlchemicalPotion;
         private Texture2D Costar;
+        private Entity AlchemyCircleEntity;
+        private SpriteRenderer AlchemyCircle;
         private Stats stats;
-        private SpeechBubble bubble;
         private int selectionIndexer;
         private int scrollIndex;
+        private float rotatIndex;
 
         public override void OnAddedToEntity()
         {
@@ -34,13 +33,31 @@ namespace KaomojiFighters.Scenes.AlchemyScene
             up = new VirtualButton().AddKeyboardKey(Keys.W);
             down = new VirtualButton().AddKeyboardKey(Keys.S);
             AlchemicalPotion = Entity.Scene.Content.LoadTexture("AlchemycalPotion");
+            AlchemyCircleEntity = Entity.Scene.AddEntity(new Entity("AlchemyCircle"));
+            AlchemyCircle = AlchemyCircleEntity.AddComponent(new SpriteRenderer(Entity.Scene.Content.LoadTexture("AlchemyCircle")));
+            AlchemyCircle.Size = new Vector2(100, 100);
+            AlchemyCircle.LocalOffset = Screen.Center;
+            AlchemyCircle.Enabled = false;
             Costar = Entity.Scene.Content.LoadTexture("CostStar");
             stats = SafeFileLoader.LoadStats();
+            SetRenderLayer(-1);
+        }
+
+        public override void OnDisabled()
+        {
+            base.OnDisabled();
+            if (AlchemyCircle != null)
+            {
+                AlchemyCircle.Enabled = false;
+                AlchemyCircle.Size = new Vector2(100);
+            }
+
         }
 
         public override void OnEnabled()
         {
             base.OnEnabled();
+            AlchemyCircle.Enabled = true;
             stats = SafeFileLoader.LoadStats();
         }
 
@@ -57,7 +74,12 @@ namespace KaomojiFighters.Scenes.AlchemyScene
                 stats.itemList.Add(ParseWordToItem(stats.wordList[scrollIndex + selectionIndexer]));
                 stats.wordList.RemoveAt(scrollIndex + selectionIndexer);
                 SafeFileLoader.SaveStats(stats);
+                scrollIndex = 0;
+                selectionIndexer = 0;
             }
+
+            AlchemyCircle.Transform.Rotation += 0.01f;
+            AlchemyCircle.Size = Vector2.Lerp(AlchemyCircle.Size, new Vector2(1000), 0.06f);
         }
 
         protected override void Render(Batcher batcher, Camera camera)
@@ -80,8 +102,6 @@ namespace KaomojiFighters.Scenes.AlchemyScene
                 batcher.Draw(Costar, new RectangleF(150 + i * 50, 450, 50, 50), stats.wordList[selectionIndexer + scrollIndex].cost > 0 ? Color.Red : Color.Blue);
             }
             batcher.DrawString(Graphics.Instance.BitmapFont, stats.wordList[selectionIndexer + scrollIndex].description, new Vector2(150, 540), Color.Black, 0f, Vector2.Zero, 3, SpriteEffects.None, 0f);
-
-
 
         }
         public override RectangleF Bounds => new RectangleF(0, 0, 1920, 1080);
