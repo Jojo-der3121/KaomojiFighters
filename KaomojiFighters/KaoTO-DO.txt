@@ -1,5 +1,4 @@
 DO-BEVOR-DEMO
-++ Overworld Menu (Scene Component)
 ++ add SFX & BGM
 ++ test level
 

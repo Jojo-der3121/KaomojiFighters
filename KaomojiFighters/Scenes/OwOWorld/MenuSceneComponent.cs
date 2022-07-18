@@ -19,7 +19,8 @@ namespace KaomojiFighters.Scenes.OwOWorld
         private Texture2D Costar;
         private SpeechBubble reiterOne;
         private SpeechBubble reiterZwei;
-        private int scrollIndex = 0;
+        private int scrollIndexI = 0;
+        private int scrollIndexW = 0;
         private Vector2 selectionIndex = Vector2.Zero;
         private VirtualButton up;
         private VirtualButton down;
@@ -49,6 +50,8 @@ namespace KaomojiFighters.Scenes.OwOWorld
             Costar = Entity.Scene.Content.LoadTexture("CostStar");
             up = new VirtualButton().AddKeyboardKey(Keys.W);
             down = new VirtualButton().AddKeyboardKey(Keys.S);
+            left = new VirtualButton().AddKeyboardKey(Keys.A);
+            right = new VirtualButton().AddKeyboardKey(Keys.D);
             one = new VirtualButton().AddKeyboardKey(Keys.Q);
             two = new VirtualButton().AddKeyboardKey(Keys.E);
             close = new VirtualButton().AddKeyboardKey(Keys.Back);
@@ -67,6 +70,9 @@ namespace KaomojiFighters.Scenes.OwOWorld
         {
             base.OnDisabled();
             player.Enabled = true;
+            selectionIndex = Vector2.Zero;
+            scrollIndexI = 0;
+            scrollIndexW = 0;
         }
 
         protected override void Render(Batcher batcher, Camera camera)
@@ -77,29 +83,39 @@ namespace KaomojiFighters.Scenes.OwOWorld
             batcher.DrawRect(250,150,1420 / 3 -10,680, Color.Black);
             batcher.DrawRect(250+ 1420 / 3 , 150,1420 / 3 -10,680, Color.Black);
             batcher.DrawRect(250+ 1420 / 3*2, 150,1420 / 3,680, Color.Black);
-            for (var i = 0; i < stat.wordList.Count; i++)
+            batcher.DrawRect(250+(1420/6)*selectionIndex.X + (IsItem? 0: 1420/3),220+75*selectionIndex.Y,1420 / 6,75, Color.CornflowerBlue);
+            for (var i = 0; i < 16; i++)
             {
-                batcher.DrawString( Graphics.Instance.BitmapFont, stat.wordList[i].actualWord, new Vector2(1420 / 3+300 + i % 2 * 200, 220 + (int)Math.Floor(i / 2f) * 75), Color.CornflowerBlue, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
+               if(stat.wordList.Count> i+scrollIndexW*2) batcher.DrawString( Graphics.Instance.BitmapFont, stat.wordList[i+scrollIndexW*2].actualWord, new Vector2(1420 / 3+300 + i % 2 * 200, 220 + (int)Math.Floor(i / 2f) * 75), Color.CornflowerBlue, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
             }
-            for (int i = 0; i < stat.wordList.Count; i++)
+            for (int i = 0; i < 16; i++)
             {
-                batcher.Draw(GetItemTexture(stat.itemList[i]._itemType), new Rectangle(350 + i%2 * 150, 220+ (int)Math.Floor(i/2f)*75, 50, 75), Color.White);
+                if (stat.itemList.Count > i+scrollIndexI*2) batcher.Draw(GetItemTexture(stat.itemList[i+scrollIndexI*2]._itemType), new Rectangle(350 + i%2 * 150, 220+ (int)Math.Floor(i/2f)*75, 50, 75), Color.White);
             }
             itemBubble.DrawTextField(batcher);
             wordBubble.DrawTextField(batcher);
 
-            if (IsItem)
+            if (IsItem && stat.itemList.Count > selectionIndex.X + selectionIndex.Y * 2 +scrollIndexI * 2)
             {
-                batcher.Draw(GetItemTexture(stat.itemList[0]._itemType), new Rectangle(240+ 1420 / 3 * 2 + 200-70, 230, 140, 220), Color.White);
-                for (var i = 0; i < Math.Abs(stat.wordList[0].cost); i++)
+                batcher.Draw(GetItemTexture(stat.itemList[(int)(selectionIndex.X + selectionIndex.Y * 2) + scrollIndexI*2]._itemType), new Rectangle(240+ 1420 / 3 * 2 + 200-70, 230, 140, 220), Color.White);
+                for (var i = 0; i < Math.Abs(stat.itemList[(int)(selectionIndex.X + selectionIndex.Y * 2) + scrollIndexI * 2].cost); i++)
                 {
-                    batcher.Draw(Costar, new RectangleF(1420 / 3 * 2 + 150 + i * 50 + 200, 470, 50, 50), stat.wordList[0].cost > 0 ? Color.Red : Color.Blue);
+                    batcher.Draw(Costar, new RectangleF(1420 / 3 * 2 + 70 + i * 50 + 200, 470, 50, 50), stat.itemList[(int)(selectionIndex.X + selectionIndex.Y * 2) + scrollIndexI * 2].cost > 0 ? Color.Red : Color.Blue);
                 }
-                batcher.DrawString(Graphics.Instance.BitmapFont, stat.itemList[0].GetType(), new Vector2(1420 / 3 * 2 + 150 + 200, 540), Color.CornflowerBlue, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
-                batcher.DrawString(Graphics.Instance.BitmapFont, stat.itemList[0].description, new Vector2(1420 / 3 * 2 + 150 + 200, 590), Color.CornflowerBlue, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
+                batcher.DrawString(Graphics.Instance.BitmapFont, stat.itemList[(int)(selectionIndex.X + selectionIndex.Y * 2) + scrollIndexI * 2].GetType(), new Vector2(1420 / 3 * 2 + 150 + 200, 540), Color.CornflowerBlue, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
+                batcher.DrawString(Graphics.Instance.BitmapFont, stat.itemList[(int)(selectionIndex.X + selectionIndex.Y * 2) + scrollIndexI * 2].description, new Vector2(1420 / 3 * 2 + 150 + 200, 590), Color.CornflowerBlue, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
             }
-            else
+            if (!IsItem && stat.wordList.Count > selectionIndex.X + selectionIndex.Y * 2 + scrollIndexW * 2)
             {
+                batcher.DrawString(Graphics.Instance.BitmapFont, stat.wordList[(int)(selectionIndex.X + selectionIndex.Y * 2) + scrollIndexW * 2].actualWord, new Vector2(1420 / 3 * 2 + 150 + 200-35, 350), Color.CornflowerBlue, 0f, Vector2.Zero, 7f, SpriteEffects.None, 0f);
+                for (var i = 0; i < Math.Abs(stat.wordList[(int)(selectionIndex.X + selectionIndex.Y * 2) + scrollIndexW * 2].cost); i++)
+                {
+                    batcher.Draw(Costar, new RectangleF(1420 / 3 * 2 + 70 + i * 50 + 200, 470, 50, 50), stat.wordList[(int)(selectionIndex.X + selectionIndex.Y * 2) + scrollIndexW * 2].cost > 0 ? Color.Red : Color.Blue);
+                }
+                batcher.DrawString(Graphics.Instance.BitmapFont, "Crit: "+ stat.wordList[(int)(selectionIndex.X + selectionIndex.Y * 2) + scrollIndexW * 2].sensitivTopic, new Vector2(1420 / 3 * 2 + 150 + 200, 540), Color.CornflowerBlue, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
+                batcher.DrawString(Graphics.Instance.BitmapFont, stat.wordList[(int)(selectionIndex.X + selectionIndex.Y * 2) + scrollIndexW * 2].description, new Vector2(1420 / 3 * 2 + 150 + 200, 590), Color.CornflowerBlue, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
+                batcher.DrawString(Graphics.Instance.BitmapFont, stat.wordList[(int)(selectionIndex.X + selectionIndex.Y * 2) + scrollIndexW * 2].actualWord, new Vector2(270 + (1420 / 6) * selectionIndex.X +  1420 / 3, 235 + 75 * selectionIndex.Y), Color.Black, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
+
 
             }
         }
@@ -128,11 +144,38 @@ namespace KaomojiFighters.Scenes.OwOWorld
 
         public void Update()
         {
-            if (one.IsPressed) IsItem = true;
-            if (two.IsPressed) IsItem = false;
+            if (one.IsPressed)
+            {
+                IsItem = true;
+                selectionIndex = Vector2.Zero;
+                scrollIndexI = 0;
+                scrollIndexW = 0;
+            }
+
+            if (two.IsPressed)
+            {
+                IsItem = false;
+                selectionIndex = Vector2.Zero;
+                scrollIndexI = 0;
+                scrollIndexW = 0;
+            }
+            if (up.IsPressed && selectionIndex.Y > 0) selectionIndex = new Vector2(selectionIndex.X,selectionIndex.Y-1);
+            else if (up.IsPressed && IsItem ? scrollIndexI > 0 : scrollIndexW > 0)
+            {
+                if (IsItem) scrollIndexI--;
+                else scrollIndexW--;
+            }
+            if (down.IsPressed &&  (IsItem? selectionIndex.Y + scrollIndexI < stat.itemList.Count/2 : selectionIndex.Y+ scrollIndexW< stat.wordList.Count/2) && selectionIndex.Y< 7) selectionIndex = new Vector2(selectionIndex.X, selectionIndex.Y + 1);
+            else if (down.IsPressed && (IsItem
+                ? selectionIndex.Y + scrollIndexI < stat.itemList.Count / 2
+                : selectionIndex.Y + scrollIndexW < stat.wordList.Count / 2))
+            {
+                if (IsItem) scrollIndexI++;
+                else scrollIndexW++;
+            }
+            if (left.IsPressed && selectionIndex.X == 1 ) selectionIndex =  new Vector2(0, selectionIndex.Y ); 
+            if (right.IsPressed && selectionIndex.X == 0) selectionIndex = new Vector2(1, selectionIndex.Y );
             if (close.IsPressed) Enabled = false;
-            
-            
         }
     }
 }

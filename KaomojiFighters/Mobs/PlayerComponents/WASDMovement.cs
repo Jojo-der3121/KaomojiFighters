@@ -38,7 +38,7 @@ namespace KaomojiFighters.Mobs
             joystick = new VirtualJoystick(true, new VirtualJoystick.KeyboardKeys(VirtualInput.OverlapBehavior.CancelOut, Keys.A, Keys.D, Keys.W, Keys.S));
             mover = Entity.AddComponent(new Mover());
             interact = new VirtualButton().AddKeyboardKey(Keys.E);
-            Menu = new VirtualButton().AddKeyboardKey(Keys.M);
+            Menu = new VirtualButton().AddKeyboardKey(Keys.I);
             Exit = new VirtualButton().AddKeyboardKey(Keys.Back);
             Entity.AddComponent(new BoxCollider());
             Entity.AddComponent(new NoticComponent(this));
