@@ -1,5 +1,6 @@
 DO-BEVOR-DEMO
 ++ test level
+++ song credits read me
 
 BUGGS:
 der Gegner muss ein richtiges Satzende beachten.

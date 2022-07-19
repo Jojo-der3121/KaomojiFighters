@@ -87,7 +87,8 @@ namespace KaomojiFighters.Scenes.OwOWorld
             {
                 new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02")),
                     new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Attack")),
-                    new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Hurt"))
+                    new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Hurt")),
+                    new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji02Sad"))
             };
         }
 
@@ -111,6 +112,7 @@ namespace KaomojiFighters.Scenes.OwOWorld
             }
             if (proceed.IsPressed && dialogIndex < _dialog.Count - 1)
             {
+                sfxSpeech[soundToBePlayed].Stop();
                 sfxSpeech.Clear();
                 soundToBePlayed = 0;
                 dialogIndex++;
@@ -119,7 +121,9 @@ namespace KaomojiFighters.Scenes.OwOWorld
             }
             if (quit.IsPressed)
             {
+                sfxSpeech[soundToBePlayed].Stop();
                 sfxSpeech.Clear();
+                soundToBePlayed = 0;
                 Enabled = false;
             }
         }
@@ -141,9 +145,12 @@ namespace KaomojiFighters.Scenes.OwOWorld
                 case 1:
                     return _player.stat.sprites.Normal;
                 case 2:
-                    return _player.stat.sprites.Hurt;
-                case 3:
                     return _player.stat.sprites.Attack;
+                case 3:
+                    return _player.stat.sprites.Hurt;
+                case 4:
+                    return new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Sad"));
+
             }
             return new Sprite(Entity.Scene.Content.LoadTexture("R"));
         }

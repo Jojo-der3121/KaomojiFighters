@@ -11,6 +11,7 @@ namespace KaomojiFighters
     class Battle : Scene
     {
         TiledMapRenderer Background;
+        protected Opponent opponent;
 
         public override void Initialize()
         {
@@ -21,7 +22,7 @@ namespace KaomojiFighters
             Background.Transform.Position = new Vector2(0f,0f);
             Background.RenderLayer = 100;
             CreateEntity("Kaomoji01").SetPosition(600, 600).AddComponent(new Player());
-            CreateEntity("Kaomoji02").SetPosition(1400, 600).AddComponent(new Opponent());
+            opponent = CreateEntity("Kaomoji02").SetPosition(1400, 600).AddComponent(new Opponent());
             CreateEntity("HUD").AddComponent(new HUD());
            
             GetOrCreateSceneComponent<SpeedoMeter>();
@@ -40,5 +41,17 @@ namespace KaomojiFighters
             base.Unload();
         }
 
+    }
+
+    class BossBattle: Battle
+    {
+        public override void Unload()
+        {
+            if (opponent.stat.HP <= 0)
+            {
+                SafeFileLoader.SaveOwOWorldSafeFile(new int[]{0});
+            }
+            base.Unload();
+        }
     }
 }

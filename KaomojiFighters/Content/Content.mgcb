@@ -128,12 +128,6 @@
 /processorParam:Quality=Best
 /build:bleeper_processed-33110 (mp3cut.net).wav
 
-#begin Caballo - Picnic on the pipeline (mp3cut.net).wav
-/importer:WavImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Caballo - Picnic on the pipeline (mp3cut.net).wav
-
 #begin CostStar.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -146,6 +140,12 @@
 /processorParam:TextureFormat=Color
 /build:CostStar.png
 
+#begin Crowander - Toy Shop (mp3cut.net).wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Crowander - Toy Shop (mp3cut.net).wav
+
 #begin DefencePotions.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -157,12 +157,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:DefencePotions.png
-
-#begin Digital Primitives - No Holiday (mp3cut.net).wav
-/importer:WavImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Digital Primitives - No Holiday (mp3cut.net).wav
 
 #begin ExplosionKaoUwu.png
 /importer:TextureImporter
@@ -284,6 +278,18 @@
 /processorParam:TextureFormat=Color
 /build:Kaomoji01Hurtdistinguished.png
 
+#begin Kaomoji01Sad.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Kaomoji01Sad.png
+
 #begin Kaomoji02.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -320,10 +326,28 @@
 /processorParam:TextureFormat=Color
 /build:Kaomoji02Hurt.png
 
+#begin Kaomoji02Sad.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Kaomoji02Sad.png
+
 #begin KaomojiDisplayMap.tmx
 /importer:TiledImporter
 /processor:BinaryUncompressedProcessor
 /build:KaomojiDisplayMap.tmx
+
+#begin Magic Lantern - Feasting on Energy (mp3cut.net).wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Magic Lantern - Feasting on Energy (mp3cut.net).wav
 
 #begin old-desktop-pc-booting-24280 (mp3cut.net).wav
 /importer:WavImporter

@@ -9,6 +9,7 @@ namespace KaomojiFighters.Enums
     public enum OwOWOrldTriggerTypes
     {
         battle,
+        Bossbattle,
         Dialog,
         Shop,
         Alchemy,

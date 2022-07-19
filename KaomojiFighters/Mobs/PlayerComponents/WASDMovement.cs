@@ -77,11 +77,6 @@ namespace KaomojiFighters.Mobs
                 }
             }
 
-            if (Exit.IsPressed && !menuComp.Enabled)
-            {
-                sfx.Play();
-                Core.StartSceneTransition(new TextureWipeTransition(() => new MenuScene(), Core.Content.LoadTexture("a")));
-            }
             if (Menu.IsPressed)
             {
                 menuComp.Enabled = true;
@@ -98,6 +93,10 @@ namespace KaomojiFighters.Mobs
                 case OwOWOrldTriggerTypes.battle:
                     sfx.Play();
                     Core.StartSceneTransition(new TextureWipeTransition(() => new Battle(), Core.Content.LoadTexture("nez/textures/textureWipeTransition/pokemon")));
+                    break;
+                case OwOWOrldTriggerTypes.Bossbattle:
+                    sfx.Play();
+                    Core.StartSceneTransition(new TextureWipeTransition(() => new BossBattle(), Core.Content.LoadTexture("nez/textures/textureWipeTransition/pokemon")));
                     break;
                 case OwOWOrldTriggerTypes.Goal:
                     sfx.Play();

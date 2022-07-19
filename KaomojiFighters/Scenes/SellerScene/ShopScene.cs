@@ -22,8 +22,8 @@ namespace KaomojiFighters.Scenes
         public override void OnStart()
         {
             base.OnStart();
-            if (IsAlch) MediaPlayer.Play(Content.Load<Song>("Caballo - Picnic on the pipeline (mp3cut.net)"));
-            else MediaPlayer.Play(Content.Load<Song>("Digital Primitives - No Holiday (mp3cut.net)"));
+            if (IsAlch) MediaPlayer.Play(Content.Load<Song>("Magic Lantern - Feasting on Energy (mp3cut.net)"));
+            else MediaPlayer.Play(Content.Load<Song>("Crowander - Toy Shop (mp3cut.net)"));
         }
 
         public override void Unload()
