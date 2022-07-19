@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using Nez.BitmapFonts;
 using Nez.Sprites;

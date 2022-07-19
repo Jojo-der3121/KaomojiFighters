@@ -6,6 +6,7 @@ using KaomojiFighters.Mobs.PlayerComponents;
 using KaomojiFighters.Scenes;
 using KaomojiFighters.Scenes.OwOWorld;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Nez;
@@ -27,9 +28,11 @@ namespace KaomojiFighters.Mobs
         private Vector2 NPCposition;
         public SpriteRenderer renderer;
         private MenuSceneComponent menuComp;
+        private SoundEffect sfx;
 
         public override void OnAddedToEntity()
         {
+            sfx = Entity.Scene.Content.Load<SoundEffect>("bleeper_processed-33110 (mp3cut.net)");
             stat = SafeFileLoader.LoadStats();
             stat.sprites = (new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01")),
                 new Sprite(Entity.Scene.Content.LoadTexture("Kaomoji01Attack")),
@@ -55,7 +58,6 @@ namespace KaomojiFighters.Mobs
                 switch (colliderTyp )
                 {
                     case OwOWOrldTriggerTypes.Shop:
-                        
                         inTrigger = false;
                         colliderTyp = OwOWOrldTriggerTypes.NaNi;
                         Core.StartSceneTransition(new TextureWipeTransition(() => new ShopScene(false), Entity.Scene.Content.LoadTexture("c")));
@@ -74,7 +76,12 @@ namespace KaomojiFighters.Mobs
                         break;
                 }
             }
-            if(Exit.IsPressed && !menuComp.Enabled) Core.StartSceneTransition(new TextureWipeTransition(() => new MenuScene(), Core.Content.LoadTexture("a")));
+
+            if (Exit.IsPressed && !menuComp.Enabled)
+            {
+                sfx.Play();
+                Core.StartSceneTransition(new TextureWipeTransition(() => new MenuScene(), Core.Content.LoadTexture("a")));
+            }
             if (Menu.IsPressed)
             {
                 menuComp.Enabled = true;
@@ -89,9 +96,11 @@ namespace KaomojiFighters.Mobs
             switch (owor.owoWorldTriggerType)
             {
                 case OwOWOrldTriggerTypes.battle:
+                    sfx.Play();
                     Core.StartSceneTransition(new TextureWipeTransition(() => new Battle(), Core.Content.LoadTexture("nez/textures/textureWipeTransition/pokemon")));
                     break;
                 case OwOWOrldTriggerTypes.Goal:
+                    sfx.Play();
                     Core.StartSceneTransition(new TextureWipeTransition(() => new MenuScene(), Core.Content.LoadTexture("a")));
                     break;
                 case OwOWOrldTriggerTypes.Shop:

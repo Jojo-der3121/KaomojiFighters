@@ -122,6 +122,18 @@
 /processorParam:TextureFormat=Color
 /build:BatterieHPBar.png
 
+#begin bleeper_processed-33110 (mp3cut.net).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:bleeper_processed-33110 (mp3cut.net).wav
+
+#begin Caballo - Picnic on the pipeline (mp3cut.net).wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Caballo - Picnic on the pipeline (mp3cut.net).wav
+
 #begin CostStar.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -145,6 +157,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:DefencePotions.png
+
+#begin Digital Primitives - No Holiday (mp3cut.net).wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Digital Primitives - No Holiday (mp3cut.net).wav
 
 #begin ExplosionKaoUwu.png
 /importer:TextureImporter
@@ -307,6 +325,12 @@
 /processor:BinaryUncompressedProcessor
 /build:KaomojiDisplayMap.tmx
 
+#begin old-desktop-pc-booting-24280 (mp3cut.net).wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:old-desktop-pc-booting-24280 (mp3cut.net).wav
+
 #begin OwOWorld.tmx
 /importer:TiledImporter
 /processor:BinaryGZipProcessor
@@ -348,6 +372,12 @@
 /processorParam:TextureFormat=Color
 /build:OwOWorldTilesetUpdatedAgain.png
 
+#begin PC-ONE - Monachine (mp3cut.net).wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:PC-ONE - Monachine (mp3cut.net).wav
+
 #begin R.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -371,6 +401,24 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:SamstagKaoButton.png
+
+#begin school-fire-alarm-loud-beepflac-14807-mp3cutnet-1_bJW7loWC.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:school-fire-alarm-loud-beepflac-14807-mp3cutnet-1_bJW7loWC.mp3
+
+#begin school-fire-alarm-loud-beepflac-14807-mp3cutnet-2_UcRfjEGp2.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:school-fire-alarm-loud-beepflac-14807-mp3cutnet-2_UcRfjEGp2.mp3
+
+#begin school-fire-alarm-loud-beepflac-14807-mp3cutnet-4_cpLbcezA3.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:school-fire-alarm-loud-beepflac-14807-mp3cutnet-4_cpLbcezA3.mp3
 
 #begin SelectionKaoButton.png
 /importer:TextureImporter
@@ -473,6 +521,12 @@
 /processorParam:TextureFormat=Color
 /build:StrenghtPotions.png
 
+#begin sword-drawn-38157-mp3cut-mp3cutnet_cIuZf7dY.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sword-drawn-38157-mp3cut-mp3cutnet_cIuZf7dY.wav
+
 #begin TextButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -484,6 +538,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TextButton.png
+
+#begin The Polish Ambassador - Digital Loveless (online-audio-converter.com).wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:The Polish Ambassador - Digital Loveless (online-audio-converter.com).wav
 
 #begin Tileset.png
 /importer:TextureImporter

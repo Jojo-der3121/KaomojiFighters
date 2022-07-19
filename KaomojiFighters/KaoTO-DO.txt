@@ -1,5 +1,4 @@
 DO-BEVOR-DEMO
-++ add SFX & BGM
 ++ test level
 
 BUGGS:

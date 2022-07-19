@@ -3,13 +3,15 @@ using Nez;
 using KaomojiFighters.Scenes.DuelMode;
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace KaomojiFighters
 {
     class Battle : Scene
     {
         TiledMapRenderer Background;
-        
+
         public override void Initialize()
         {
             AddRenderer(new DefaultRenderer());
@@ -24,6 +26,18 @@ namespace KaomojiFighters
            
             GetOrCreateSceneComponent<SpeedoMeter>();
            
+        }
+
+        public override void OnStart()
+        {
+            base.OnStart();
+            MediaPlayer.Play(Content.Load<Song>("PC-ONE - Monachine (mp3cut.net)"));
+        }
+
+        public override void Unload()
+        {
+            MediaPlayer.Stop();
+            base.Unload();
         }
 
     }

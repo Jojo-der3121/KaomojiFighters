@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using Nez;
 using Nez.Sprites;
 
@@ -14,6 +15,19 @@ namespace KaomojiFighters.Scenes
             base.Initialize();
             Start = new VirtualButton().AddKeyboardKey(Keys.Space);
             CreateEntity("TitelScrean").SetLocalPosition(Screen.Center).AddComponent(new SpriteRenderer(Content.LoadTexture("ExplosionKaoUwu")));
+        }
+
+        public override void OnStart()
+        {
+            base.OnStart();
+            MediaPlayer.Play(Content.Load<Song>("old-desktop-pc-booting-24280 (mp3cut.net)"));
+            MediaPlayer.IsRepeating = true;
+        }
+
+        public override void Unload()
+        {
+            base.Unload();
+            MediaPlayer.Stop();
         }
 
         public override void Update()

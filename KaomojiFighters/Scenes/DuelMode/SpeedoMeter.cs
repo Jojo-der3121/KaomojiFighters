@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using KaomojiFighters.Mobs;
+using Microsoft.Xna.Framework.Audio;
 using Nez;
 using Nez.Sprites;
 using Nez.Tweens;
@@ -12,12 +13,15 @@ namespace KaomojiFighters.Scenes.DuelMode
         public List<Mob> EntityList;
         private Mob TurnPlayer;
         private bool LastPlayerFinished = true;
+       
 
         public SpeedoMeter()
         {
             EntityList = new List<Mob>();
             TelegramService.Register(this,"SpeedoMeter");
         }
+
+        
 
         public override void Update()
         {

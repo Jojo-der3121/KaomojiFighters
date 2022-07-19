@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using KaomojiFighters.Mobs;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using Nez;
 using Nez.Sprites;
@@ -22,6 +24,12 @@ namespace KaomojiFighters.Scenes.OwOWorld
         private int WhichNPC;
         private RectangleF NPCArea;
         private int owoWorldScale;
+        private SoundEffect sfx1;
+        private SoundEffect sfx2;
+        private SoundEffect sfx3;
+        private SoundEffectInstance[] sfxArray = new SoundEffectInstance[3];
+        private List<SoundEffectInstance> sfxSpeech = new List<SoundEffectInstance>();
+        private int soundToBePlayed;
 
         public DialogComponent(int whichDiaKaomoji, OwOWorldPlayer player, List<Dialog> dialog, TmxObject element, int WorldScale)
         {
@@ -36,6 +44,12 @@ namespace KaomojiFighters.Scenes.OwOWorld
         {
             base.OnAddedToEntity();
             SetRenderLayer(4);
+            sfx1 = Entity.Scene.Content.Load<SoundEffect>("school-fire-alarm-loud-beepflac-14807-mp3cutnet-1_bJW7loWC");
+            sfx2 = Entity.Scene.Content.Load<SoundEffect>("school-fire-alarm-loud-beepflac-14807-mp3cutnet-2_UcRfjEGp2");
+            sfx3 = Entity.Scene.Content.Load<SoundEffect>("school-fire-alarm-loud-beepflac-14807-mp3cutnet-4_cpLbcezA3");
+            sfxArray[0] = sfx1.CreateInstance();
+            sfxArray[1] = sfx2.CreateInstance();
+            sfxArray[2] = sfx3.CreateInstance();
             proceed = new VirtualButton().AddKeyboardKey(Keys.Space);
             quit = new VirtualButton().AddKeyboardKey(Keys.Back);
             bubble = new SpeechBubble(new Vector2(Screen.Center.X, 1080 / 5 * 4), _dialog[dialogIndex].txt,
@@ -52,6 +66,9 @@ namespace KaomojiFighters.Scenes.OwOWorld
             _player.renderer.Enabled = false;
             _player.Enabled = false;
             bubble.GetSpeech(_dialog[dialogIndex].txt);
+            sfxSpeech.Clear();
+            soundToBePlayed = 0;
+            GetSFXSpeech();
         }
 
         public override void OnDisabled()
@@ -76,6 +93,17 @@ namespace KaomojiFighters.Scenes.OwOWorld
 
         public void Update()
         {
+            if (soundToBePlayed == 0)
+            {
+                sfxSpeech[soundToBePlayed].Play();
+                soundToBePlayed++;
+            }
+            if (soundToBePlayed + 1 < sfxSpeech.Count && sfxSpeech[soundToBePlayed].State == SoundState.Stopped)
+            {
+                soundToBePlayed++;
+                sfxSpeech[soundToBePlayed].Play();
+            }
+
             if (proceed.IsPressed && dialogIndex >= _dialog.Count - 1)
             {
                 dialogIndex = -1;
@@ -83,11 +111,15 @@ namespace KaomojiFighters.Scenes.OwOWorld
             }
             if (proceed.IsPressed && dialogIndex < _dialog.Count - 1)
             {
+                sfxSpeech.Clear();
+                soundToBePlayed = 0;
                 dialogIndex++;
                 bubble.GetSpeech(_dialog[dialogIndex].txt);
+               GetSFXSpeech();
             }
             if (quit.IsPressed)
             {
+                sfxSpeech.Clear();
                 Enabled = false;
             }
         }
@@ -114,6 +146,15 @@ namespace KaomojiFighters.Scenes.OwOWorld
                     return _player.stat.sprites.Attack;
             }
             return new Sprite(Entity.Scene.Content.LoadTexture("R"));
+        }
+
+        private void GetSFXSpeech()
+        {
+            var r = new System.Random();
+            for (var i = 0; i < bubble._speech.Count; i++)
+            {
+                sfxSpeech.Add(sfxArray[r.Next(0, 2)]);
+            }
         }
     }
 

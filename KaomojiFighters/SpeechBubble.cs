@@ -11,7 +11,7 @@ namespace KaomojiFighters
     {
         private readonly Vector2 _size;
         private readonly Vector2 _location;
-        private readonly List<string> _speech = new List<string>();
+        public  List<string> _speech = new List<string>();
         private readonly Color _boxColor;
         private readonly Color _textColor;
         private readonly float _fontSize = 5f;

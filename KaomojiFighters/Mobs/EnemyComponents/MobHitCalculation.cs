@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using Nez.Sprites;
@@ -45,10 +46,11 @@ namespace KaomojiFighters.Mobs
                 triggerBuffer = 0;
             }
             var damage = triggerBuffer>0 ? opponentEntity.GetComponent<Mob>().stat.AttackValue*2 - mob.stat.Defence: opponentEntity.GetComponent<Mob>().stat.AttackValue - mob.stat.Defence;
-            if (immunityBuffer > 0) damage = 0;
-            if (damage > 0)
+            if (damage > 0 && immunityBuffer == 0)
             {
                 mob.stat.HP -= damage;
+                var sfx = Entity.Scene.Content.Load<SoundEffect>("sword-drawn-38157-mp3cut-mp3cutnet_cIuZf7dY");
+                sfx.Play();
             }
         }
 
