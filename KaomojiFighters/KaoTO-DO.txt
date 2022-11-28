@@ -1,7 +1,5 @@
 TO-DO
-Add another Nano bevor the Boss
 Second Level
-Enemy Mob Encyclopedia in Inventory
 
 BUGGS:
 der Gegner muss ein richtiges Satzende beachten.

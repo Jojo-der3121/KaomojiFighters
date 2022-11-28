@@ -51,6 +51,7 @@ namespace KaomojiFighters.Scenes
                         map.AddComponent(new SpriteRenderer(Content.LoadTexture("ShopShroom"))).SetLocalOffset(new Vector2(element.X + element.Width / 2, element.Y + element.Height) * WorldScale).SetRenderLayer(-10);
                         break;
                     case "Dialog":
+                        if(SafeFileLoader.GetOwOWorldSafeFile()[0] == 0 && element.X == 498 && element.Y == 118) continue;
                         map.AddComponent(new OwOWorldTrigger((int)element.Width, (int)element.Height) { owoWorldTriggerType = OwOWOrldTriggerTypes.Dialog }).SetLocalOffset(new Vector2(element.X, element.Y));
                         dialogNPCs.Add( new Vector2(element.X,element.Y) ,map.AddComponent(new DialogComponent(11, player,GetListOfSpeech(element.X,element.Y) , element, WorldScale)));
                         dialogNPCs[new Vector2(element.X, element.Y)].Enabled = false;
@@ -97,8 +98,9 @@ namespace KaomojiFighters.Scenes
         {
             var locationOfNPC = new Vector2(x, y);
             var battleNPC = new Vector2(258.834f, 89.6663f);
-            var introNPC = new Vector2(268f, 208) ;
-            var shopNPC = new Vector2(407.167f, 374.666f) ;
+            var introNPC = new Vector2(268f, 208);
+            var shopNPC = new Vector2(407.167f, 374.666f);
+            var BossBattleNPC = new Vector2(498, 118);
 
             if (locationOfNPC == battleNPC)
             {
@@ -133,6 +135,13 @@ namespace KaomojiFighters.Scenes
                     new Dialog("You can see the prices of the items as Gold lettering next to them. Youre total Gold is gonna be shown at the top of the screen a little to the right, but you'll see. If your unhappy with your choice just press X to decrease your shopping list by 1. Pressing enter will buy or sell the items. Btw he is from Germany i hope you don't mind that. We don't have any racists among us well now do we?", 1, 1),
                     new Dialog("But now to our Pride! The Alchemy Steeple!! There you'll have the choice between Alchemy and Generate. Selecting Generate will give you the Option of generating words from a selection of 10 basic words. You'll switch between them using W, A, S, D select with Space, Decrease with X and start the generation with Enter.You can generate as many as you want to. The Steeple owner is so kind that he'll lend you every Material you'll need for the transmutation.", 1, 2),
                     new Dialog("Using the Option Alchemy will allow you to transform your old Words into Alchemical Potions. With the same values as the origin word.you'll switch between the option with W and S and start the Alchemy Process with Space. But be carefull. It cannot be undone. Every word will be permanently lost", 2, 3),
+                };
+            }
+            if (locationOfNPC == BossBattleNPC)
+            {
+                return new List<Dialog>
+                {
+                    new Dialog("Up Ahead will be your first Bossfight in this Game. Proof your worth and talent! Unlike our spraing match the Boss will be no longer available once you've defeated him. Same goes for this iteration of me. I'll be waiting on the other side for you.",1,1)
                 };
             }
             return new List<Dialog>
