@@ -1,9 +1,11 @@
-DO-BEVOR-DEMO
-++ test level
-++ song credits read me
+TO-DO
+Add another Nano bevor the Boss
+Second Level
 
 BUGGS:
 der Gegner muss ein richtiges Satzende beachten.
+attackSentenceEnd null refrence e == 0
+pls fix Nano's voice for the love of christ
 
 Notizen
 epic music playList. Themabattle ? => duke devlin + Friday night Funkin ?

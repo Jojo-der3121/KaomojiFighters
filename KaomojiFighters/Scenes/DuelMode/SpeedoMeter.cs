@@ -12,13 +12,22 @@ namespace KaomojiFighters.Scenes.DuelMode
     {
         public List<Mob> EntityList;
         private Mob TurnPlayer;
-        private bool LastPlayerFinished = true;
-       
+        private bool LastPlayerFinished = true; 
+        public delegate void ChangeLog() ;
+
+        public ChangeLog change;
+
+
+        public SpeedoMeter(ChangeLog Log )
+        {
+            EntityList = new List<Mob>();
+            TelegramService.Register(this,"SpeedoMeter"); 
+            change = new ChangeLog(Log) ;
+        }
 
         public SpeedoMeter()
         {
-            EntityList = new List<Mob>();
-            TelegramService.Register(this,"SpeedoMeter");
+
         }
 
         
@@ -35,6 +44,7 @@ namespace KaomojiFighters.Scenes.DuelMode
                     var stats = SafeFileLoader.LoadStats();
                     if (battlingEntity.Entity != player)
                     {
+                        change();
                         var r = new System.Random();
                         stats.Gold += battlingEntity.stat.Gold;
                         stats.wordList.Add(battlingEntity.stat.wordList[r.Next(battlingEntity.stat.wordList.Count-1)]);

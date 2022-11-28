@@ -3,13 +3,14 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 
 namespace KaomojiFighters.Mobs
 {
 
     public enum Wort
     {
-        YourMom, And, AFishHead, DogFood, I, You, Legos, StepOn, Hope, Fucked
+        YourMom, And, AFishHead, DogFood, I, You, Legos, StepOn, Hope, Fucked, But, AButtfan, Sused, Killed, APuppy, Insulted,
     }
 
     public class word
@@ -137,25 +138,73 @@ namespace KaomojiFighters.Mobs
                     cost = 5;
                     wordEffect = (x) => x.AttackValue += 5;
                     break;
+                case Wort.But:
+                    actualWord = "but";
+                    sensitivTopic = "none";
+                    description = "increases ATK by 3";
+                    typeOfWord = wordType.Konjunktion;
+                    allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.nothing };
+                    cost = 1;
+                    wordEffect = (x) => x.AttackValue += 3;
+                    break;
+                case Wort.AButtfan:
+                    actualWord = "a Buttfan";
+                    sensitivTopic = "appearance";
+                    description = "increases DEF by 3";
+                    typeOfWord = wordType.Nomen;
+                    allowedPreviouseWords = new List<wordType> { wordType.Verb, wordType.nothing, wordType.Konjunktion };
+                    cost = 3;
+                    wordEffect = (x) => x.Defence += 3;
+                    break;
+                case Wort.Sused:
+                    actualWord = "sused";
+                    sensitivTopic = "honor";
+                    description = "increases ATK by 2";
+                    typeOfWord = wordType.Verb;
+                    allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Konjunktion };
+                    cost = 2;
+                    wordEffect = (x) => x.AttackValue += 2;
+                    break;
+                case Wort.Killed:
+                    actualWord = "killed";
+                    sensitivTopic = "ptsd";
+                    description = "increases ATK by 15";
+                    typeOfWord = wordType.Verb;
+                    allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Konjunktion };
+                    cost = 7;
+                    wordEffect = (x) => x.AttackValue += 15;
+                    break;
+                case Wort.APuppy:
+                    actualWord = "a Puppy";
+                    sensitivTopic = "cute";
+                    description = "recovers 12 HP";
+                    typeOfWord = wordType.Nomen;
+                    allowedPreviouseWords = new List<wordType> { wordType.Verb, wordType.nothing, wordType.Konjunktion };
+                    cost = 8;
+                    wordEffect = (x) => x.HP += 12;
+                    break;
+                case Wort.Insulted:
+                    actualWord = "insulted";
+                    sensitivTopic = "honor";
+                    description = "recovers 7 HP";
+                    typeOfWord = wordType.Verb;
+                    allowedPreviouseWords = new List<wordType> { wordType.Nomen, wordType.Konjunktion };
+                    cost = 4;
+                    wordEffect = (x) => x.HP += 7;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
         public void ExecuteEffect(Stats stats) => wordEffect(stats);
 
-        //public virtual bool IsUsable(wordType previouseWord)
-        //{
-        //    foreach (var allowedWord in allowedPreviouseWords)
-        //    {
-        //        if (allowedWord == previouseWord)
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    stats.HP -= 3;
-        //    return false;
-        //}
-
-        public static List<word> GetWordList() => Enum.GetValues(typeof(Wort)).OfType<Wort>().Select((x) => new word(x)).ToList();
+        public static List<word> GetWordList() => new List<word>()
+        {
+            new word(Wort.I), new word(Wort.StepOn), new word(Wort.Legos), new word(Wort.Hope), new word(Wort.You),
+            new word(Wort.Fucked), new word(Wort.YourMom), new word(Wort.And), new word(Wort.AFishHead),
+            new word(Wort.DogFood)
+        };
 
     }
 }

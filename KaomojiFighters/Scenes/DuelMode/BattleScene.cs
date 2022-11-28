@@ -1,9 +1,9 @@
-﻿using KaomojiFighters.Mobs;
+﻿using System.Reflection.Emit;
+using KaomojiFighters.Mobs;
+using KaomojiFighters.Mobs.EnemyComponents;
 using Nez;
 using KaomojiFighters.Scenes.DuelMode;
-
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 
 namespace KaomojiFighters
@@ -11,7 +11,8 @@ namespace KaomojiFighters
     class Battle : Scene
     {
         TiledMapRenderer Background;
-        protected Opponent opponent;
+        protected Mob opponent;
+        
 
         public override void Initialize()
         {
@@ -22,13 +23,19 @@ namespace KaomojiFighters
             Background.Transform.Position = new Vector2(0f,0f);
             Background.RenderLayer = 100;
             CreateEntity("Kaomoji01").SetPosition(600, 600).AddComponent(new Player());
-            opponent = CreateEntity("Kaomoji02").SetPosition(1400, 600).AddComponent(new Opponent());
+            GetOpponent();
             CreateEntity("HUD").AddComponent(new HUD());
-           
-            GetOrCreateSceneComponent<SpeedoMeter>();
-           
+
+            var safe = new SpeedoMeter.ChangeLog (ChangeSafeFile);
+            AddSceneComponent(new SpeedoMeter(safe));
         }
 
+        protected virtual void GetOpponent()=> opponent = CreateEntity("Kaomoji02").SetPosition(1400, 600).AddComponent(new Opponent());
+
+        public virtual void ChangeSafeFile()
+        {
+
+        }
         public override void OnStart()
         {
             base.OnStart();
@@ -45,13 +52,14 @@ namespace KaomojiFighters
 
     class BossBattle: Battle
     {
-        public override void Unload()
+        protected override void GetOpponent() => opponent = CreateEntity("Kaomoji02").SetPosition(1400, 600).AddComponent(new BossOpponent());
+
+        public override void ChangeSafeFile() 
         {
             if (opponent.stat.HP <= 0)
             {
-                SafeFileLoader.SaveOwOWorldSafeFile(new int[]{0});
+                SafeFileLoader.SaveOwOWorldSafeFile(new int[] { 0 });
             }
-            base.Unload();
         }
     }
 }
