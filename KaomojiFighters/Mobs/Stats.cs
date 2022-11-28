@@ -7,7 +7,7 @@ namespace KaomojiFighters.Mobs
 {
     public class Stats
     {
-
+        public string name;
         public int HP = 42;
         public int AttackValue = 1;
         public int Speed;
@@ -21,6 +21,7 @@ namespace KaomojiFighters.Mobs
         public Vector2 OwOworldPosition;
         public List<word> wordList = new List<word>();
         public List<Item> itemList = new List<Item>();
+        public List<string> knownEnemyList = new List<string>();
 
     }
     

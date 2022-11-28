@@ -20,6 +20,7 @@ namespace KaomojiFighters.Mobs.EnemyComponents
 
         protected override Stats statsConfig => new Stats()
         {
+            name = "Boss01",
             Gold = 45,
             Speed = 11,
             immunity = "ptsd",

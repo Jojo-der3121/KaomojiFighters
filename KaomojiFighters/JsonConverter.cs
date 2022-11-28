@@ -1,8 +1,6 @@
 ﻿using KaomojiFighters.Mobs;
 using Newtonsoft.Json;
 using System.IO;
-using System.Threading;
-using KaomojiFighters.Objects;
 
 namespace KaomojiFighters
 {

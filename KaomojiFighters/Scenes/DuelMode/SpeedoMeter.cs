@@ -48,6 +48,7 @@ namespace KaomojiFighters.Scenes.DuelMode
                         var r = new System.Random();
                         stats.Gold += battlingEntity.stat.Gold;
                         stats.wordList.Add(battlingEntity.stat.wordList[r.Next(battlingEntity.stat.wordList.Count-1)]);
+                        if(!stats.knownEnemyList.Contains(battlingEntity.stat.name)) stats.knownEnemyList.Add(battlingEntity.stat.name);
                         SafeFileLoader.SaveStats(stats);
                     }
                     var deadEntity = battlingEntity.Entity.GetComponent<SpriteRenderer>();
