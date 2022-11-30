@@ -30,8 +30,6 @@ namespace KaomojiFighters.Mobs
             spriteRenderer.SetSprite(new Sprite(stat.sprites.Normal), SpriteRenderer.SizingMode.Resize);
             spriteRenderer.LocalOffset = new Vector2(spriteRenderer.LocalOffset.X, spriteRenderer.LocalOffset.Y - (spriteRenderer.Size.Y - oldSize) / 2);
             stat.AttackValue *= 50;
-
-            SafeFileLoader.SaveStats(stat);
         }
 
         protected override void LoadShit() => Entity.AddComponent(new EasterEgg() { EasterEggString = new Keys[] { Keys.D, Keys.I, Keys.S, Keys.T, Keys.I, Keys.N, Keys.G, Keys.U, Keys.I, Keys.S, Keys.H, Keys.E, Keys.D } });

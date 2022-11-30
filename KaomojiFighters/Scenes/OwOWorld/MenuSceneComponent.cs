@@ -195,7 +195,7 @@ namespace KaomojiFighters.Scenes.OwOWorld
             else
             {
                 if (up.IsPressed && selectionIndex.Y > 0) selectionIndex = new Vector2(selectionIndex.X, selectionIndex.Y - 1);
-                else if (up.IsPressed && inventoryState == InventoryEnum.items ? scrollIndexI > 0 : scrollIndexW > 0)
+                else if (up.IsPressed && (inventoryState == InventoryEnum.items ? scrollIndexI > 0 : scrollIndexW > 0))
                 {
                     if (inventoryState == InventoryEnum.items) scrollIndexI--;
                     else scrollIndexW--;
