@@ -5,6 +5,7 @@ BUGGS:
 der Gegner muss ein richtiges Satzende beachten.
 attackSentenceEnd null refrence e == 0
 pls fix Nano's voice for the love of christ
+Distinguished boost gets absorbed into base form
 
 Notizen
 epic music playList. Themabattle ? => duke devlin + Friday night Funkin ?

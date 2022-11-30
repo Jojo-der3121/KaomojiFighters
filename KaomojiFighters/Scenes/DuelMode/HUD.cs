@@ -112,10 +112,15 @@ namespace KaomojiFighters.Scenes.DuelMode
             }
 
             // draws energy Bar
-            for ( var i = 1; i <= playerComponent.stat.energy; i++) 
+            for ( var i = 1; i <= (playerComponent.stat.energy > 12 ? 12 : playerComponent.stat.energy); i++) 
             {
                 batcher.Draw(EnergyStar, new Rectangle(85, 1080 - 290 - i*40,45,45), Color.CornflowerBlue);
                 batcher.DrawString(Graphics.Instance.BitmapFont,  i.ToString(), new Vector2(75, 1080 - 280 - i * 40), Color.CornflowerBlue, 0f, Vector2.Zero, 3f, SpriteEffects.None,0f);
+            }
+            if (playerComponent.stat.energy > 12)
+            {
+                batcher.Draw(EnergyStar, new Rectangle(85, 1080 - 290 - 13 * 40, 45, 45), Color.CornflowerBlue);
+                batcher.DrawString(Graphics.Instance.BitmapFont, playerComponent.stat.energy.ToString(), new Vector2(75, 1080 - 280 - 13 * 40), Color.CornflowerBlue, 0f, Vector2.Zero, 3f, SpriteEffects.None, 0f);
             }
         }
 
